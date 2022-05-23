@@ -6,7 +6,7 @@
 
 - 🔭 I’m currently working on [personal projects](https://pi-food-main-one.vercel.app/)
 
-- 🌱 I’m currently learning **React**
+- 🌱 I’m currently learning **Angular**
 
 - 👨‍💻 All of my projects are available at [https://github.com/RunyShark?tab=repositories](https://github.com/RunyShark?tab=repositories)
 
