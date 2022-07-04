@@ -64,11 +64,11 @@
 <p align="left">
 </br>
 </p>
-<p align="left" ">&nbsp;<img align="center"  src="https://github-readme-stats.vercel.app/api?username=runyshark&show_icons=true&locale=en&layout=compact&theme=vision-friendly-dark" alt="runyshark" /></p>
+<p align="left" ">&nbsp;<img align="center"  src="https://github-readme-stats.vercel.app/api?username=runyshark&show_icons=true&locale=en&layout=compact&theme=midnight-purple" alt="runyshark" /></p>
 </br>
 </br>
-<p align="left"><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=vision-friendly-dark" alt="runyshark" /></p>
+<p align="left"><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=midnight-purple" alt="runyshark" /></p>
 </br>
 </br>
-<p align="left"><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=runyshark&show_icons=true&theme=vision-friendly-dark&locale=en&layout=compact" alt="runyshark" /></p>
+<p align="left"><img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=runyshark&show_icons=true&theme=midnight-purple&locale=en&layout=compact" alt="runyshark" /></p>
 </br>
