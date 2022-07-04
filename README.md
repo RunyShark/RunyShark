@@ -47,7 +47,7 @@
 <hr></hr>
 # 📊GitHub Stats :
 <p align="left">
-![](https://github-readme-stats.vercel.app/api?username=francoasc&theme=vision-friendly-dark&hide_border=true&include_all_commits=true&count_private=true)<br/>
+![](https://github-readme-stats.vercel.app/api?username=runyshark&show_icons=true&locale=en)<br/>
 </p>
 <p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=runyshark&show_icons=true&locale=en" alt="runyshark" /></p>
 
