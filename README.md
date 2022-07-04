@@ -3,13 +3,13 @@
 <h3 align="center">A passionate  full stack from Mexico</h3>
 <img align="right" alt="Coding" width="400"; src="https://c.tenor.com/2uyENRmiUt0AAAAC/coding.gif" alt="img">
 
-- 🔭 I’m currently working on [personal projects](https://pi-food-main-one.vercel.app/)
+- 🔭 I’m currently working on [personal projects](https://e-commerce-pf.vercel.app)
 
-- 🌱 I’m currently learning **Angular**
+- 🌱 I’m currently learning **React**
 
 - 👨‍💻 All of my projects are available at [https://github.com/RunyShark?tab=repositories](https://github.com/RunyShark?tab=repositories)
 
-- 💬 Ask me about **Web,Backend,Frontend**
+- 💬 Ask me about **JavaScript, TypeScript, NodeJS, React, React-TypeScript, HTML, CSS, Tailwindcss, Bootstrap, Jest-test-react, Redux, Express-validador, Express, PostgreSQL, OAuth,  Sequelize, Json Web Tokens,  MogonDB**
 
 - 📫 How to reach me **sdmoreno51@gmail.com**
 
