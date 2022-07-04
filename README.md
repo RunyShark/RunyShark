@@ -1,5 +1,5 @@
 
-<h1 align="center">Hi 👋, I'm Sergio Dario Moreno</h1>
+<h1 align="center">Hi 👋, I'm  Dario Moreno</h1>
 <h3 align="center">A passionate  full stack from Mexico</h3>
 <img align="right" alt="Coding" width="400"; src="https://c.tenor.com/2uyENRmiUt0AAAAC/coding.gif" alt="img">
 
