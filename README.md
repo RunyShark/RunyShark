@@ -19,8 +19,7 @@
 <br />
 <br />
 
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=runyshark&show_icons=true&theme=dark&locale=en&layout=compact" alt="runyshark" /></p>
-</br>
+
 <hr></hr>
 <h3 align="left">Languages and Tools:</h3>
 <p align="left"> 
@@ -49,8 +48,11 @@
 
 # 📊GitHub Stats :
 <p align="left">
-
+</br>
 </p>
 <p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=runyshark&show_icons=true&locale=en" alt="runyshark" /></p>
-
+</br>
 <p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&" alt="runyshark" /></p>
+</br>
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=runyshark&show_icons=true&theme=dark&locale=en&layout=compact" alt="runyshark" /></p>
+</br>
