@@ -5,9 +5,9 @@
 
 - 🔭 I’m currently working on [personal projects](https://e-commerce-pf.vercel.app)
 
-- 🌱 I’m currently learning **React**
+- 🌱 I’m currently learning **React and ingles**
 
-- 👨‍💻 All of my projects are available at [https://github.com/RunyShark?tab=repositories](https://github.com/RunyShark?tab=repositories)
+- 👨‍💻 All of my projects are available at [My projects](https://github.com/RunyShark?tab=repositories)
 
 - 💬 Ask me about **JavaScript, TypeScript, NodeJS, React, React-TypeScript, HTML, CSS, Tailwindcss, Bootstrap, Jest-test-react, Redux, Express-validador, Express, PostgreSQL, OAuth,  Sequelize, Json Web Tokens,  MogonDB**
 
