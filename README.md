@@ -1,6 +1,10 @@
 
 
+
 <h1 align="center">Hi 👋, I'm  Dario Moreno</h1>
+<p align="center"><img align="center" alt="nombre" src="https://i.ibb.co/b72jzQG/portada-git-dario.gif"><p/>
+
+
 <h3 align="center">A passionate  full stack from Mexico</h3>
 <img align="right" alt="Coding" width="400"; src="https://c.tenor.com/2uyENRmiUt0AAAAC/coding.gif" alt="img">
 
