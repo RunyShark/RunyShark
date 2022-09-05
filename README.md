@@ -52,9 +52,10 @@
 
 <h3 align="left">Back End Developer: 👨‍💻:</h3>
 <p align="left"> 
+<a href="https://nestjs.com" target="_blank" rel="noreferrer"> <img src="https://docs.nestjs.com/assets/logo-small.svg" alt="nodejs" width="40" height="40"/> </a> 
 <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://ugeek.github.io/blog/images-blog/node.png" alt="nodejs" width="40" height="40"/> </a> 
 <a href="https://expressjs.com" target="_blank"> <img src="https://i.cloudup.com/zfY6lL7eFa-3000x3000.png" alt="express" height="40"/> </a> 
-<a href="https://sequelize.org/" target="_blank" rel="noreferrer"> <img src="https://seeklogo.com/images/S/sequelize-logo-9A5075DB9F-seeklogo.com.png" alt="sequelize" width="40" height="40"/> </a>
+<a href="https://sequelize.org/" target="_blank" rel="noreferrer"> <img src="https://seeklogo.com/images/S/sequelize-logo-9A5075DB9F-seeklogo.com.png" alt="sequelize" width="40" height="40"/> </a><a href="https://typeorm.io" target="_blank" rel="noreferrer"> <img src="https://opencollective-production.s3-us-west-1.amazonaws.com/a90da2c0-a82c-11e7-8125-a1bea2bef08c.png" alt="sequelize" width="40" height="40"/> </a>
 <a href="https://postman.com" target="_blank"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a>  
 <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a>
 <a href="https://www.postgresql.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a>
