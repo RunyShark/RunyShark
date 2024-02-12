@@ -16,7 +16,7 @@
   <a href="https://wa.me/522283578806" target="_blank">
   <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"  height="20" alt="css3"/>
   </a>
-  <a href="https://wa.me/522283578806" target="_blank">
+  <a href="https://www.linkedin.com/in/dario-moreno-aa204022a/" target="_blank">
   <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" height="20" alt="css3"/>
   </a>
   <a href="mailto:sdmoreno51@gmail.com" target="_blank"><img lt="GIF" height="20" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
@@ -212,8 +212,6 @@
 <a href="https://github.com/anuraghazra/github-readme-stats">
   <img alt="runyshark Github Stats" src="https://denvercoder1-github-readme-stats.vercel.app/api/?username=runyshark&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="150px"/>
 </a>
-
-
 
 ## Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
 
