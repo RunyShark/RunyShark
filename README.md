@@ -156,11 +156,11 @@
 
 <a href="https://github.com/anuraghazra/github-readme-stats">
 <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=runyshark&show_icons=true&theme=midnight-purple&locale=en&layout=compact" alt="runyshark" />
-</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</a> &nbsp;&nbsp;
 <a href="https://github.com/anuraghazra/github-readme-stats">
  <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=midnight-purple" alt="runyshark" />
 </a> 
-
+<img lt="GIF" height="80" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif"/>
 
 ## 🎧 Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
 
