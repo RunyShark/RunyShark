@@ -212,15 +212,6 @@
 <a href="https://github.com/anuraghazra/github-readme-stats">
   <img alt="runyshark Top Languages" src="https://denvercoder1-github-readme-stats.vercel.app/api/top-langs/?username=runyshark&langs_count=20&layout=compact&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="192px"/>
 </a>
-  <br/>
-
-<b>Note:</b> Top languages is only a metric of the languages my public code consists of and doesn't reflect experience or skill level.
-
-  <!-- https://github.com/ashutosh00710/github-readme-activity-graph -->
-  
-<a href="https://github.com/ashutosh00710/github-readme-activity-graph">
-  <img alt="runyshark Activity Graph" src="https://github-readme-activity-graph.vercel.app/graph/?username=runyshark&bg_color=282A36&color=F8F8F2&line=FF79C6&point=FFB86C&hide_border=true"  height="310"  />
-</a>
 
 
 
