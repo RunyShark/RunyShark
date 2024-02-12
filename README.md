@@ -207,10 +207,10 @@
 
 
 <a href="https://github.com/anuraghazra/github-readme-stats">
-  <img alt="runyshark Github Stats" src="https://denvercoder1-github-readme-stats.vercel.app/api/?username=runyshark&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="192px"/>
+  <img alt="runyshark Github Stats" src="https://denvercoder1-github-readme-stats.vercel.app/api/?username=runyshark&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="190px"/>
 </a>
 <a href="https://github.com/anuraghazra/github-readme-stats">
-  <img alt="runyshark Top Languages" src="https://denvercoder1-github-readme-stats.vercel.app/api/top-langs/?username=runyshark&langs_count=20&layout=compact&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="192px"/>
+  <img alt="runyshark Top Languages" src="https://denvercoder1-github-readme-stats.vercel.app/api/top-langs/?username=runyshark&langs_count=20&layout=compact&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="150px"/>
 </a>
 
 
