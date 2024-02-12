@@ -102,7 +102,7 @@
     <img height="25"
         src="https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white"
         alt="badges" />
-        <h3> Backend Development <img height="25" lt="GIF" height="30"
+        <h3> Backend <img height="25" lt="GIF" height="30"
         src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif" /></h3>
 <p align="left">
 <div>
