@@ -102,6 +102,52 @@
     <img height="25"
         src="https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white"
         alt="badges" />
+        <h3> Backend Development <img height="25" lt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif" /></h3>
+<p align="left">
+<div>
+    <img height="25" src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"
+        alt="badges" />
+    <img height="25"
+        src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB"
+        alt="badges" />
+    <img height="25"
+        src="https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white"
+        alt="badges" />
+    <img height="25"
+        src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101"
+        alt="badges" />
+    <img height="25" src="https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white"
+        alt="badges" />
+    <img height="25" src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"
+        alt="badges" />
+    <img height="25"
+        src="https://img.shields.io/badge/strapi-%232E7EEA.svg?style=for-the-badge&logo=strapi&logoColor=white"
+        alt="badges" />
+            <h3>Database, ORMs and Cloud Hosting <img height="25" lt="GIF" height="30"
+            src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/7V7_vswa5y.gif" /></h3>
+    <div>
+        <img height="25"
+            src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"
+            alt="badges" />
+        <img height="25"
+            src="https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white"
+            alt="badges" />
+        <img height="25"
+            src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white"
+            alt="badges" />
+        <img height="25"
+            src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"
+            alt="badges" />
+        <img height="25"
+            src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"
+            alt="badges" />
+        <img height="25"
+            src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white"
+            alt="badges" />
+        <img height="25"
+            src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"
+            alt="badges" />
 <h3>Funding  <img alt="GIF" height="30"
         src="https://res.cloudinary.com/runyshark1/image/upload/v1707762976/xt_j41lju.gif" /></h3>
 <p align="left">
@@ -127,52 +173,6 @@
 <img height="25" src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white"
     alt="badges" />
        </p>
-<h3> Backend Development <img height="25" lt="GIF" height="30"
-        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif" /></h3>
-<p align="left">
-<div>
-    <img height="25" src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"
-        alt="badges" />
-    <img height="25"
-        src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB"
-        alt="badges" />
-    <img height="25"
-        src="https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white"
-        alt="badges" />
-    <img height="25"
-        src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101"
-        alt="badges" />
-    <img height="25" src="https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white"
-        alt="badges" />
-    <img height="25" src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"
-        alt="badges" />
-    <img height="25"
-        src="https://img.shields.io/badge/strapi-%232E7EEA.svg?style=for-the-badge&logo=strapi&logoColor=white"
-        alt="badges" />
-    <h3>Database, ORMs and Cloud Hosting <img height="25" lt="GIF" height="30"
-            src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/7V7_vswa5y.gif" /></h3>
-    <div>
-        <img height="25"
-            src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"
-            alt="badges" />
-        <img height="25"
-            src="https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white"
-            alt="badges" />
-        <img height="25"
-            src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white"
-            alt="badges" />
-        <img height="25"
-            src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"
-            alt="badges" />
-        <img height="25"
-            src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"
-            alt="badges" />
-        <img height="25"
-            src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white"
-            alt="badges" />
-        <img height="25"
-            src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"
-            alt="badges" />
         <h3>Software and Tools <img height="25" lt="GIF" height="30"
                 src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy0_oae3vv.gif" /></h3>
         <img height="25" src="https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black"
