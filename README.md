@@ -102,7 +102,7 @@
         src="https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white"
         alt="react" />
 <h3>Funding  <img alt="GIF" height="30"
-        src="https://res.cloudinary.com/runyshark1/image/upload/v1707762555/2r6D_ajmnzg.gif" /></h3>
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707762976/xt_j41lju.gif" /></h3>
 <p align="left">
 <img height="25" src="https://img.shields.io/badge/strapi-2F2E8B?style=for-the-badge&logo=strapi&logoColor=white"
     alt="react" />
