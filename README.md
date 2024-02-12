@@ -14,14 +14,15 @@
 
 - 📫 How to reach me&nbsp;&nbsp;
   <a href="https://wa.me/522283578806" target="_blank">
-      <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"  height="20" alt="css3"/>
+  <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"  height="20" alt="css3"/>
   </a>
-    <a href="https://wa.me/522283578806" target="_blank">
-      <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" height="20" alt="css3"/>
+  <a href="https://wa.me/522283578806" target="_blank">
+  <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" height="20" alt="css3"/>
   </a>
   <a href="mailto:sdmoreno51@gmail.com" target="_blank"><img lt="GIF" height="20" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
 
 ##
+
 <h3>Programming Languages <img alt="GIF" height="30"
         src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy3_rfjyyl.gif" />
 </h3>
@@ -204,21 +205,17 @@
 
 <br />
 
-
-
 <a href="https://github.com/anuraghazra/github-readme-stats">
-  <img alt="runyshark Github Stats" src="https://denvercoder1-github-readme-stats.vercel.app/api/?username=runyshark&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="190px"/>
+  <img alt="runyshark Github Stats" src="https://denvercoder1-github-readme-stats.vercel.app/api/?username=runyshark&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="150px"/>
 </a>
+&nbsp;&nbsp;
+&nbsp;&nbsp;
 <a href="https://github.com/anuraghazra/github-readme-stats">
   <img alt="runyshark Top Languages" src="https://denvercoder1-github-readme-stats.vercel.app/api/top-langs/?username=runyshark&langs_count=20&layout=compact&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="150px"/>
 </a>
 
-
-
-
-##  Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
+## Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
 
 &nbsp;&nbsp;
 [![spotify-github-profile](https://spotify-github-profile.vercel.app/api/view?uid=21wenupyy6frblehjdouc4sua&cover_image=true&theme=novatorem&show_offline=false&background_color=121212&interchange=true&bar_color_cover=true)](https://spotify-github-profile.vercel.app/api/view?uid=21wenupyy6frblehjdouc4sua&redirect=true)
 <img  alt="GIF" height="210" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709244/7VA_e1d5ay.gif"/>
-
