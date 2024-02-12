@@ -12,11 +12,11 @@
 
 - 💬 Ask me about **backend, frontend and mobile development**
 
-- 📫 How to reach me
+- 📫 How to reach me&nbsp;&nbsp;
   <a href="https://wa.me/522283578806" target="_blank">
-  <img alt="WhatsApp" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707752229/WhatsApp.svg_pa7zky.webp"/>
+  <img alt="WhatsApp" height="25" src="https://res.cloudinary.com/runyshark1/image/upload/v1707752229/WhatsApp.svg_pa7zky.webp"/>
   </a>
-  <a href="mailto:sdmoreno51@gmail.com" target="_blank"><img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707752229/Gmail-logo_rysd74.png"/></a>
+  <a href="mailto:sdmoreno51@gmail.com" target="_blank"><img lt="GIF" height="25" src="https://res.cloudinary.com/runyshark1/image/upload/v1707752229/Gmail-logo_rysd74.png"/></a>
 
 ##
 
