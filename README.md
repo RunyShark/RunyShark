@@ -14,164 +14,220 @@
 
 - 📫 How to reach me&nbsp;&nbsp;
   <a href="https://wa.me/522283578806" target="_blank">
-  <img alt="WhatsApp" height="25" src="https://res.cloudinary.com/runyshark1/image/upload/v1707752229/WhatsApp.svg_pa7zky.webp"/>
+      <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"  height="20" alt="css3"/>
   </a>
-  <a href="mailto:sdmoreno51@gmail.com" target="_blank"><img lt="GIF" height="25" src="https://res.cloudinary.com/runyshark1/image/upload/v1707752229/Gmail-logo_rysd74.png"/></a>
+    <a href="https://wa.me/522283578806" target="_blank">
+      <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" height="20" alt="css3"/>
+  </a>
+  <a href="mailto:sdmoreno51@gmail.com" target="_blank"><img lt="GIF" height="20" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white"/></a>
 
 ##
+<h3>Programming Languages <img alt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy3_rfjyyl.gif" />
+</h3>
+<p>
+    <img alt="js" src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&"
+        height="25" />
+    <img alt="ts"
+        src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white"
+        height="25" />
+</p>
+<h3>Frontend <img lt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/3WFM_iahmch.gif" /></h3>
+<p align="left">
+    <img height="25" src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white"
+        alt="css3" />
+    <img height="25"
+        src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white"
+        alt="html5" />
+    <img height="25"
+        src="https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white"
+        alt="jQuery" />
+    <img height="25"
+        src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/Context--Api-000000?style=for-the-badge&logo=react"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=#D04A37"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/Pug-FFF?style=for-the-badge&logo=pug&logoColor=A86454"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/RollupJS-ef3335?style=for-the-badge&logo=rollup.js&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/rxjs-%23B7178C.svg?style=for-the-badge&logo=reactivex&logoColor=white"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/GULP-%23CF4647.svg?style=for-the-badge&logo=gulp&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/astro-%232C2052.svg?style=for-the-badge&logo=astro&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white"
+        alt="react" />
+<h3>Funding  <img alt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707762555/2r6D_ajmnzg.gif" /></h3>
+<p align="left">
+<img height="25" src="https://img.shields.io/badge/strapi-2F2E8B?style=for-the-badge&logo=strapi&logoColor=white"
+    alt="react" />
+<img height="25" src="https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white"
+    alt="react" />
+    </p>
+<h3>Tests <img alt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/4XCW_utukec.gif" /></h3>
+<p align="left">
+<img height="25" src="https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white"
+    alt="react" />
+<img height="25"
+    src="https://img.shields.io/badge/-TestingLibrary-%23E33332?style=for-the-badge&logo=testing-library&logoColor=white"
+    alt="react" />
+<img height="25" src="https://img.shields.io/badge/-cypress-%23E5E5E5?style=for-the-badge&logo=cypress&logoColor=058a5e"
+    alt="react" /> <img height="25"
+    src="https://img.shields.io/badge/Playwright-45ba4b?style=for-the-badge&logo=Playwright&logoColor=white"
+    alt="react" />
+<img height="25" src="https://img.shields.io/badge/-ApolloGraphQL-311C87?style=for-the-badge&logo=apollo-graphql"
+    alt="react" />
+<img height="25" src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white"
+    alt="react" />
+       </p>
+<h3> Backend Development <img height="25" lt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif" /></h3>
+<p align="left">
+<div>
+    <img height="25" src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/-GraphQL-E10098?style=for-the-badge&logo=graphql&logoColor=white"
+        alt="react" />
+    <img height="25" src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"
+        alt="react" />
+    <img height="25"
+        src="https://img.shields.io/badge/strapi-%232E7EEA.svg?style=for-the-badge&logo=strapi&logoColor=white"
+        alt="react" />
+    <h3>Database, ORMs and Cloud Hosting <img height="25" lt="GIF" height="30"
+            src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/7V7_vswa5y.gif" /></h3>
+    <div>
+        <img height="25"
+            src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"
+            alt="react" />
+        <h3>Software and Tools <img height="25" lt="GIF" height="30"
+                src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy0_oae3vv.gif" /></h3>
+        <img height="25" src="https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/Trello-%23026AA7.svg?style=for-the-badge&logo=Trello&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white"
+            alt="react" />
+        <img height="25" src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white"
+            alt="react" />
+        <img height="25"
+            src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white"
+            alt="react" />
 
-<h3>👨‍💻 Programming Languages <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/4XCW_utukec.gif"/>
- </h3>
-<p align="left"> 
- <a href="https://developer.mozilla.org/es/docs/Web/JavaScript" target="_blank">
-                        <img src="https://res.cloudinary.com/runyshark1/image/upload/v1707711085/JavaScript-logo_vabomf.png"
-                            alt="javaScript" width="50" height="50" /></a>
-                    <a href="https://www.typescriptlang.org/">
-                        <img src="https://res.cloudinary.com/runyshark1/image/upload/v1707711099/ts_ymrfdm.png"
-                            alt="typeScript" width="50" height="50" />
-                    </a>
-      <h3>🌐 Frontend Development <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/3WFM_iahmch.gif"/></h3>
-                            <a href="https://www.w3schools.com/css/" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"
-                                    alt="css3" width="40" height="40" /> </a>
-                            <a href="https://www.w3.org/html/" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg"
-                                    alt="html5" width="40" height="40" /> </a>
-                            <a href="https://jquery.com/" target="_blank"> <img
-                                    src="https://profilinator.rishav.dev/skills-assets/jquery.png" alt="jQuery"
-                                    width="40" height="40" /> </a>
-                            <a href="https://reactjs.org/" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg"
-                                    alt="react" width="40" height="40" /> </a>
-                            <a href="https://reactjs.org/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707753934/react-native-1_x6l9ju.svg"
-                                    alt="react" width="40" height="40" /> </a>
-                                           <a href="https://storybook.js.org/docs/get-started/setup" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707754132/storybook-icon_dyqrgf.svg"
-                                    alt="storybook" width="40" height="40" /> </a>
-                            <a href="https://getbootstrap.com" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg"
-                                    alt="bootstrap" width="40" height="40" /> </a>
-                            <a href="https://pugjs.org" target="_blank"> <img src="https://cdn.worldvectorlogo.com/logos/pug.svg"
-                                    alt="pug" width="40" height="40" /> </a>
-                            <a href="https://sass-lang.com" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg"
-                                    alt="sass" width="40" height="40" /> </a>
-                            <a href="https://redux.js.org" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg"
-                                    alt="redux" width="40" height="40" /> </a>
-                            <a href="https://babeljs.io/" target="_blank"> <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Babel_Logo.svg/1280px-Babel_Logo.svg.png"
-                                    alt="babel" width="40" height="40" /></a>
-                            <a href="https://nextjs.org/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707753880/nextjs-boilerplate-logo_tv2tro.png"
-                                    alt="nextJs" width="40" height="40" /></a>
-                            <a href="https://tanstack.com/query/v3/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711764/1_elhu-42TzQEdsFjKDbQhhA_qbcmqc.png"
-                                    alt="ReactQuery" width="40" height="40" /></a>
-                            <a href="https://zustand-demo.pmnd.rs/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711765/zustand-logo_yso4jf.png"
-                                    alt="zustand" width="70" height="40" /></a>
-                            <a href="https://tailwindui.com/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711764/Tailwind_CSS_Logo.svg_urk5ww.png"
-                                    alt="tailwindui" width="40" height="25" /></a>
-                            <a href="https://mui.com/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711764/logo_vgnkgn.png"
-                                    alt="mui" width="40" height="40" /></a>
-
-<h3>🖥️ Backend Development <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif"/></h3>
-<p align="left"> 
-<div >
-                            <a href="https://nodejs.org" target="_blank"> <img
-                                    src="https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" alt="nodejs"
-                                    width="40" height="40" /> </a>
-                                         <a href="https://nestjs.com/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711768/NestJS_gsnmxe.svg"
-                                    alt="nest" width="40" height="40" /> </a>
-                                         <a href="https://strapi.io/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707754032/9c68ae10-0a8a-4e3f-9084-3625b19df9cb_sdfh1g.png" alt="https://strapi.io/"
-                                    width="40" height="40" /> </a>
-                            <a href="https://expressjs.com" target="_blank"> <img
-                                    src="https://avatars.githubusercontent.com/u/5658226?s=200&v=4" alt="express"
-                                    width="40" height="40" /> </a>
-                            <a href="https://socket.io/" target="_blank"> <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Socket-io.svg/330px-Socket-io.svg.png"
-                                    alt="socket" width="40" height="40" /> </a>
-                            <a href="https://pusher.com/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707712448/pusher-logo-4C7555E4D0-seeklogo.com_uoeu4i.png"
-                                    alt="pusher" width="40" height="40" /> </a>
-                        <a>
-                                    <a href="https://graphql.org/" target="_blank"> <img
-                                            src="https://res.cloudinary.com/runyshark1/image/upload/v1707711768/2048px-GraphQL_Logo.svg_oi07ye.png"
-                                            alt="graphql" width="40" height="40" /> <a>
-                            <a href="https://jwt.io/" target="_blank" rel="noreferrer" > <img
-                                    src="https://img.stackshare.io/service/6417/jwt-icon.png" alt="jwt" width="40"
-                                    height="40" /> </a>
-                            <a href="https://www.langchain.com/" target="_blank" rel="noreferrer"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707713467/langchain-vectordb--logo_shvgpl.webp"
-                                    alt="langchain" width="40" height="40" /> </a>
 <br />
-<br />
-
-<h3>💽 Database & ORMs <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/7V7_vswa5y.gif"/></h3>
- <div>
-                        <a href="https://www.mongodb.com/" target="_blank">
-                            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg"
-                                alt="mongodb" width="40" height="40" />
-                        </a>
-                        <a href="https://www.postgresql.org/" target="_blank">
-                            <img src="https://img.icons8.com/color/48/undefined/postgreesql.png" alt="postgreesql"
-                                width="40" height="40" />
-                        </a>
-                        <a href="https://sequelize.org/" target="_blank" rel="noreferrer">
-                            <img src="https://seeklogo.com/images/S/sequelize-logo-9A5075DB9F-seeklogo.com.png"
-                                alt="sequelize" width="40" height="40" /> </a><a href="https://typeorm.io"
-                            target="_blank" rel="noreferrer">
-                            <img src="https://opencollective-production.s3-us-west-1.amazonaws.com/a90da2c0-a82c-11e7-8125-a1bea2bef08c.png"
-                                alt="sequelize" width="40" height="40" /> </a><a href="https://www.prisma.io/docs"
-                            target="_blank" rel="noreferrer">
-                            <img src="https://www.freelogovectors.net/wp-content/uploads/2022/01/prisma_logo-freelogovectors.net_.png"
-                                alt="sequelize" width="40" height="40" />
-                        </a>
-                    </div>
-
-<br />
-<br />
-
-  <h3>🛠️ Tools <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy0_oae3vv.gif"/></h3>
-
- <div>
-                        <a href="https://postman.com" target="_blank">
-                            <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman"
-                                width="40" height="40" />
-                        </a>
-                        <a href="https://www.docker.com" target="_blank">
-                            <img src="https://res.cloudinary.com/runyshark1/image/upload/v1707713348/97_Docker_logo_logos-512_dda6k5.webp"
-                                alt="postman" width="40" height="40" />
-                        </a>
-                        <a href="https://github.com" target="_blank">
-                            <img src="https://cdn-icons-png.flaticon.com/512/1051/1051377.png" alt="postman" width="40"
-                                height="40" />
-                        </a>
-                    </div>
+ <summary><h2> Stats and Activity  <img alt="GIF" height="30"
+        src="https://res.cloudinary.com/runyshark1/image/upload/v1707709939/33Ho_ucktq0.gif" /></h2></summary>
+ <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" alt="runyshark" />
+ 
+ 
+## GitHub Stats <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/Xi5e_ix8jqc.gif"/>
 
 <br />
 
-## 🚀 GitHub Stats <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy3_rfjyyl.gif"/>
 
-<br />
 
 <a href="https://github.com/anuraghazra/github-readme-stats">
-<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=runyshark&show_icons=true&theme=midnight-purple&locale=en&layout=compact" alt="runyshark" />
-</a> &nbsp;&nbsp;
+  <img alt="runyshark Github Stats" src="https://denvercoder1-github-readme-stats.vercel.app/api/?username=runyshark&show_icons=true&include_all_commits=true&count_private=true&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="192px"/>
+</a>
 <a href="https://github.com/anuraghazra/github-readme-stats">
- <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=midnight-purple" alt="runyshark" />
-</a> 
+  <img alt="runyshark Top Languages" src="https://denvercoder1-github-readme-stats.vercel.app/api/top-langs/?username=runyshark&langs_count=20&layout=compact&theme=dracula&bg_color=282A36&title_color=FF79C6&icon_color=F8F8F2" height="192px"/>
+</a>
+  <br/>
+
+<b>Note:</b> Top languages is only a metric of the languages my public code consists of and doesn't reflect experience or skill level.
+
+  <!-- https://github.com/ashutosh00710/github-readme-activity-graph -->
+  
+<a href="https://github.com/ashutosh00710/github-readme-activity-graph">
+  <img alt="runyshark Activity Graph" src="https://github-readme-activity-graph.vercel.app/graph/?username=runyshark&bg_color=282A36&color=F8F8F2&line=FF79C6&point=FFB86C&hide_border=true"  height="310"  />
+</a>
 
 
-## 🎧 Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
+
+
+##  Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
 
 &nbsp;&nbsp;
 [![spotify-github-profile](https://spotify-github-profile.vercel.app/api/view?uid=21wenupyy6frblehjdouc4sua&cover_image=true&theme=novatorem&show_offline=false&background_color=121212&interchange=true&bar_color_cover=true)](https://spotify-github-profile.vercel.app/api/view?uid=21wenupyy6frblehjdouc4sua&redirect=true)
 <img  alt="GIF" height="210" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709244/7VA_e1d5ay.gif"/>
-<img lt="GIF" height="100" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709939/33Ho_ucktq0.gif"/>
+
