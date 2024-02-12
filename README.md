@@ -20,7 +20,8 @@
 
 ##
 
-<h3>👨‍💻 Programming Languages <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/4XCW_utukec.gif"/> </h3>
+<h3>👨‍💻 Programming Languages <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/4XCW_utukec.gif"/>
+ </h3>
 <p align="left"> 
  <a href="https://developer.mozilla.org/es/docs/Web/JavaScript" target="_blank">
                         <img src="https://res.cloudinary.com/runyshark1/image/upload/v1707711085/JavaScript-logo_vabomf.png"
@@ -159,7 +160,7 @@
 <a href="https://github.com/anuraghazra/github-readme-stats">
  <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=midnight-purple" alt="runyshark" />
 </a> 
-<img lt="GIF" height="120" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif"/>
+
 
 ## 🎧 Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
 
