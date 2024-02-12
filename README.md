@@ -44,8 +44,11 @@
                                     src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg"
                                     alt="react" width="40" height="40" /> </a>
                             <a href="https://reactjs.org/" target="_blank"> <img
-                                    src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg"
+                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707753934/react-native-1_x6l9ju.svg"
                                     alt="react" width="40" height="40" /> </a>
+                                           <a href="https://storybook.js.org/docs/get-started/setup" target="_blank"> <img
+                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707754132/storybook-icon_dyqrgf.svg"
+                                    alt="storybook" width="40" height="40" /> </a>
                             <a href="https://getbootstrap.com" target="_blank"> <img
                                     src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg"
                                     alt="bootstrap" width="40" height="40" /> </a>
@@ -61,7 +64,7 @@
                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Babel_Logo.svg/1280px-Babel_Logo.svg.png"
                                     alt="babel" width="40" height="40" /></a>
                             <a href="https://nextjs.org/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711766/next-js_jq9unv.svg"
+                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707753880/nextjs-boilerplate-logo_tv2tro.png"
                                     alt="nextJs" width="40" height="40" /></a>
                             <a href="https://tanstack.com/query/v3/" target="_blank"> <img
                                     src="https://res.cloudinary.com/runyshark1/image/upload/v1707711764/1_elhu-42TzQEdsFjKDbQhhA_qbcmqc.png"
@@ -82,6 +85,12 @@
                             <a href="https://nodejs.org" target="_blank"> <img
                                     src="https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" alt="nodejs"
                                     width="40" height="40" /> </a>
+                                         <a href="https://nestjs.com/" target="_blank"> <img
+                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711768/NestJS_gsnmxe.svg"
+                                    alt="nest" width="40" height="40" /> </a>
+                                         <a href="https://strapi.io/" target="_blank"> <img
+                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707754032/9c68ae10-0a8a-4e3f-9084-3625b19df9cb_sdfh1g.png" alt="https://strapi.io/"
+                                    width="40" height="40" /> </a>
                             <a href="https://expressjs.com" target="_blank"> <img
                                     src="https://avatars.githubusercontent.com/u/5658226?s=200&v=4" alt="express"
                                     width="40" height="40" /> </a>
@@ -91,9 +100,7 @@
                             <a href="https://pusher.com/" target="_blank"> <img
                                     src="https://res.cloudinary.com/runyshark1/image/upload/v1707712448/pusher-logo-4C7555E4D0-seeklogo.com_uoeu4i.png"
                                     alt="pusher" width="40" height="40" /> </a>
-                            <a href="https://nestjs.com/" target="_blank"> <img
-                                    src="https://res.cloudinary.com/runyshark1/image/upload/v1707711768/NestJS_gsnmxe.svg"
-                                    alt="nest" width="40" height="40" /> <a>
+                        <a>
                                     <a href="https://graphql.org/" target="_blank"> <img
                                             src="https://res.cloudinary.com/runyshark1/image/upload/v1707711768/2048px-GraphQL_Logo.svg_oi07ye.png"
                                             alt="graphql" width="40" height="40" /> <a>
