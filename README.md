@@ -30,7 +30,7 @@
                         <img src="https://res.cloudinary.com/runyshark1/image/upload/v1707711099/ts_ymrfdm.png"
                             alt="typeScript" width="50" height="50" />
                     </a>
-      <h3>🌐 Frontend Development</h3>
+      <h3>🌐 Frontend Development <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/3WFM_iahmch.gif"/></h3>
                             <a href="https://www.w3schools.com/css/" target="_blank"> <img
                                     src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"
                                     alt="css3" width="40" height="40" /> </a>
@@ -76,7 +76,7 @@
                                     src="https://res.cloudinary.com/runyshark1/image/upload/v1707711764/logo_vgnkgn.png"
                                     alt="mui" width="40" height="40" /></a>
 
-<h3>🖥️ Backend Development</h3>
+<h3>🖥️ Backend Development <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif"/></h3>
 <p align="left"> 
 <div >
                             <a href="https://nodejs.org" target="_blank"> <img
@@ -106,7 +106,7 @@
 <br />
 <br />
 
-<h3>💽 Database & ORMs</h3>
+<h3>💽 Database & ORMs <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709240/7V7_vswa5y.gif"/></h3>
  <div>
                         <a href="https://www.mongodb.com/" target="_blank">
                             <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg"
@@ -131,7 +131,7 @@
 <br />
 <br />
 
-  <h3>🛠️ Tools</h3>
+  <h3>🛠️ Tools <img lt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/yy0_oae3vv.gif"/></h3>
 
  <div>
                         <a href="https://postman.com" target="_blank">
@@ -160,11 +160,11 @@
 <a href="https://github.com/anuraghazra/github-readme-stats">
  <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=runyshark&layout=compact&theme=midnight-purple" alt="runyshark" />
 </a> 
-<img lt="GIF" height="80" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709241/4M52_i1clfw.gif"/>
+
 
 ## 🎧 Listening now <img alt="GIF" height="30" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709938/6oa_iya1ry.gif"/>
 
 &nbsp;&nbsp;
 [![spotify-github-profile](https://spotify-github-profile.vercel.app/api/view?uid=21wenupyy6frblehjdouc4sua&cover_image=true&theme=novatorem&show_offline=false&background_color=121212&interchange=true&bar_color_cover=true)](https://spotify-github-profile.vercel.app/api/view?uid=21wenupyy6frblehjdouc4sua&redirect=true)
 <img  alt="GIF" height="210" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709244/7VA_e1d5ay.gif"/>
-<img lt="GIF" height="200" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709939/33Ho_ucktq0.gif"/>
+<img lt="GIF" height="100" src="https://res.cloudinary.com/runyshark1/image/upload/v1707709939/33Ho_ucktq0.gif"/>
