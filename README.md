@@ -66,6 +66,9 @@
         src="https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white"
         alt="badges" />
     <img height="25"
+        src="https://img.shields.io/badge/angular.js-%23E23237.svg?style=for-the-badge&logo=angularjs&logoColor=white"
+        alt="badges" />
+    <img height="25"
         src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"
         alt="badges" />
     <img height="25"
