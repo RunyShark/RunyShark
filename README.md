@@ -33,10 +33,6 @@
 ![Followers](https://img.shields.io/github/followers/runyshark?style=for-the-badge&color=ff79c6&labelColor=282a36&logo=github&label=FOLLOWERS)
 ![Stars](https://img.shields.io/github/stars/runyshark?style=for-the-badge&color=f1fa8c&labelColor=282a36&logo=github&label=STARS)
 ![Repos](https://img.shields.io/badge/dynamic/json?logo=github&label=REPOS&style=for-the-badge&color=8be9fd&labelColor=282a36&query=%24.public_repos&url=https://api.github.com/users/runyshark)
-<br/>
-<a href="https://wakatime.com/@RunyShark">
-<img src="https://wakatime.com/badge/user/65bd1a6c-a1f3-48a5-8a60-3ff0bb4dded8.svg?style=for-the-badge&color=bd93f9" alt="WakaTime Total Hours"/>
-</a>
 
 </div>
 
@@ -71,6 +67,32 @@
 📖 &nbsp;Always learning — currently diving into <b>Python & Cloud Architecture</b><br/>
 🌎 &nbsp;Languages: <b>Spanish</b> (native) · <b>English</b> (learning)<br/>
 💬 &nbsp;Ask me about <b>NestJS, Next.js, React Native, System Design</b>
+
+</div>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                    CODING ACTIVITY (WAKATIME)                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<h2 align="center">
+  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">
+  &nbsp;Coding Activity&nbsp;
+  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">
+</h2>
+
+<div align="center">
+
+![Total Coding](https://img.shields.io/badge/Total_Coding_Time-5,186+hrs-bd93f9?style=for-the-badge&logo=wakatime&logoColor=f8f8f2&labelColor=282a36)
+![Daily Average](https://img.shields.io/badge/Daily_Average-7+hrs+16+mins-ff79c6?style=for-the-badge&logo=wakatime&logoColor=f8f8f2&labelColor=282a36)
+<br/>
+![Top Language](https://img.shields.io/badge/Top_Lang-TypeScript-8be9fd?style=for-the-badge&logo=typescript&logoColor=282a36&labelColor=282a36)
+![Editor](https://img.shields.io/badge/Editor-VS_Code-50fa7b?style=for-the-badge&logo=visualstudiocode&logoColor=282a36&labelColor=282a36)
+
+<br/>
+
+<!-- WakaTime details shown via badges above -->
 
 </div>
 
@@ -423,32 +445,6 @@
   <source media="(prefers-color-scheme: light)" srcset="./profile-3d-contrib/profile-dracula.svg" />
   <img alt="3D Contribution Graph" src="./profile-3d-contrib/profile-dracula-rainbow.svg" width="100%" />
 </picture>
-
-</div>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!--                    CODING ACTIVITY (WAKATIME)                 -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-
-<h2 align="center">
-  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">
-  &nbsp;Coding Activity&nbsp;
-  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">
-</h2>
-
-<div align="center">
-
-![Total Coding](https://img.shields.io/badge/Total_Coding_Time-5,186+hrs-bd93f9?style=for-the-badge&logo=wakatime&logoColor=f8f8f2&labelColor=282a36)
-![Daily Average](https://img.shields.io/badge/Daily_Average-7+hrs+16+mins-ff79c6?style=for-the-badge&logo=wakatime&logoColor=f8f8f2&labelColor=282a36)
-<br/>
-![Top Language](https://img.shields.io/badge/Top_Lang-TypeScript-8be9fd?style=for-the-badge&logo=typescript&logoColor=282a36&labelColor=282a36)
-![Editor](https://img.shields.io/badge/Editor-VS_Code-50fa7b?style=for-the-badge&logo=visualstudiocode&logoColor=282a36&labelColor=282a36)
-
-<br/>
-
-<!-- WakaTime details shown via badges above -->
 
 </div>
 
