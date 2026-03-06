@@ -60,7 +60,6 @@
 
 🧠 &nbsp;<b>Self-taught</b> developer passionate about <b>Clean Architecture & DDD</b><br/>
 💚 &nbsp;I love programming and thrive solving <b>complex problems</b><br/>
-🏗️ &nbsp;Currently building a <b>production-grade SaaS monorepo</b> (5 apps, 1 core)<br/>
 🤖 &nbsp;Building <b>AI Agents</b>, multi-agent orchestration & <b>MCP integrations</b><br/>
 ⚡ &nbsp;Expert in <b>prompt engineering</b>, LLM pipelines & AI-powered workflows<br/>
 📖 &nbsp;Always learning — currently diving into <b>Python & Cloud Architecture</b><br/>
