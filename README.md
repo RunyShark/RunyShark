@@ -58,14 +58,27 @@
 
 <br/>
 
-🧠 &nbsp;<b>Self-taught</b> developer passionate about <b>Clean Architecture & DDD</b><br/>
-💚 &nbsp;I love programming and thrive solving <b>complex problems</b><br/>
+**Full-Stack Engineer con 7+ años de experiencia desarrollando productos web y mobile end-to-end, diseñando soluciones escalables en cloud y flujos de AI aplicados a producto.**
+
+<br/>
+
+🚀 &nbsp;<b>190+ repositorios</b> | <b>20+ tecnologías dominadas</b> | <b>5,900+ contribuciones</b><br/>
+🧠 &nbsp;Apasionado por <b>Clean Architecture, DDD & SOLID</b><br/>
 🤖 &nbsp;Building <b>AI Agents</b>, multi-agent orchestration & <b>MCP integrations</b><br/>
 ⚡ &nbsp;Expert in <b>prompt engineering</b>, LLM pipelines & AI-powered workflows<br/>
+🎓 &nbsp;Mentor de <b>30+ estudiantes</b> en bootcamps Full Stack<br/>
 📖 &nbsp;Always learning — currently diving into <b>Python & Cloud Architecture</b><br/>
-🤝 &nbsp;I enjoy <b>mentoring</b> and sharing knowledge with others<br/>
 🌎 &nbsp;Languages: <b>Spanish</b> (native) · <b>English</b> (learning)<br/>
 💬 &nbsp;Ask me about <b>NestJS, Next.js, React Native, System Design</b>
+
+<br/>
+
+### ⚡ Logros Clave
+
+🚀 &nbsp;Reduje tiempos de deploy de días a minutos con <b>CI/CD automation</b><br/>
+🏗️ &nbsp;Migración de monolitos a <b>microservicios con NestJS + Prisma</b><br/>
+🛠️ &nbsp;Creé <b>CLI tools</b> para despliegues completos de entornos en <b>AWS</b><br/>
+💳 &nbsp;Integración de sistemas de pago (<b>Stripe</b>) automatizando billing y suscripciones
 
 </div>
 
