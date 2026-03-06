@@ -1,6 +1,6 @@
 [
   {
-    "type": "rainbow",
+    "type": "normal",
     "fileName": "profile-dracula-rainbow.svg",
     "backgroundColor": "#282a36",
     "foregroundColor": "#f8f8f2",
@@ -8,13 +8,7 @@
     "weakColor": "#6272a4",
     "radarColor": "#ff79c6CC",
     "growingAnimation": true,
-    "contribColors": [
-      ["#44475a", "#6272a4", "#bd93f9", "#ff79c6"],
-      ["#44475a", "#6272a4", "#50fa7b", "#8be9fd"],
-      ["#44475a", "#6272a4", "#f1fa8c", "#ffb86c"],
-      ["#44475a", "#6272a4", "#ff79c6", "#ff5555"],
-      ["#44475a", "#6272a4", "#8be9fd", "#bd93f9"]
-    ]
+    "contribColors": ["#44475a", "#6272a4", "#bd93f9", "#ff79c6", "#50fa7b"]
   },
   {
     "type": "normal",
@@ -24,7 +18,7 @@
     "strongColor": "#bd93f9",
     "weakColor": "#6272a4",
     "radarColor": "#ff79c6CC",
-    "growingAnimation": true,
+    "growingAnimation": false,
     "contribColors": ["#44475a", "#6272a4", "#bd93f9", "#ff79c6", "#50fa7b"]
   }
 ]
