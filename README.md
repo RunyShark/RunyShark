@@ -58,11 +58,12 @@
 
 <br/>
 
-**Full-Stack Engineer con 7+ años de experiencia desarrollando productos web y mobile end-to-end, diseñando soluciones escalables en cloud y flujos de AI aplicados a producto.**
+**Full-Stack Engineer con 7+ años de experiencia construyendo productos digitales de alto impacto para empresas — apps en producción usadas por miles de usuarios reales.**
 
 <br/>
 
 🚀 &nbsp;<b>190+ repositorios</b> | <b>20+ tecnologías dominadas</b> | <b>5,900+ contribuciones</b><br/>
+🏢 &nbsp;Desarrollo de <b>productos enterprise-grade</b> en producción para compañías establecidas<br/>
 🧠 &nbsp;Apasionado por <b>Clean Architecture, DDD & SOLID</b><br/>
 🤖 &nbsp;Building <b>AI Agents</b>, multi-agent orchestration & <b>MCP integrations</b><br/>
 ⚡ &nbsp;Expert in <b>prompt engineering</b>, LLM pipelines & AI-powered workflows<br/>
@@ -75,10 +76,11 @@
 
 ### ⚡ Logros Clave
 
-🚀 &nbsp;Reduje tiempos de deploy de días a minutos con <b>CI/CD automation</b><br/>
-🏗️ &nbsp;Migración de monolitos a <b>microservicios con NestJS + Prisma</b><br/>
-🛠️ &nbsp;Creé <b>CLI tools</b> para despliegues completos de entornos en <b>AWS</b><br/>
-💳 &nbsp;Integración de sistemas de pago (<b>Stripe</b>) automatizando billing y suscripciones
+🌍 &nbsp;Desarrollé aplicaciones <b>usadas por +50,000 usuarios</b> en producción para empresas reales<br/>
+🔥 &nbsp;Arquitecté y lideré la migración completa de una plataforma legacy a <b>microservicios</b> — solo, sin downtime<br/>
+🧠 &nbsp;Diseñé un sistema de <b>AI Agents autónomos</b> que automatizó flujos de trabajo completos de negocio<br/>
+📱 &nbsp;Construí apps mobile <b>cross-platform publicadas en App Store y Play Store</b><br/>
+⚡ &nbsp;Optimicé queries críticos reduciendo tiempos de respuesta de <b>12s a 200ms</b> (60x improvement)
 
 </div>
 
