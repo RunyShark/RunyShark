@@ -451,22 +451,6 @@
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!--                    🧛 METRICS                                 -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-
-<h2 align="center">
-  <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30">
-  &nbsp;Metrics&nbsp;
-  <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30">
-</h2>
-
-<p align="center">
-  <img src="./github-metrics.svg" alt="Metrics" width="100%"/>
-</p>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
 <!--                    🧛 PROFILE VIEWS                           -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 
