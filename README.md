@@ -467,6 +467,42 @@
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                    🧛 PROFILE SUMMARY CARDS                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<h2 align="center">
+  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">
+  &nbsp;Profile Summary&nbsp;
+  <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">
+</h2>
+
+<div align="center">
+
+<img src="./profile-summary-card-output/dracula/0-profile-details.svg" alt="Profile Details" width="100%"/>
+
+<br/>
+
+<img src="./profile-summary-card-output/dracula/1-repos-per-language.svg" alt="Repos per Language" width="49%"/>
+<img src="./profile-summary-card-output/dracula/2-most-commit-language.svg" alt="Most Commit Language" width="49%"/>
+
+<br/>
+
+<img src="./profile-summary-card-output/dracula/3-stats.svg" alt="Stats" width="49%"/>
+<img src="./profile-summary-card-output/dracula/4-productive-time.svg" alt="Productive Time" width="49%"/>
+
+</div>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--                    🧛 PROFILE VIEWS                           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=runyshark&style=for-the-badge&color=bd93f9&label=PROFILE+VIEWS&abbreviated=true" alt="Profile Views"/>
+</p>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
 <!--                    🧛 SPOTIFY                                 -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 
