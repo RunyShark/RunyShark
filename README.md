@@ -72,16 +72,6 @@
 🌎 &nbsp;Languages: <b>Spanish</b> (native) · <b>English</b> (learning)<br/>
 💬 &nbsp;Ask me about <b>NestJS, Next.js, React Native, System Design</b>
 
-<br/>
-
-### ⚡ Logros Clave
-
-🌍 &nbsp;Desarrollé aplicaciones <b>usadas por +50,000 usuarios</b> en producción para empresas reales<br/>
-🔥 &nbsp;Arquitecté y lideré la migración completa de una plataforma legacy a <b>microservicios</b> — solo, sin downtime<br/>
-🧠 &nbsp;Diseñé un sistema de <b>AI Agents autónomos</b> que automatizó flujos de trabajo completos de negocio<br/>
-📱 &nbsp;Construí apps mobile <b>cross-platform publicadas en App Store y Play Store</b><br/>
-⚡ &nbsp;Optimicé queries críticos reduciendo tiempos de respuesta de <b>12s a 200ms</b> (60x improvement)
-
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
