@@ -24,7 +24,7 @@
 <br/><br/>
 
 [![Gmail](https://img.shields.io/badge/Gmail-ff5555?style=for-the-badge&logo=gmail&logoColor=f8f8f2)](mailto:sdmoreno51@gmail.com)
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-50fa7b?style=for-the-badge&logo=whatsapp&logoColor=282a36)](https://wa.me/522283578806)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-50fa7b?style=for-the-badge&logo=whatsapp&logoColor=282a36)](https://wa.me/522284089251)
 [![Portfolio](https://img.shields.io/badge/Portfolio-ff79c6?style=for-the-badge&logo=github&logoColor=282a36)](https://github.com/runyshark)
 
 <br/>
