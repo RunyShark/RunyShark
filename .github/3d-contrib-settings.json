@@ -1,24 +1,40 @@
 [
   {
     "type": "normal",
-    "fileName": "profile-dracula-rainbow.svg",
-    "backgroundColor": "#282a36",
-    "foregroundColor": "#f8f8f2",
-    "strongColor": "#bd93f9",
-    "weakColor": "#6272a4",
-    "radarColor": "#ff79c6CC",
+    "fileName": "profile-vercel.svg",
+    "backgroundColor": "#000000",
+    "foregroundColor": "#ededed",
+    "strongColor": "#ffffff",
+    "weakColor": "#454545",
+    "radarColor": "#52a8ff",
     "growingAnimation": true,
-    "contribColors": ["#44475a", "#6272a4", "#bd93f9", "#ff79c6", "#50fa7b"]
+    "contribColors": ["#161616", "#0a3069", "#0b58b8", "#2f8af5", "#9ccbff"],
+    "l10n": {
+      "commit": "Commits",
+      "repo": "Repos",
+      "review": "Reviews",
+      "pullreq": "Pull requests",
+      "issue": "Issues",
+      "contrib": "contributions"
+    }
   },
   {
     "type": "normal",
-    "fileName": "profile-dracula.svg",
-    "backgroundColor": "#282a36",
-    "foregroundColor": "#f8f8f2",
-    "strongColor": "#bd93f9",
-    "weakColor": "#6272a4",
-    "radarColor": "#ff79c6CC",
+    "fileName": "profile-vercel-static.svg",
+    "backgroundColor": "#000000",
+    "foregroundColor": "#ededed",
+    "strongColor": "#ffffff",
+    "weakColor": "#454545",
+    "radarColor": "#52a8ff",
     "growingAnimation": false,
-    "contribColors": ["#44475a", "#6272a4", "#bd93f9", "#ff79c6", "#50fa7b"]
+    "contribColors": ["#161616", "#0a3069", "#0b58b8", "#2f8af5", "#9ccbff"],
+    "l10n": {
+      "commit": "Commits",
+      "repo": "Repos",
+      "review": "Reviews",
+      "pullreq": "Pull requests",
+      "issue": "Issues",
+      "contrib": "contributions"
+    }
   }
 ]

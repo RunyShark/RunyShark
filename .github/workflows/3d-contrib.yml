@@ -4,6 +4,10 @@ on:
   schedule: [{ cron: "0 1 * * *" }]
   workflow_dispatch:
 
+concurrency:
+  group: 3d-contrib
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,6 +16,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Palette (.github/3d-contrib-settings.json): Vercel/Geist dark — #000 panel,
+      # #ededed text, blue heat scale from scripts/profile/core/tokens.mjs, #52a8ff radar.
+      # Outputs profile-3d-contrib/profile-vercel.svg (growing animation) and
+      # profile-vercel-static.svg. Pinned: the polish step below targets 0.7.1 markup.
       - uses: yoshi389111/github-profile-3d-contrib@0.7.1
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
@@ -19,10 +27,272 @@ jobs:
           SETTING_JSON: .github/3d-contrib-settings.json
           MAX_REPOS: 500
 
-      - name: Commit & Push
+      # Geist fonts (from scripts/profile/vendor/fonts.json), rounded #1f1f1f-bordered
+      # panel, title/desc, "44,771" separators; drops the empty language donut, the radar
+      # ticks and the star/fork counters (stars include private repos and contradict the
+      # public count shown elsewhere). Period + total become a bottom-left KPI block and the
+      # radar is pinned to the top-right padding, clear of the bars: when the busiest days
+      # grow tall it scales the radar down, then the skyline. Every step is guarded, so
+      # upstream changes degrade to the raw SVG. The raw output and the script are kept in
+      # $RUNNER_TEMP so the push step can polish again on top of a newer origin.
+      - name: Polish skyline
         run: |
+          mkdir -p "$RUNNER_TEMP/skyline-raw"
+          cp profile-3d-contrib/profile-vercel.svg profile-3d-contrib/profile-vercel-static.svg "$RUNNER_TEMP/skyline-raw/"
+          cat > "$RUNNER_TEMP/polish-skyline.mjs" <<'JS'
+          // Polish the github-profile-3d-contrib@0.7.1 output so it matches the profile's
+          // Vercel/Geist design system. Every step is guarded: if the upstream markup ever
+          // changes, the step is skipped and the raw (still valid) SVG is kept.
+          import fs from 'node:fs'
+
+          const W = 1280
+          const H = 850
+          const PAD = 48 // 32px at the ~846px README width, the padding of every profile panel
+          const GAP = 20 // minimum distance between the radar (labels included) and any bar
+
+          const files = process.argv.slice(2)
+          let fonts = {}
+          try {
+            fonts = JSON.parse(fs.readFileSync('scripts/profile/vendor/fonts.json', 'utf8'))
+          } catch {}
+          const face = (family, key, weight) =>
+            fonts[key]
+              ? `@font-face{font-family:'${family}';font-weight:${weight};src:url(data:font/woff2;base64,${fonts[key]}) format('woff2')}`
+              : ''
+          const SANS = "Geist,Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"
+          const MONO = "'Geist Mono',ui-monospace,SFMono-Regular,Consolas,monospace"
+          const css = [
+            face('Geist', 'sans-400', 400),
+            face('Geist', 'sans-600', 600),
+            face('Geist Mono', 'mono-400', 400),
+            `*{font-family:${SANS}}`,
+            'text{font-kerning:normal;text-rendering:geometricPrecision}',
+            // KPI block (bottom-left): mono period eyebrow over "44,771 contributions".
+            `.eyebrow{font-family:${MONO};font-size:18px;letter-spacing:.04em;fill:#878787}`,
+            '.kpi{font-size:32px;font-weight:600;letter-spacing:-0.03em;font-variant-numeric:tabular-nums;fill:#fff}',
+            '.kpi .label{font-size:24px;font-weight:400;letter-spacing:0;fill:#a1a1a1}',
+            // Same look for the raw stats row / period if the KPI step is ever skipped.
+            'text[style*="font-weight: bold"]{font-weight:600!important;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}',
+            `text[dominant-baseline="hanging"]{font-family:${MONO};font-size:18px!important;letter-spacing:.04em;fill:#878787}`,
+            // Radar axis labels: secondary grey with a black halo over the dashed grid.
+            '.axis text{fill:#a1a1a1;paint-order:stroke;stroke:#000;stroke-width:6px;stroke-linejoin:round}',
+          ].join('')
+
+          // Index just past the </g> that closes the <g ...> starting at `start` (-1 if unbalanced).
+          function groupEnd(svg, start) {
+            const re = /<(\/?)g\b[^>]*?(\/?)>/g
+            re.lastIndex = start
+            let depth = 0
+            let m
+            while ((m = re.exec(svg))) {
+              if (m[2]) continue
+              depth += m[1] ? -1 : 1
+              if (depth === 0) return re.lastIndex
+            }
+            return -1
+          }
+
+          // Radar: pinned to the top-right padding, clear of the skyline. Bar heights follow the
+          // busiest days (log scale), so the free corner changes daily: measure the skyline's top
+          // edge and step the radar scale down (labels stay >= ~11.7px), then the skyline scale
+          // (anchored bottom-left), until every bar keeps GAP units away from it.
+          function placeRadar(svg) {
+            const rs = svg.search(/<g transform="translate\(-?[\d.]+, -?[\d.]+\)"><line /)
+            const ss = svg.indexOf('<g><g transform="translate(')
+            const re = rs < 0 ? -1 : groupEnd(svg, rs)
+            const se = ss < 0 ? -1 : groupEnd(svg, ss)
+            if (re < 0 || se < 0) return svg
+            const radar = svg.slice(rs, re)
+            const num = (s) => s.split(/[\s,]+/).map(Number)
+
+            // Radar outline in its own coordinates: grid/axis lines, data polygon, label boxes.
+            const segs = [...radar.matchAll(/<line x1="([-\d.]+)" y1="([-\d.]+)" x2="([-\d.]+)" y2="([-\d.]+)"/g)].map((m) => m.slice(1).map(Number))
+            const pts = num((radar.match(/<polygon [^>]*points="([^"]+)"/) || [, '0,0'])[1].trim())
+            for (let i = 0; i + 1 < pts.length; i += 2) {
+              const j = (i + 2) % pts.length
+              segs.push([pts[i], pts[i + 1], pts[j], pts[j + 1]])
+            }
+            const boxes = [...radar.matchAll(/<text style="font-size: ([\d.]+)px;"[^>]*x="([-\d.]+)" y="([-\d.]+)"[^>]*>([^<]+)</g)].map(([, f, x, y, t]) => {
+              const w = t.length * 0.6 * f + 6 // generous Geist advance + halo
+              const h = 1.2 * f + 6
+              return [+x - w / 2, +y - h / 2, +x + w / 2, +y + h / 2]
+            })
+            if (!segs.length || !boxes.length) return svg
+            const xs = segs.flatMap((s) => [s[0], s[2]]).concat(boxes.flatMap((b) => [b[0], b[2]]))
+            const ys = segs.flatMap((s) => [s[1], s[3]]).concat(boxes.flatMap((b) => [b[1], b[3]]))
+            const [minX, maxX, minY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys)]
+
+            // Bars: <g transform="translate(X Y)"> = left corner of the top face (36 wide, 10.39 peak).
+            const bars = [...svg.slice(ss, se).matchAll(/<g transform="translate\((-?[\d.]+) (-?[\d.]+)\)">/g)].map((m) => [+m[1], +m[2]])
+            if (!bars.length) return svg
+
+            const fits = (k, s) => {
+              // Skyline top edge after scaling it by k around the bottom-left corner (0, H).
+              const top = new Float64Array(W + 1).fill(Infinity)
+              for (const [X, Y] of bars) {
+                const x0 = k * X
+                const y0 = H - k * (H - Y)
+                for (let x = Math.max(0, Math.ceil(x0)); x <= Math.min(W, x0 + 36 * k); x++) {
+                  top[x] = Math.min(top[x], y0 - 10.39 * k * (1 - Math.abs(x - x0 - 18 * k) / (18 * k)))
+                }
+              }
+              // Radar bottom edge, pinned to the top-right padding.
+              const cx = W - PAD - s * maxX
+              const cy = PAD - s * minY
+              const low = new Float64Array(W + 1).fill(-Infinity)
+              const mark = (x, y) => {
+                for (let i = Math.max(0, Math.round(x) - GAP); i <= Math.min(W, Math.round(x) + GAP); i++) low[i] = Math.max(low[i], y)
+              }
+              for (const [x1, y1, x2, y2] of segs) {
+                const n = Math.max(1, Math.ceil(Math.abs(x2 - x1) * s))
+                for (let i = 0; i <= n; i++) mark(cx + s * (x1 + ((x2 - x1) * i) / n), cy + s * (y1 + ((y2 - y1) * i) / n))
+              }
+              for (const [x1, , x2, y2] of boxes) for (let x = x1; x <= x2 + 1; x++) mark(cx + s * Math.min(x, x2), cy + s * y2)
+              for (let x = 0; x <= W; x++) if (low[x] + GAP > top[x]) return null
+              return { cx, cy }
+            }
+
+            const steps = [[1, 1], [1, 0.95], [1, 0.9], [0.95, 0.9], [0.9, 0.9], [0.9, 0.85], [0.85, 0.85]]
+            let pick
+            for (const [k, s] of steps) if ((pick = fits(k, s))) { pick = { ...pick, k, s }; break }
+            if (!pick) {
+              const [k, s] = steps[steps.length - 1]
+              pick = { cx: W - PAD - s * maxX, cy: PAD - s * minY, k, s }
+            }
+            const f = (n) => +n.toFixed(2)
+            const scaled = pick.s === 1 ? '' : ` scale(${pick.s})`
+            let out = svg.slice(0, rs) + radar.replace(/^<g transform="[^"]+">/, `<g transform="translate(${f(pick.cx)}, ${f(pick.cy)})${scaled}">`) + svg.slice(re)
+            if (pick.k !== 1) out = out.replace('<g><g transform="translate(', `<g transform="translate(0 ${f(H * (1 - pick.k))}) scale(${pick.k})"><g transform="translate(`)
+            console.log(`  radar at (${f(pick.cx)}, ${f(pick.cy)}) scale ${pick.s}, skyline scale ${pick.k}`)
+            return out
+          }
+
+          for (const file of files) {
+            let svg = fs.readFileSync(file, 'utf8')
+            if (svg.includes('data-polished')) continue
+            const total = (svg.match(/font-weight: bold;"[^>]*>([\d ]+)<\/text>/) || [])[1]
+            const pretty = total ? total.trim().replace(/ /g, ',') : null
+
+            // 1. Fonts + typographic refinements.
+            svg = svg.replace(/<style>[^<]*<\/style>/, `<style>${css}</style>`)
+
+            // 2. Accessible name + description.
+            const desc = `Isometric 3D skyline of RunyShark's GitHub contributions over the last 12 months${
+              pretty ? ` (${pretty} contributions)` : ''
+            }, with a radar of commits, issues, pull requests, reviews and repositories.`
+            svg = svg.replace(
+              /^<svg ([^>]*)>/,
+              `<svg $1 role="img" aria-labelledby="title desc" data-polished="1"><title id="title">RunyShark · contribution skyline</title><desc id="desc">${desc}</desc>`,
+            )
+
+            // 3. Full-bleed background → rounded panel with the hairline border used by
+            //    every other profile card (16px radius / 1px border at the ~846px README width).
+            svg = svg.replace(
+              /<rect x="0" y="0" width="1280" height="850" fill="([^"]+)"><\/rect>/,
+              '<rect x="0.75" y="0.75" width="1278.5" height="848.5" rx="24" fill="$1" stroke="#1f1f1f" stroke-width="1.5"></rect>',
+            )
+
+            // 4. Language donut: every contribution is private, so it only ever shows a grey
+            //    "other" ring. Drop it when it carries no information.
+            const pie = svg.indexOf('<g transform="translate(40, 520)">')
+            const pieEnd = pie < 0 ? -1 : groupEnd(svg, pie)
+            if (pieEnd > 0) {
+              const labels = [...svg.slice(pie, pieEnd).matchAll(/<text[^>]*>([^<]+)</g)].map((m) => m[1])
+              if (labels.length && labels.every((l) => l === 'other')) svg = svg.slice(0, pie) + svg.slice(pieEnd)
+            }
+
+            // 5. Thousands separators: "44 771" → "44,771".
+            svg = svg.replace(/(font-weight: bold;"[^>]*>)(\d{1,3}(?: \d{3})+)(<)/g, (_, a, n, b) => a + n.replace(/ /g, ',') + b)
+
+            // 6. Radar log-scale ticks (1 / 10 / … / 10K) collide with the polygon: drop them.
+            svg = svg.replace(/<text style="font-size: [\d.]+px;" text-anchor="start" dominant-baseline="auto"[^>]*>[^<]*<\/text>/g, '')
+
+            // 7. Star and fork counters (icon + number): stars include private repositories, which
+            //    contradicts the public star count shown everywhere else on the profile, and forks are 0.
+            svg = svg.replace(
+              /<g transform="translate\(\d+, \d+\), scale\(2\)"><path [^>]*><\/path><\/g><text style="font-size: 32px; font-weight: bold;"[^>]*>[^<]*<title>[^<]*<\/title><\/text>/g,
+              '',
+            )
+
+            // 8. Stats row + period (top-right) → one KPI block in the empty bottom-left corner,
+            //    which leaves the whole top-right corner to the radar.
+            const period = svg.match(/<text [^>]*dominant-baseline="hanging"[^>]*>([^<]+)<\/text>/)
+            const stats = svg.match(/<text style="font-size: 32px; font-weight: bold;"[^>]*>([^<]+)<\/text><text style="font-size: 24px;"[^>]*>([^<]+)<\/text>/)
+            if (period && stats) {
+              svg = svg
+                .replace(period[0], '')
+                .replace(
+                  stats[0],
+                  `<text class="eyebrow" x="${PAD}" y="${H - PAD - 46}">${period[1]}</text>` +
+                    `<text class="kpi" x="${PAD}" y="${H - PAD}">${stats[1]}<tspan class="label" dx="10">${stats[2]}</tspan></text>`,
+                )
+            } else {
+              svg = svg.replace(/fill="#ededed">contributions</, 'fill="#a1a1a1">contributions<')
+            }
+
+            // 9. Radar: top-right corner, never overlapping the skyline.
+            svg = placeRadar(svg)
+
+            fs.writeFileSync(file, svg)
+            console.log(`polished ${file} (${(Buffer.byteLength(svg) / 1024).toFixed(0)} KB)`)
+          }
+          JS
+          node "$RUNNER_TEMP/polish-skyline.mjs" profile-3d-contrib/profile-vercel.svg profile-3d-contrib/profile-vercel-static.svg
+
+      # Same publishing contract as profile.yml: commit only on changes; on a rejected push
+      # `git pull --rebase`, kept only when clean AND profile-3d-contrib/ stays exactly as
+      # generated; otherwise abort, reset to origin, restore this run's raw skyline and
+      # polish it again on top; origin must contain the commit; fail after 5 attempts.
+      - name: Commit & push
+        run: |
+          branch="$GITHUB_REF_NAME"
+          paths=profile-3d-contrib
+          message="chore: update 3D contribution graph"
+          attempts=5
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git diff --staged --quiet || git commit -m "chore: update 3D contribution graph"
-          git push
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Commit the generated files and remember their tree, or end the step when there
+          # is nothing to publish. Only ever called as a plain command, so bash -e holds.
+          commit_or_finish() {
+            git add -A -- "$paths"
+            if git diff --staged --quiet; then
+              echo "$1"
+              exit 0
+            fi
+            git commit -q -m "$message"
+            generated=$(git rev-parse "HEAD:$paths")
+          }
+
+          # Drop the local commit and polish this run's raw skyline again on top of origin.
+          rebuild_on_origin() {
+            git rebase --abort 2>/dev/null || true
+            git fetch -q origin "$branch"
+            git reset -q --hard "origin/$branch"
+            cp "$RUNNER_TEMP"/skyline-raw/*.svg "$paths/"
+            node "$RUNNER_TEMP/polish-skyline.mjs" "$paths/profile-vercel.svg" "$paths/profile-vercel-static.svg"
+            commit_or_finish "origin/$branch already carries this skyline"
+          }
+
+          commit_or_finish "skyline unchanged"
+          for ((attempt = 1; attempt <= attempts; attempt++)); do
+            if git push origin "HEAD:refs/heads/$branch"; then
+              git fetch -q origin "$branch" || true
+              missing=$(git rev-list --count "origin/$branch..HEAD")
+              if [ "$missing" -eq 0 ]; then
+                echo "published $(git rev-parse --short HEAD) to $branch (attempt $attempt/$attempts)"
+                exit 0
+              fi
+              echo "::warning::push exited 0 but origin/$branch lacks $missing local commit(s)"
+            fi
+            if [ "$attempt" -eq "$attempts" ]; then break; fi
+            echo "push rejected (attempt $attempt/$attempts), rebasing onto origin/$branch"
+            sleep $((attempt * 5 + RANDOM % 5))
+            if git pull -q --rebase origin "$branch" && [ "$(git rev-parse "HEAD:$paths")" = "$generated" ]; then
+              continue
+            fi
+            echo "::warning::origin/$branch also changed $paths/ (rebase conflict or mixed output), regenerating on top of it"
+            rebuild_on_origin
+          done
+          echo "::error::could not publish $paths/ to $branch after $attempts attempts"
+          exit 1

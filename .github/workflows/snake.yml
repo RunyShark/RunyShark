@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: snake
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,13 +19,57 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate snake svgs
+      # Options (Platane/snk README): palette, color_snake, color_dots (exactly 5:
+      # empty → max), color_dot_border. SVG output has no background option.
+      #   github-snake.svg       plain GitHub light palette (light-mode <source>)
+      #   github-snake-dark.svg  Vercel palette: #161616 empty cells, blue heat
+      #                          scale (scripts/profile/core/tokens.mjs `heat`),
+      #                          #ededed snake, hairline dot border
+      - name: Generate snake SVGs
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: runyshark
           outputs: |
             dist/github-snake.svg
-            dist/github-snake-dark.svg?palette=github-dark
+            dist/github-snake-dark.svg?color_snake=#ededed&color_dots=#161616,#0a3069,#0b58b8,#2f8af5,#9ccbff&color_dot_border=#ffffff0a
+
+      # snk SVGs are transparent. Put the dark one on the profile's black panel:
+      # #000 fill, 1px #1f1f1f hairline, 16px radius at the ~846px README width,
+      # ~32px padding, plus an accessible <title>/<desc>.
+      - name: Polish dark snake
+        run: |
+          node --input-type=module - dist/github-snake-dark.svg <<'JS'
+          import fs from 'node:fs'
+
+          for (const file of process.argv.slice(2)) {
+            let svg = fs.readFileSync(file, 'utf8')
+            const m = svg.match(/^<svg viewBox="(-?[\d.]+) (-?[\d.]+) ([\d.]+) ([\d.]+)" width="[\d.]+" height="[\d.]+"/)
+            if (!m || svg.includes('data-polished')) continue
+            const [x, y, w, h] = m.slice(1).map(Number)
+            const X = x - 16
+            const Y = y - 8
+            const W = w + 32
+            const H = h + 36
+            const k = W / 846 // viewBox units per rendered px in the README column
+            const r = +(16 * k).toFixed(2)
+            const s = +(1 * k).toFixed(2)
+            svg = svg
+              .replace(
+                m[0],
+                `<svg viewBox="${X} ${Y} ${W} ${H}" width="${W}" height="${H}" role="img" aria-labelledby="title desc" data-polished="1"`,
+              )
+              .replace(
+                /<desc>[^<]*<\/desc>/,
+                '<title id="title">RunyShark · contribution snake</title><desc id="desc">A snake eats the last 12 months of RunyShark\'s GitHub contribution graph, cell by cell. Generated with github.com/Platane/snk.</desc>',
+              )
+              .replace(
+                /<\/style>/,
+                `</style><rect x="${X + s / 2}" y="${Y + s / 2}" width="${W - s}" height="${H - s}" rx="${r}" fill="#000000" stroke="#1f1f1f" stroke-width="${s}"/>`,
+              )
+            fs.writeFileSync(file, svg)
+            console.log(`polished ${file}`)
+          }
+          JS
 
       - name: Publish to output branch
         uses: peaceiris/actions-gh-pages@v4

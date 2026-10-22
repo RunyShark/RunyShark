@@ -1,0 +1,190 @@
+name: Profile
+
+# Renders every SVG under assets/ from live GitHub + WakaTime data
+# (scripts/profile/build.mjs), gates them with tools/check.mjs and commits the
+# result. Runs after the other profile workflows (snake 00:00, metrics 00:00,
+# 3D skyline 01:00, summary cards 02:00 UTC) so its push rarely races them.
+
+on:
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/profile/**"
+      - ".github/workflows/profile.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Falls back to the cached assets/generated/metrics.json when an API fails,
+      # so a broken image is never published.
+      - name: Build profile assets
+        run: node scripts/profile/build.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_TOKEN }}
+
+      # A source that is not 'live' was rendered from the cached metrics.json: ::warning::.
+      # GitHub data older than 7 days (sources.githubAt) means the live fetch keeps failing,
+      # e.g. an expired METRICS_TOKEN: ::error::, and the last step fails the job once the
+      # cache-rendered (still valid) assets are published.
+      - name: Check data freshness
+        id: freshness
+        run: |
+          node --input-type=module - <<'JS'
+          import fs from 'node:fs'
+
+          const FILE = 'assets/generated/metrics.json'
+          const MAX_AGE_DAYS = 7
+          const DAY_MS = 86_400_000
+          const now = Date.now()
+          const oneLine = (s) => String(s).replace(/%/g, '%25').replace(/\r?\n/g, ' ')
+          const rows = []
+          let stale = false
+
+          let m = null
+          try {
+            m = JSON.parse(fs.readFileSync(FILE, 'utf8'))
+          } catch (err) {
+            console.log(`::error::cannot read ${FILE} (${oneLine(err.message)}): data freshness unknown`)
+            stale = true
+          }
+
+          if (m) {
+            const s = m.sources ?? {}
+            // Last live fetch of a source: sources.<name>At, else generatedAt while it is live.
+            const fetchedAt = (name) => {
+              const at = s[`${name}At`] ?? (s[name] === 'live' ? m.generatedAt : null)
+              const t = typeof at === 'number' ? at : Date.parse(at ?? '')
+              return Number.isFinite(t) ? t : null
+            }
+            const ago = (t) =>
+              t === null ? 'unknown' : `${new Date(t).toISOString()} (${((now - t) / DAY_MS).toFixed(1)} days ago)`
+
+            for (const name of ['github', 'wakatime']) {
+              const state = typeof s[name] === 'string' ? s[name] : 'missing'
+              const t = fetchedAt(name)
+              rows.push(`| ${name} | ${oneLine(state)} | ${ago(t)} |`)
+              console.log(`${name}: ${state}, last live fetch ${ago(t)}`)
+              if (state !== 'live') {
+                console.log(
+                  `::warning title=${name} data not live::sources.${name} is '${oneLine(state)}': ` +
+                    `its panels were rendered from cached data (last live fetch ${ago(t)})`,
+                )
+              }
+            }
+
+            const t = fetchedAt('github')
+            if (t !== null && now - t > MAX_AGE_DAYS * DAY_MS) {
+              console.log(
+                `::error title=GitHub data is stale::the last live GitHub fetch was ${ago(t)}, ` +
+                  `more than ${MAX_AGE_DAYS} days ago: check the METRICS_TOKEN secret`,
+              )
+              stale = true
+            }
+          }
+
+          const summary = process.env.GITHUB_STEP_SUMMARY
+          if (summary && rows.length) {
+            const table = ['### Data freshness', '', '| Source | State | Last live fetch |', '| --- | --- | --- |', ...rows]
+            fs.appendFileSync(summary, table.join('\n') + '\n')
+          }
+          if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `stale=${stale}\n`)
+          console.log(stale ? 'freshness: STALE' : 'freshness: ok')
+          JS
+
+      # Well-formed XML, <title>/<desc>, Chrome decode (ubuntu-latest ships
+      # google-chrome; tools/chrome.mjs adds --no-sandbox when CI is set).
+      - name: Check assets
+        run: node scripts/profile/tools/check.mjs --no-remote
+
+      # Publishes assets/ without ever dropping the commit:
+      #  - commits only when assets/ changed;
+      #  - on a rejected push runs `git pull --rebase`, kept only when it applies cleanly AND
+      #    leaves assets/ exactly as this run generated it. On a conflict, or when upstream
+      #    also rewrote assets/ (the result would mix two generations), the rebase is
+      #    aborted, the checkout reset to origin and the full live build + gate run again on
+      #    top of it (`--offline` is not enough: metrics.json itself changed upstream);
+      #  - after a push, origin must contain the commit (rev-list origin..HEAD = 0);
+      #  - fails the job after 5 attempts.
+      - name: Commit & push
+        env:
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
+          WAKATIME_API_KEY: ${{ secrets.WAKATIME_TOKEN }}
+        run: |
+          branch="$GITHUB_REF_NAME"
+          paths=assets
+          message="chore(profile): refresh generated assets"
+          attempts=5
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # Commit the generated files and remember their tree, or end the step when there
+          # is nothing to publish. Only ever called as a plain command, so bash -e holds.
+          commit_or_finish() {
+            git add -A -- "$paths"
+            if git diff --staged --quiet; then
+              echo "$1"
+              exit 0
+            fi
+            git commit -q -m "$message"
+            generated=$(git rev-parse "HEAD:$paths")
+          }
+
+          # Drop the local commit and generate again on top of the latest origin.
+          rebuild_on_origin() {
+            git rebase --abort 2>/dev/null || true
+            git fetch -q origin "$branch"
+            git reset -q --hard "origin/$branch"
+            node scripts/profile/build.mjs
+            node scripts/profile/tools/check.mjs --no-remote
+            commit_or_finish "origin/$branch already carries these assets"
+          }
+
+          commit_or_finish "assets unchanged"
+          for ((attempt = 1; attempt <= attempts; attempt++)); do
+            if git push origin "HEAD:refs/heads/$branch"; then
+              git fetch -q origin "$branch" || true
+              missing=$(git rev-list --count "origin/$branch..HEAD")
+              if [ "$missing" -eq 0 ]; then
+                echo "published $(git rev-parse --short HEAD) to $branch (attempt $attempt/$attempts)"
+                exit 0
+              fi
+              echo "::warning::push exited 0 but origin/$branch lacks $missing local commit(s)"
+            fi
+            if [ "$attempt" -eq "$attempts" ]; then break; fi
+            echo "push rejected (attempt $attempt/$attempts), rebasing onto origin/$branch"
+            sleep $((attempt * 5 + RANDOM % 5))
+            if git pull -q --rebase origin "$branch" && [ "$(git rev-parse "HEAD:$paths")" = "$generated" ]; then
+              continue
+            fi
+            echo "::warning::origin/$branch also changed $paths/ (rebase conflict or mixed output), regenerating on top of it"
+            rebuild_on_origin
+          done
+          echo "::error::could not publish $paths/ to $branch after $attempts attempts"
+          exit 1
+
+      - name: Fail on stale data
+        if: steps.freshness.outputs.stale == 'true'
+        run: |
+          echo "::error::published from stale metrics, see the 'Check data freshness' step"
+          exit 1

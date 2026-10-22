@@ -24,26 +24,72 @@ Vercel / Geist dark. Restraint is the point: black, grays, one accent at a time.
   text renders ~1:1). Standalone sections are **black rounded panels** — use
   `panel(doc)` from `core/svg.mjs` (radius 16, border `#1f1f1f`). Section headers are
   the only transparent SVGs.
-- **Colour**: tokens in `core/tokens.mjs`. Text `#ededed` / `#a1a1a1` / `#878787` /
-  `#454545`. Borders `#1f1f1f` (default) / `#2e2e2e` (controls). Surfaces `#0a0a0a`,
-  `#111`, `#1a1a1a`. Accents used sparingly: blue `#0070f3`/`#52a8ff` for data,
-  green `#62c073` for "live/ready", amber `#f5a524` for glows, the Vercel triad
-  gradients for at most one highlight per SVG.
+- **Colour**: tokens in `core/tokens.mjs`. Text `#ededed` / `#a1a1a1` / `#878787`
+  (`#454545` is for strokes and guides only, never for text). Borders `#1f1f1f`
+  (default) / `#2e2e2e` (controls). Surfaces `#0a0a0a`, `#111`, `#1a1a1a`. Accents:
+  see rule 5 below.
 - **Type**: Geist (sans) + Geist Mono, embedded automatically via the `f-<family>-<weight>`
   classes emitted by `txt()`. Headlines 600 weight with negative tracking
-  (−0.02 to −0.04em). Mono uppercase eyebrows with +0.08em tracking. Numbers in KPIs
-  use 600 weight; keep digits aligned (`font-variant-numeric: tabular-nums` via
-  `attrs: { style: 'font-variant-numeric:tabular-nums' }`).
+  (−0.02 to −0.04em). Sizes: rule 3 below.
 - **Spacing**: 32px outer padding inside panels, 16px gaps, 8/12px radii for inner
-  boxes, 36px icon tiles with radius 8.
+  boxes, 36px icon tiles (radius 8) in content, 28px tiles (radius 7) in toolbars.
 - **Signatures**: thin grid guides with `+` crosshairs (`guide`, `crosshair`),
   top-edge highlight + soft radial glow on cards (`card({ glow })`), mono eyebrows,
-  green status dots with pulse (`statusDot`, `pill`), monochrome brand logos.
-- **Motion**: subtle and slow. CSS keyframes preferred (they honour the global
-  `prefers-reduced-motion` rule in `createDoc`). SMIL only when CSS can't do it
-  (e.g. animating geometry attributes). Nothing should flash or loop faster than ~2s.
+  green status dots (`statusDot`, `pill`), monochrome brand logos.
+- **Motion**: CSS keyframes preferred (they honour the global `prefers-reduced-motion`
+  rule in `createDoc`); SMIL only when CSS can't do it. Slow: nothing loops faster
+  than ~2s. What may move at all: rule 6 below.
 - **No**: emoji, giphy, rainbow dividers, saturated multi-colour badge walls,
   drop shadows, bevels, text smaller than 11px, text touching panel edges.
+
+### 2.1 Panel system rules
+
+Shared code: `components/shared/panel.mjs` (frame, type scale, chips, freshness) and
+the copy/time helpers in `core/format.mjs`. Components import these instead of
+hard-coding sizes, colours or status logic.
+
+1. **Toolbar.** Every data panel opens with `panelHeader(doc, { icon, title, subtitle, pills })`:
+   64px tall, 28px monochrome icon tile at the 32px padding, title 15/600 `#ededed`,
+   subtitle 13px `#a1a1a1`, pills right-aligned (period pill + status pill), hairline
+   below. Content aligns to the same 32px padding. No second headline inside a panel
+   (the section header above it is the headline); a data statement may stay as one
+   KPI line at 18–20px (`TYPE.statement`).
+2. **No numbering inside panels.** "CONTRIBUTION GRAPH", not "01 CONTRIBUTION GRAPH".
+   Numbers belong to section headers only.
+3. **Type scale** (`TYPE`): hero stats 40/600 −0.04em · panel KPIs 32/600 −0.04em ·
+   secondary numbers 24/600 · eyebrows = `eyebrow()` (12px Geist Mono, +0.08em,
+   uppercase, `#878787`) · body 13–14px · 11px only for axis ticks and the footer strip.
+   Text is never darker than `#878787`. Numbers use tabular figures (`NUMERIC`);
+   `metric()` draws number + unit ("5,186h", "122/day": unit 2px after, gray, no space).
+4. **Footer.** One style, `panelFooter(doc, { y, left, right })`: mono 11px
+   "LABEL value" pairs, label uppercase `#878787`, value as written `#a1a1a1`, e.g.
+   `SOURCE GitHub GraphQL API · incl. private repositories` … `WINDOW 368 days · UTC−6`.
+5. **Colour discipline.** Green only for positive deltas and live status; blue only
+   for data series; amber only for light/glow. Every other chip is neutral (`#1a1a1a`
+   fill, `#2e2e2e` border, `#ededed` text): `chip({ tone })`, `deltaChip({ ratio })`.
+   Pink/violet only for the identity orb (hero, about).
+6. **Motion budget.** Only the hero animates (typing, wordmark sweep, clouds, status-dot
+   pulse), plus the "Live" status dot in Impact (`freshnessPill(f, { pulse: true })`).
+   Every other panel is static: no sweeps, twinkles, pulses or drifts.
+7. **Freshness truth.** `freshness(data, 'github' | 'wakatime')` reads `data.sources`:
+   "Live" (green dot) only when that source is `'live'`; otherwise "Cached · <date>"
+   (gray dot), "Snapshot" for the WakaTime seed, "Partial · <date>" for partial data,
+   "No data" when nothing is known. The date is the source's own timestamp
+   (`sources.<key>At`, falling back to `generatedAt`) shown in `profile.timezone`
+   (America/Mexico_City). Every human-facing date goes through `dateInZone()` /
+   `dateRange()`.
+8. **Copy.** Sentence case. Plural-correct (`plural()`, `quantity()`: "1 day", "2 days").
+   Negatives use U+2212 "−" (`MINUS`, `signedPercent()`, `utcOffset()`). A delta that
+   rounds to 0 is hidden (`signedPercent()` → `null`). One-day ranges show one date.
+
+| Export | Use |
+| --- | --- |
+| `panelHeader`, `toolbarPill`, `periodPill`, `freshnessPill` | toolbar and its pills |
+| `panelFooter` | provenance strip |
+| `freshness` | `{ state, live, label, date, at, text }` per source |
+| `TYPE`, `INK`, `NUMERIC`, `PANEL`, `eyebrow`, `metric` | type scale, text colours, layout |
+| `CHIP`, `chipTone`, `chip`, `deltaChip` | chip palette |
+| `format.mjs`: `plural`, `quantity`, `signedPercent`, `dateInZone`, `dateRange`, `utcOffset`, `zonedParts`, `MINUS` | copy and time |
 
 ## 3. GitHub rendering constraints (hard rules)
 

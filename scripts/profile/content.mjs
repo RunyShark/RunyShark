@@ -30,11 +30,11 @@ export const links = {
 // Section headers, in README order. `id` doubles as the SVG file name.
 export const sections = [
   { id: 'about', label: 'About', title: 'Engineering products that ship — and scale.' },
-  { id: 'impact', label: 'Impact', title: 'Shipping, every single day.' },
+  { id: 'impact', label: 'Impact', title: 'Shipping, week after week.' },
   { id: 'coding', label: 'Coding activity', title: 'Hours in the editor, measured.' },
   { id: 'stack', label: 'Stack', title: 'The tools behind the work.' },
   { id: 'certifications', label: 'Certifications', title: 'Never done learning.' },
-  { id: 'analytics', label: 'GitHub analytics', title: 'The open-source footprint.' },
+  { id: 'analytics', label: 'GitHub analytics', title: 'The GitHub footprint.' },
   { id: 'playing', label: 'Now playing', title: 'Soundtrack for deep work.' },
 ]
 
@@ -63,7 +63,7 @@ export const about = {
     {
       glyph: 'zap',
       title: 'Prompt engineering & LLM pipelines',
-      text: 'Expert in prompt design, LLM pipelines and AI-powered developer tooling.',
+      text: 'Deep hands-on work in prompt design, LLM pipelines and AI developer tooling.',
     },
     {
       glyph: 'graduation',

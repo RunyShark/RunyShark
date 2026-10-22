@@ -29,6 +29,8 @@ const COMPONENTS = [
   'coding',
   'stack',
   'certifications',
+  'github',
+  'achievements',
   'footer',
 ]
 
