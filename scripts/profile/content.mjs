@@ -5,16 +5,23 @@ export const profile = {
   login: 'RunyShark',
   handle: 'runyshark',
   name: 'Sergio Dario Moreno',
-  roles: ['Full-Stack Engineer', 'AI Engineer', 'Backend Architect', 'Mobile Engineer'],
+  roles: ['Principal Engineer', 'AI Architect', 'Multi-Agent Systems', 'Engineering Leader'],
+  // Headline claims, reused by the hero strip, About and Leadership.
+  claims: {
+    yearsShipping: '7+',
+    engineersLed: 60,
+    parallelAgents: '100+',
+  },
   location: 'Mexico',
   timezone: 'America/Mexico_City',
-  status: 'Shipping AI agents in production',
+  status: 'Orchestrating 100+ AI agents in production',
   // Rotating lines typed out in the hero terminal.
   taglines: [
-    'Clean Architecture · DDD · SOLID',
-    'TypeScript · NestJS · Next.js · Expo',
-    'AI agents · MCP · LLM pipelines',
-    'Code is poetry, architecture is art.',
+    'orchestrate --agents 100+ --parallel --verify',
+    'Claude Code · Codex · MCP · agent harnesses',
+    'RAG · embeddings · vector search · evals',
+    'Leading 60 engineers, prompt to production',
+    'Clean Architecture · DDD · SOLID, at scale',
   ],
 }
 
@@ -29,10 +36,13 @@ export const links = {
 
 // Section headers, in README order. `id` doubles as the SVG file name.
 export const sections = [
-  { id: 'about', label: 'About', title: 'Engineering products that ship — and scale.' },
+  { id: 'about', label: 'About', title: 'Principal Engineer. AI-native by design.' },
+  { id: 'ai', label: 'AI systems', title: 'Agentic engineering, at production scale.' },
+  { id: 'leadership', label: 'Leadership', title: 'Leading 60 engineers into the agentic era.' },
+  { id: 'trophies', label: 'Hall of fame', title: 'The hardest ones to earn.' },
   { id: 'impact', label: 'Impact', title: 'Shipping, week after week.' },
   { id: 'coding', label: 'Coding activity', title: 'Hours in the editor, measured.' },
-  { id: 'stack', label: 'Stack', title: 'The tools behind the work.' },
+  { id: 'stack', label: 'Expertise', title: 'Expert across the entire stack.' },
   { id: 'certifications', label: 'Certifications', title: 'Never done learning.' },
   { id: 'analytics', label: 'GitHub analytics', title: 'The GitHub footprint.' },
   { id: 'playing', label: 'Now playing', title: 'Soundtrack for deep work.' },
@@ -41,66 +51,226 @@ export const sections = [
 // About card rows. `glyph` refers to core/glyphs.mjs (UI icons, not brands).
 export const about = {
   eyebrow: 'About',
-  title: 'Engineering products that ship — and scale.',
+  title: 'Principal Engineer. AI-native by design.',
   intro:
-    'Full-stack engineer with 7+ years building high-impact digital products for established companies — production apps used by thousands of real users.',
+    'Principal Engineer and AI expert leading 60 engineers. I design the agent harnesses that orchestrate 100+ AI agents in parallel, and ship them to production on architecture built to last.',
   rows: [
     {
-      glyph: 'rocket',
-      title: '7+ years shipping production software',
-      text: 'Enterprise-grade products, in production, for established companies.',
-    },
-    {
-      glyph: 'layers',
-      title: 'Clean Architecture, DDD & SOLID',
-      text: 'Systems designed to be read, tested and changed for years.',
+      glyph: 'users',
+      title: 'Principal Engineer · 60-person org',
+      text: 'Technical direction, architecture and engineering standards for 60 engineers.',
     },
     {
       glyph: 'bot',
-      title: 'AI agents & multi-agent orchestration',
-      text: 'Building AI agents, MCP integrations and agentic workflows end to end.',
+      title: '100+ AI agents, orchestrated in parallel',
+      text: 'Harnesses of planners, builders, reviewers and verifiers working as one team.',
+    },
+    {
+      glyph: 'terminal',
+      title: 'Claude Code & Codex, at expert level',
+      text: 'Agentic coding with custom skills, hooks, subagents, workflows and MCP servers.',
+    },
+    {
+      glyph: 'layers',
+      title: 'RAG, embeddings & vector search',
+      text: 'Retrieval pipelines, semantic search, reranking and grounded answers.',
     },
     {
       glyph: 'zap',
-      title: 'Prompt engineering & LLM pipelines',
-      text: 'Deep hands-on work in prompt design, LLM pipelines and AI developer tooling.',
+      title: 'LLM pipelines, evals & guardrails',
+      text: 'Prompt engineering, structured outputs and adversarial verification.',
     },
     {
-      glyph: 'graduation',
-      title: 'Mentor to 30+ students',
-      text: 'Teaching full-stack engineering in professional bootcamps.',
+      glyph: 'activity',
+      title: 'AI automation, end to end',
+      text: 'Event-driven automations that wire agents into real business workflows.',
     },
     {
-      glyph: 'book',
-      title: 'Always learning',
-      text: 'Currently diving into Python & Cloud Architecture.',
+      glyph: 'shieldCheck',
+      title: 'Clean Architecture, DDD & SOLID',
+      text: '7+ years shipping enterprise systems designed to be changed for years.',
     },
     {
       glyph: 'globe',
-      title: 'Spanish (native) · English (learning)',
-      text: 'Based in Mexico, working with teams across time zones.',
+      title: 'Cloud-native, full-stack depth',
+      text: 'AWS, serverless and containers. TypeScript end to end, web to mobile.',
+    },
+  ],
+}
+
+// AI systems section: the orchestration showcase and the three "model cards".
+export const ai = {
+  // Agent roles drawn as hubs around the orchestrator, clockwise from the top.
+  roles: ['Planner', 'Architect', 'Builders', 'Reviewers', 'Verifiers', 'Release'],
+  // Pillars (OpenAI "Build / Contextualize / Act" style), left to right.
+  pillars: [
+    {
+      glyph: 'cpu',
+      title: 'Orchestrate',
+      text: 'Harnesses, subagents and workflows running 100+ agents at once.',
     },
     {
-      glyph: 'message',
-      title: 'Ask me about',
-      text: 'NestJS, Next.js, React Native and System Design.',
+      glyph: 'layers',
+      title: 'Ground',
+      text: 'RAG over embeddings and vector search, plus MCP for live context.',
+    },
+    {
+      glyph: 'zap',
+      title: 'Act',
+      text: 'Tool calling and automations wired into GitHub, Slack and clouds.',
+    },
+    {
+      glyph: 'shieldCheck',
+      title: 'Verify',
+      text: 'Evals, guardrails and adversarial review before anything ships.',
+    },
+  ],
+  // Streaming log lines shown in the orchestration terminal.
+  log: [
+    'harness.spawn   planner        ok',
+    'fan-out         100+ agents    running',
+    'rag.retrieve    top-k 12       grounded',
+    'review          adversarial    3/3 pass',
+    'verify          typecheck+e2e  green',
+    'release         main           shipped',
+  ],
+  // OpenAI-style "model cards" (starfield background, title, spec lines).
+  cards: [
+    {
+      title: 'Agent Harness',
+      specs: [
+        ['Agents in parallel', '100+'],
+        ['Roles', 'plan · build · review · verify'],
+        ['Runtime', 'Claude Code · Codex · SDKs'],
+      ],
+    },
+    {
+      title: 'RAG Engine',
+      specs: [
+        ['Retrieval', 'embeddings · hybrid search'],
+        ['Stores', 'pgvector · Pinecone · Redis'],
+        ['Quality', 'reranking · evals · citations'],
+      ],
+    },
+    {
+      title: 'Automation Mesh',
+      specs: [
+        ['Triggers', 'webhooks · queues · cron'],
+        ['Tools', 'MCP · function calling'],
+        ['Delivery', 'GitHub Actions · serverless'],
+      ],
+    },
+  ],
+}
+
+// Leadership section. Only the 60-person org and the mentoring count are
+// claims; delivery numbers come from metrics at render time.
+export const leadership = {
+  people: 60,
+  pillars: [
+    {
+      glyph: 'rocket',
+      title: 'Technical direction',
+      text: 'Architecture vision, roadmaps and the standards 60 engineers build on.',
+    },
+    {
+      glyph: 'bot',
+      title: 'AI-first engineering culture',
+      text: 'Every team pairs with agents: harnesses, skills and reviews built in-house.',
+    },
+    {
+      glyph: 'gitPullRequest',
+      title: 'Quality at scale',
+      text: 'Design reviews, code reviews and verification gates on every change.',
+    },
+    {
+      glyph: 'graduation',
+      title: 'Mentorship',
+      text: 'Growing senior engineers, plus 30+ bootcamp students mentored.',
     },
   ],
 }
 
 // Tech stack. `icon` is a simple-icons slug (vendored in vendor/icons.json);
 // `glyph` is a UI icon from core/glyphs.mjs; items with neither get a monogram.
+// `level` is the proficiency label shown next to each category.
 export const stack = [
   {
+    title: 'AI & Agents',
+    level: 'Expert',
+    items: [
+      { name: 'Claude Code', icon: 'claude' },
+      { name: 'OpenAI Codex', icon: 'openai' },
+      { name: 'Claude API', icon: 'anthropic' },
+      { name: 'OpenAI API', icon: 'openai' },
+      { name: 'Gemini', icon: 'googlegemini' },
+      { name: 'MCP', icon: 'modelcontextprotocol' },
+      { name: 'Vercel AI SDK', icon: 'vercel' },
+      { name: 'LangChain', icon: 'langchain' },
+      { name: 'LangGraph', icon: 'langgraph' },
+      { name: 'LlamaIndex', icon: null, glyph: 'book' },
+      { name: 'Hugging Face', icon: 'huggingface' },
+      { name: 'Ollama', icon: 'ollama' },
+      { name: 'GitHub Copilot', icon: 'githubcopilot' },
+      { name: 'Cursor', icon: 'cursor' },
+      { name: 'Multi-agent orchestration', icon: null, glyph: 'bot' },
+      { name: 'Agent harnesses', icon: null, glyph: 'cpu' },
+      { name: 'Prompt engineering', icon: null, glyph: 'sparkles' },
+    ],
+  },
+  {
+    title: 'RAG & Retrieval',
+    level: 'Expert',
+    items: [
+      { name: 'Embeddings', icon: null, glyph: 'layers' },
+      { name: 'Vector search', icon: null, glyph: 'gauge' },
+      { name: 'pgvector', icon: 'postgresql' },
+      { name: 'Pinecone', icon: null },
+      { name: 'Qdrant', icon: 'qdrant' },
+      { name: 'Redis Vector', icon: 'redis' },
+      { name: 'Hybrid search', icon: null, glyph: 'activity' },
+      { name: 'Reranking', icon: null, glyph: 'trendingUp' },
+      { name: 'Evals & guardrails', icon: null, glyph: 'shieldCheck' },
+    ],
+  },
+  {
+    title: 'Automation',
+    level: 'Expert',
+    items: [
+      { name: 'n8n', icon: 'n8n' },
+      { name: 'Zapier', icon: 'zapier' },
+      { name: 'Make', icon: 'make' },
+      { name: 'GitHub Actions', icon: 'githubactions' },
+      { name: 'Webhooks', icon: null, glyph: 'zap' },
+      { name: 'BullMQ queues', icon: null, glyph: 'box' },
+      { name: 'Cron & schedulers', icon: null, glyph: 'clock' },
+      { name: 'Tool calling', icon: null, glyph: 'code' },
+    ],
+  },
+  {
     title: 'Languages',
+    level: 'Expert',
     items: [
       { name: 'TypeScript', icon: 'typescript' },
       { name: 'JavaScript', icon: 'javascript' },
       { name: 'Python', icon: 'python' },
+      { name: 'SQL', icon: null, glyph: 'box' },
+      { name: 'Bash', icon: 'gnubash' },
+      { name: 'PowerShell', icon: 'powershell' },
+      { name: 'HTML5', icon: 'html5' },
+      { name: 'CSS', icon: 'css' },
+      { name: 'SCSS', icon: 'sass' },
+      { name: 'Handlebars', icon: 'handlebarsdotjs' },
+      { name: 'MDX', icon: 'mdx' },
+      { name: 'GraphQL', icon: 'graphql' },
+      { name: 'Markdown', icon: 'markdown' },
+      { name: 'JSON', icon: 'json' },
+      { name: 'YAML', icon: 'yaml' },
     ],
   },
   {
     title: 'Frontend & Mobile',
+    level: 'Expert',
     items: [
       { name: 'React 19', icon: 'react' },
       { name: 'Next.js 15', icon: 'nextdotjs' },
@@ -111,10 +281,10 @@ export const stack = [
       { name: 'Astro', icon: 'astro' },
       { name: 'Tailwind CSS v4', icon: 'tailwindcss' },
       { name: 'Radix UI', icon: 'radixui' },
+      { name: 'shadcn/ui', icon: 'shadcnui' },
       { name: 'NativeWind', icon: 'tailwindcss' },
       { name: 'Styled Components', icon: 'styledcomponents' },
       { name: 'Sass', icon: 'sass' },
-      { name: 'Bootstrap', icon: 'bootstrap' },
       { name: 'MUI', icon: 'mui' },
       { name: 'Zustand', icon: null },
       { name: 'Redux', icon: 'redux' },
@@ -123,51 +293,62 @@ export const stack = [
       { name: 'Zod', icon: 'zod' },
       { name: 'React Router', icon: 'reactrouter' },
       { name: 'RxJS', icon: 'reactivex' },
+      { name: 'Framer Motion', icon: 'framer' },
       { name: 'Storybook', icon: 'storybook' },
     ],
   },
   {
     title: 'Backend & APIs',
+    level: 'Expert',
     items: [
       { name: 'NestJS 11', icon: 'nestjs' },
       { name: 'Node.js', icon: 'nodedotjs' },
       { name: 'Bun', icon: 'bun' },
       { name: 'Express', icon: 'express' },
+      { name: 'FastAPI', icon: 'fastapi' },
       { name: 'GraphQL', icon: 'graphql' },
-      { name: 'Socket.IO', icon: 'socketdotio' },
+      { name: 'REST & OpenAPI', icon: 'openapiinitiative' },
+      { name: 'WebSockets', icon: 'socketdotio' },
       { name: 'JWT', icon: 'jsonwebtokens' },
       { name: 'Stripe', icon: 'stripe' },
-      { name: 'Redis', icon: 'redis' },
       { name: 'Strapi', icon: 'strapi' },
+      { name: 'Microservices', icon: null, glyph: 'box' },
+      { name: 'Event-driven', icon: null, glyph: 'activity' },
     ],
   },
   {
-    title: 'Databases & Cloud',
+    title: 'Cloud & Infra',
+    level: 'Expert',
+    items: [
+      { name: 'AWS', icon: 'amazonaws' },
+      { name: 'Google Cloud', icon: 'googlecloud' },
+      { name: 'Azure', icon: 'microsoftazure' },
+      { name: 'Vercel', icon: 'vercel' },
+      { name: 'Cloudflare', icon: 'cloudflare' },
+      { name: 'Firebase', icon: 'firebase' },
+      { name: 'Supabase', icon: 'supabase' },
+      { name: 'Docker', icon: 'docker' },
+      { name: 'Kubernetes', icon: 'kubernetes' },
+      { name: 'Terraform', icon: 'terraform' },
+      { name: 'Serverless', icon: null, glyph: 'zap' },
+    ],
+  },
+  {
+    title: 'Databases',
+    level: 'Expert',
     items: [
       { name: 'PostgreSQL', icon: 'postgresql' },
       { name: 'MongoDB', icon: 'mongodb' },
       { name: 'MySQL', icon: 'mysql' },
-      { name: 'Firebase', icon: 'firebase' },
+      { name: 'Redis', icon: 'redis' },
       { name: 'Prisma 7', icon: 'prisma' },
       { name: 'Sequelize', icon: 'sequelize' },
-      { name: 'AWS', icon: 'amazonaws' },
-      { name: 'Vercel', icon: 'vercel' },
-      { name: 'Cloudflare', icon: 'cloudflare' },
+      { name: 'TypeORM', icon: 'typeorm' },
     ],
   },
   {
-    title: 'AI & Automation',
-    items: [
-      { name: 'Claude', icon: 'claude' },
-      { name: 'OpenAI', icon: 'openai' },
-      { name: 'GitHub Copilot', icon: 'githubcopilot' },
-      { name: 'MCP', icon: 'modelcontextprotocol' },
-      { name: 'AI Agents', icon: null, glyph: 'bot' },
-      { name: 'Prompt Engineering', icon: null, glyph: 'sparkles' },
-    ],
-  },
-  {
-    title: 'Testing',
+    title: 'Testing & Quality',
+    level: 'Expert',
     items: [
       { name: 'Jest', icon: 'jest' },
       { name: 'Vitest', icon: 'vitest' },
@@ -180,9 +361,9 @@ export const stack = [
   },
   {
     title: 'DevOps & Tools',
+    level: 'Expert',
     items: [
       { name: 'Turborepo', icon: 'turborepo' },
-      { name: 'Docker', icon: 'docker' },
       { name: 'GitHub Actions', icon: 'githubactions' },
       { name: 'Git', icon: 'git' },
       { name: 'GitHub', icon: 'github' },
@@ -260,3 +441,25 @@ export const extraIcons = [
   'html5',
   'python',
 ]
+
+// Hall of fame snapshot (verified 2026-10-22). GitHub does not expose achievements
+// or github-profile-trophy ranks through its API, so tiers and ranks are copied
+// from the public pages; every number on the cards still comes from metrics.json.
+//   github:   github.com/RunyShark?tab=achievements (tier label: x4 gold, x2 bronze)
+//   trophies: github-trophies.vercel.app/?username=runyshark (rank per trophy)
+export const achievements = {
+  verifiedAt: '2026-10-22',
+  github: [
+    { id: 'pull-shark', name: 'Pull Shark', tier: 'gold', count: 4 },
+    { id: 'pair-extraordinaire', name: 'Pair Extraordinaire', tier: 'bronze', count: 2 },
+    { id: 'quickdraw', name: 'Quickdraw', tier: null, count: 1 },
+    { id: 'yolo', name: 'YOLO', tier: null, count: 1 },
+  ],
+  trophies: [
+    { id: 'AchieveSSSRank', name: 'SSS Rank Hacker', rank: 'SECRET', points: 'Have SSS Rank' },
+    { id: 'Commits', name: 'God Committer', rank: 'SSS', points: '44.8k' },
+    { id: 'PullRequest', name: 'Super Puller', rank: 'S', points: '172' },
+    { id: 'MultiLanguage', name: 'Rainbow Lang User', rank: 'SECRET', points: '8' },
+    { id: 'LongTimeUser', name: 'Village Elder', rank: 'SECRET', points: '5 years' },
+  ],
+}

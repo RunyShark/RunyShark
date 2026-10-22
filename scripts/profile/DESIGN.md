@@ -9,12 +9,14 @@ services for the core sections.
 
 | Topic | Decision |
 | --- | --- |
+| Positioning (v2) | **Principal Engineer and AI expert**, not "just full-stack": leads 60 engineers, orchestrates 100+ AI agents in parallel with agent harnesses; Claude Code, Codex, MCP, RAG, embeddings, vector search, automations, cloud. Full-stack depth stays as proof, not as the headline. Claims live in `profile.claims` (`content.mjs`) — the only numbers not read from metrics |
 | Language | English everywhere (copy in `content.mjs`) |
 | Theme | Dark only. Pure-black panels (`#000`) on GitHub's `#0d1117` page |
 | Hero | "RunyShark" as a **dot-matrix wordmark** (Aceternity *pixelated canvas*) over **procedural clouds** (Aceternity *cloud shader*) |
 | Contact | Email + LinkedIn (+ GitHub follow). No phone number |
 | Indicators | Keep every existing indicator, restyle them, add new ones (see §5) |
-| References | vercel.com/home, vercel.com/blog/ai-sdk-4-0, ui.aceternity.com cloud-shader + pixelated-canvas, the amber-glow 2FA card (Vercel dashboard) |
+| References | vercel.com/home ("Agentic Infrastructure": glowing triangle + halo, two-tone statements, radial vignettes, particle/dither visuals), openai.com/es-ES/api (starfield "model cards", Build / Contextualize / Act gradient pillars, agents.py editor mock, check-list enterprise cards), vercel.com/blog/ai-sdk-4-0, ui.aceternity.com cloud-shader + pixelated-canvas, the amber-glow 2FA card (Vercel dashboard) |
+| Motion (v2) | "Everything alive, nothing frantic": every panel has an ambient layer + one signature motion, from the shared kit `core/motion.mjs` (§2.1 rule 6) |
 
 ## 2. Visual language
 
@@ -35,10 +37,12 @@ Vercel / Geist dark. Restraint is the point: black, grays, one accent at a time.
   boxes, 36px icon tiles (radius 8) in content, 28px tiles (radius 7) in toolbars.
 - **Signatures**: thin grid guides with `+` crosshairs (`guide`, `crosshair`),
   top-edge highlight + soft radial glow on cards (`card({ glow })`), mono eyebrows,
-  green status dots (`statusDot`, `pill`), monochrome brand logos.
+  green status dots (`statusDot`, `pill`), monochrome brand logos. v2 adds the AI
+  layer: deep-space starfields with 4-point flare stars, agent constellations with
+  data pulses, border beams and shine sweeps (`core/motion.mjs`).
 - **Motion**: CSS keyframes preferred (they honour the global `prefers-reduced-motion`
-  rule in `createDoc`); SMIL only when CSS can't do it. Slow: nothing loops faster
-  than ~2s. What may move at all: rule 6 below.
+  rule in `createDoc`); SMIL only when CSS can't do it. Slow: ambient loops ≥ 3s.
+  What moves and how: rule 6 below (Motion policy v2).
 - **No**: emoji, giphy, rainbow dividers, saturated multi-colour badge walls,
   drop shadows, bevels, text smaller than 11px, text touching panel edges.
 
@@ -68,9 +72,28 @@ hard-coding sizes, colours or status logic.
    for data series; amber only for light/glow. Every other chip is neutral (`#1a1a1a`
    fill, `#2e2e2e` border, `#ededed` text): `chip({ tone })`, `deltaChip({ ratio })`.
    Pink/violet only for the identity orb (hero, about).
-6. **Motion budget.** Only the hero animates (typing, wordmark sweep, clouds, status-dot
-   pulse), plus the "Live" status dot in Impact (`freshnessPill(f, { pulse: true })`).
-   Every other panel is static: no sweeps, twinkles, pulses or drifts.
+   **AI accent** — blue → cyan → violet (`#52a8ff`, `#47c9e5`, `#a78bfa`; `AI` in
+   `core/motion.mjs`) — only in AI / hero / leadership visuals: agent packets, network
+   glows, the OpenAI-style gradient pillars. Never on chips or body text.
+   **Trophies** — gold/amber metal gradients (`#f5a524`, `#ffd27a`, `#b7791f`) for the top
+   tier, silver/bronze metals for lower tiers; only in the Hall of fame.
+6. **Motion policy v2 — "Everything alive, nothing frantic."**
+   - Every panel gets an ambient layer (starfield twinkle and/or drifting particles) plus
+     at least one signature motion (border beam, data pulses along edges, shine sweep,
+     orbit, blinking agents). Build them from `core/motion.mjs`, not ad hoc.
+   - Animate only `opacity` and `transform` (and `stroke-dashoffset` for beams/pulses).
+     CSS keyframes, so the global reduced-motion rule in `createDoc` stops them. Loops
+     ≥ 3s, staggered deterministic phases (negative `animation-delay`, `stagger()`).
+   - **The resting state must look complete**: with `animation:none` (reduced motion, and
+     renderers that don't animate) nothing important may be invisible. Never rely on an
+     animation to reveal text.
+   - Text never moves (exception: the hero typing terminal; log lines in the AI terminal
+     may fade in/out, but each line must be readable at rest).
+   - Each SVG < 300 KB and roughly ≤ 300 animated elements. Repeated shapes/icons via
+     `<symbol>`/`<use>` (or a `<g id>` in defs). Deterministic: seeded PRNG only
+     (`rng(seed)`), no `Math.random`, no `Date.now`.
+   - Rotations: `transform-box: fill-box` or `view-box` with an explicit
+     `transform-origin` in px (`orbit()` does this).
 7. **Freshness truth.** `freshness(data, 'github' | 'wakatime')` reads `data.sources`:
    "Live" (green dot) only when that source is `'live'`; otherwise "Cached · <date>"
    (gray dot), "Snapshot" for the WakaTime seed, "Partial · <date>" for partial data,
@@ -90,6 +113,27 @@ hard-coding sizes, colours or status logic.
 | `TYPE`, `INK`, `NUMERIC`, `PANEL`, `eyebrow`, `metric` | type scale, text colours, layout |
 | `CHIP`, `chipTone`, `chip`, `deltaChip` | chip palette |
 | `format.mjs`: `plural`, `quantity`, `signedPercent`, `dateInZone`, `dateRange`, `utcOffset`, `zonedParts`, `MINUS` | copy and time |
+
+### 2.2 Motion kit — `core/motion.mjs`
+
+Pure functions returning SVG markup (built with `h()`); each registers its keyframes and
+classes once through `doc.css` (all prefixed `mk-`), durations and phases go inline.
+Every position, size, colour and phase derives from `seed`, so output is byte-identical
+run to run. `delay` params are a phase in seconds (applied as a negative
+`animation-delay`, so loops are already running at load and never sync up).
+
+| Export | Use |
+| --- | --- |
+| `rng(seed)` | mulberry32 PRNG (strings hashed). `r()` → [0,1); `r.range(a,b)`, `r.int(a,b)`, `r.pick(list)`, `r.chance(p)` |
+| `stagger(i, n, period)` | phase for item i of n over one loop → `'-1.5s'` |
+| `AI`, `STAR` | AI accent (`blue`, `cyan`, `violet`) and star colours (`white`, `pale`, `blue`, `amber`) |
+| `starfield(doc, { x, y, w, h, count, seed, flares, colors, twinkle, avoid, opacity })` | stars r 0.4–1.6 (≈62% white, 30% pale blue, 8% amber); `twinkle` share bucketed into 3 variants (3.4/5.8/8.6s) × 4 phases (≤ 12 animated groups); `flares` 4-point flare stars (tapered cross + halo, one `<use>` each) breathing 6–10s. No nebula: add your own gradient |
+| `particles(doc, { x, y, w, h, count, seed, direction, colors, sizes, opacity, duration, avoid })` | `'drift'`: dots wander a few px and breathe (≈12s); `'up'`: sparks rise 35–80% of h and fade (≈9s). One animated circle each |
+| `constellation(doc, { x, y, w, h, nodes, seed, k, pulses, avoid, color, edgeOpacity, nodeR, pulseColors, pulseDuration })` | agent network: nodes (min-distance scatter, `avoid` rects), k-nearest edges (deduplicated, one `<path>`), twinkling nodes, `pulses` longest edges carrying a moving AI-accent dash → `{ markup, nodes, edges }` |
+| `pulseAlong(doc, { d, color, duration, delay, length, width, glow, rest, opacity })` | bright dash travelling along any path (`pathLength=100`, `length` in %); `rest` = idle share of the loop; faint 3× twin as glow. Rests 40% along the path |
+| `borderBeam(doc, { x, y, w, h, r, color, duration, length, delay, width, opacity })` | segment travelling clockwise around a rounded rect (`pathLength=1000`, `length` in ‰): dim tail + white head + blurred twin (`#mk-blur`, defined once). Rests on the top edge |
+| `shineSweep(doc, { x, y, w, h, r, duration, delay, angle, opacity, color, band })` | diagonal light band crossing a rect during the first 45% of the loop, clipped (`doc.uid` clip id). Rests off-canvas |
+| `orbit(doc, { cx, cy, r, count, duration, seed, dot: { r, fill }, ring, reverse, delay })` | dots rotating rigidly around (cx, cy) (`transform-box: view-box`, origin in px — works inside translated groups), optional dashed track |
 
 ## 3. GitHub rendering constraints (hard rules)
 
@@ -113,14 +157,15 @@ scripts/profile/
   build.mjs            entry: collect data → render components → write assets/
   content.mjs          all copy, links, stack items, certifications
   core/                tokens, svg doc builder, text metrics, fonts, glyphs (UI icons),
-                       icons (brand logos), primitives, format
+                       icons (brand logos), primitives, format, motion (animation kit)
   data/                collect.mjs (+ github.mjs, wakatime.mjs) → metrics model
   components/<name>.mjs   default export { name, render({ data }) → [{ path, svg }] }
   vendor/              fonts.json, metrics.json, icons.json, wordmark.json (+ licenses)
   tools/               vendor_*.py|mjs (one-off), preview.mjs, check.mjs, chrome.mjs
 assets/
-  hero.svg, about.svg, stack.svg, certifications.svg, buttons/*.svg, sections/*.svg
-  generated/impact.svg, activity.svg, coding.svg, footer.svg, metrics.json
+  hero.svg, about.svg, ai.svg, ai-cards.svg, leadership.svg, stack.svg,
+  certifications.svg, buttons/*.svg, sections/*.svg
+  generated/trophies.svg, impact.svg, activity.svg, coding.svg, footer.svg, metrics.json
 ```
 
 Commands:
@@ -138,9 +183,19 @@ falls back to the cached `metrics.json`, so a broken image is never published.
 
 ## 5. Components
 
+README order (v2): hero → contact buttons → counters → 01 About → 02 AI systems
+(`ai.svg` + `ai-cards.svg`) → 03 Leadership → 04 Hall of fame (trophies) → 05 Impact
+(impact + activity) → 06 Coding → 07 Expertise (stack) → 08 Certifications →
+09 GitHub analytics (third-party) → footer. Section headers come from `sections` in
+`content.mjs`, in that order.
+
 | File | Kind | Content |
 | --- | --- | --- |
-| `assets/hero.svg` | data | 860×~520 panel. Top bar: mono handle + status pill "● Shipping AI agents in production". Dot-matrix wordmark from `vendor/wordmark.json` (coverage → dot radius; deterministic dropout for texture; twinkling subset; slow light sweep). Cloud layer: `feTurbulence` fractal noise, tinted, masked, drifting. Roles line. Terminal line typing the `profile.taglines` with a blinking caret. Bottom stat strip (Vercel "450K+ / 9,000+" style): years, repositories, contributions, certifications — from metrics, with fallbacks. Grid guides + crosshairs. |
+| `assets/hero.svg` | data | 860×552 panel. Top bar: mono handle + status pill "● Orchestrating 100+ AI agents in production" (`profile.status`). Dot-matrix wordmark from `vendor/wordmark.json` (coverage → dot radius; deterministic dropout for texture; twinkling subset; slow light sweep) over a neural constellation / starfield and the cloud layer (fractal noise baked at build time into a PNG data URI, tinted, masked, drifting — no runtime filters). Roles line (`profile.roles`: Principal Engineer · AI Architect · …). Terminal line typing the `profile.taglines` with a blinking caret. Bottom stat strip (Vercel "450K+ / 9,000+" style): the `profile.claims` (7+ years, 60 engineers led, 100+ agents in parallel) plus metrics (contributions, repositories), with fallbacks. Grid guides + crosshairs. |
+| `assets/ai.svg` | static | AI systems showcase (OpenAI "agents platform" + Vercel "Agentic Infrastructure"): an orchestrator hub coordinating the `ai.roles` hubs (planner, architect, builders, reviewers, verifiers, release) with agent packets pulsing along the edges (AI accent), an orchestration terminal streaming `ai.log` (lines readable at rest), and the four `ai.pillars` (Orchestrate / Ground / Act / Verify) as gradient art cards with frosted icon tiles. Starfield ambient layer. |
+| `assets/ai-cards.svg` | static | Three OpenAI-style "model cards" (`ai.cards`: Agent Harness, RAG Engine, Automation Mesh) on deep-space starfields with flare stars and a faint nebula: big title bottom-left, mono spec lines ("Agents in parallel 100+") under it, border beam / shine sweep as the signature motion. |
+| `assets/leadership.svg` | data | Engineering organization: a Principal Engineer leading `leadership.people` (60) engineers drawn as an org constellation, delivery stats from metrics (pull requests + merge rate, commits, weeks shipping), and the four `leadership.pillars` (technical direction, AI-first culture, quality at scale, mentorship — 30+ students). |
+| `assets/generated/trophies.svg` | data | Hall of fame: trophy cabinet, rarest first (SSS rank, Pull Shark, God Committer, Super Puller, weekly streak, Village Elder, Rainbow Lang User, …). Tiers derived from `metrics.json` at render time — never hard-coded; gold/amber metal for the top tier, silver/bronze below (rule 5). Shine sweeps on the metals, starfield behind. |
 | `assets/buttons/*.svg` | static | Vercel buttons, 40px tall: `email` (primary: white fill, black text, mail glyph, "Get in touch"), `linkedin` (secondary: black, `#2e2e2e` border, logo), `github` (secondary, "Follow"), `certifications` (secondary, "View all certifications", arrow-up-right). Transparent background, exact width from measured text. |
 | `assets/sections/*.svg` | static | Done (reference implementation: `components/sections.mjs`). |
 | `assets/about.svg` | static | Panel with an inner card styled like the amber-glow 2FA card: halftone dot orb avatar (pink→violet, pixelated-canvas texture) with a small badge, centred title + intro, then a 2-column grid of the 8 `about.rows` (bordered rows: icon tile + title + text). |

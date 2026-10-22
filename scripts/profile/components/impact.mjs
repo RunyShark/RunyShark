@@ -1,5 +1,5 @@
-// Impact — a Vercel Analytics / Observability style KPI board. A breadcrumb
-// header with a live status pill, then eight KPI tiles (4×2) framed by grid
+// Impact — a Vercel Analytics / Observability style KPI board. The shared panel
+// toolbar (period + freshness pills), then eight KPI tiles (4×2) framed by grid
 // guides and "+" crosshairs. Numbers are the hero; every tile carries one quiet
 // micro-visualisation that annotates its own number (monthly area, yearly bars,
 // merge meter, repository dot field, streak chain, peak trace, average line,
@@ -8,17 +8,18 @@
 import { profile } from '../content.mjs'
 import { compact, date, int, monthLabel, percent } from '../core/format.mjs'
 import { glyph } from '../core/glyphs.mjs'
-import { brandIcon } from '../core/icons.mjs'
 import { card, crosshair, guide, linearGradient, smoothPath, statusDot } from '../core/primitives.mjs'
 import { createDoc, esc, h, panel, panelClip } from '../core/svg.mjs'
 import { capHeight, centerBaseline, measure, truncate, txt } from '../core/text.mjs'
 import { color } from '../core/tokens.mjs'
+import { pulseAlong, shineSweep, starfield } from '../core/motion.mjs'
+import { PANEL, TYPE, chip as chipShape, freshness, freshnessPill, panelFooter, panelHeader, periodPill } from './shared/panel.mjs'
 
 // ── Layout ────────────────────────────────────────────────────────────────
 const W = 860
 const GUIDE_L = 32
 const GUIDE_R = W - 32
-const GRID_TOP = 96
+const GRID_TOP = PANEL.toolbar + PANEL.pad // 96
 const COLS = 4
 const ROWS = 2
 const GAP = 16
@@ -27,8 +28,7 @@ const TILE_H = 176
 const PAD = 20
 const INNER = TILE_W - PAD * 2 // 147
 const GRID_BOTTOM = GRID_TOP + ROWS * TILE_H + (ROWS - 1) * GAP
-const FOOT = 52
-const H = GRID_BOTTOM + FOOT
+const H = GRID_BOTTOM + PANEL.pad + PANEL.footer
 
 // Tile rows (offsets from the tile top).
 const LABEL_Y = 28 // eyebrow baseline
@@ -37,27 +37,37 @@ const NOTE_CY = 93 // footnote / chip centre line
 const VIZ_TOP = 116
 const VIZ_H = 40
 
-const LABEL = { size: 11, family: 'mono', weight: 400, tracking: 0.08 }
+const LABEL = TYPE.eyebrow // 12px mono eyebrow (DESIGN.md rule 3)
 const VALUE = { size: 32, weight: 600, tracking: -0.04 }
 const UNIT = { size: 14, weight: 500 }
 const NOTE = { size: 12, weight: 400 }
-const CHIP = { size: 11.5, weight: 500 }
 
 const BLUE = { lo: color.blue, hi: color.blueBright }
 
 // Copy content.mjs does not carry.
 const COPY = {
   title: 'Impact',
+  subtitle: 'GitHub activity across every repository',
   range: 'Last 12 months',
-  live: 'Live',
-  updated: 'updated',
-  source: ['Source', 'GitHub GraphQL API'],
+  source: ['Source', 'GitHub GraphQL API · incl. private repositories'],
   window: ['Window', 'Rolling 365 days · UTC'],
 }
 const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const WEEKDAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+// Motion (DESIGN.md rule 6, v2): a faint starfield in the frame, a slow blue
+// border beam round the panel, a glint along the trend lines and a diagonal
+// wave of shine sweeps across the KPI tiles. Every data mark is drawn in its
+// final state; motion only adds light.
+const MOTION = {
+  shinePeriod: 12, // one sweep per tile per loop
+  shineStep: 0.55, // s between tile diagonals (col + row)
+  beam: { duration: 16, delay: 2.5 },
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────
+// Phase so an item starts `at` seconds into a `period` loop (negative delay).
+const lag = (at, period) => r2((period - (at % period)) % period)
 const r2 = (v) => Math.round(v * 100) / 100
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null)
 const arr = (v) => (Array.isArray(v) ? v : [])
@@ -178,22 +188,11 @@ function model(data) {
 }
 
 // ── Tile chrome ───────────────────────────────────────────────────────────
+// Shared chip palette (DESIGN.md rule 5): green only for a positive delta,
+// everything else neutral.
 function chip(x, cy, text, tone) {
-  const tones = {
-    green: { fill: color.greenBright, text: color.greenBright, stroke: color.greenBright },
-    blue: { fill: color.blueBright, text: color.blueBright, stroke: color.blueBright },
-    gray: { fill: '#ffffff', text: color.textSecondary, stroke: '#ffffff' },
-  }
-  const t = tones[tone] ?? tones.gray
-  const w = Math.ceil(measure(text, CHIP)) + 12
-  const hgt = 18
-  return {
-    width: w,
-    markup: [
-      h('rect', { x: x + 0.5, y: cy - hgt / 2 + 0.5, width: w - 1, height: hgt - 1, rx: hgt / 2, fill: t.fill, 'fill-opacity': 0.1, stroke: t.stroke, 'stroke-opacity': 0.22 }),
-      txt(x + 6, centerBaseline(cy, CHIP), text, { ...CHIP, fill: t.text, attrs: { style: 'font-variant-numeric:tabular-nums' } }),
-    ].join(''),
-  }
+  const c = chipShape({ x, cy, text, tone: tone === 'positive' ? 'positive' : 'neutral' })
+  return { width: c.width, markup: c.markup }
 }
 
 // Value (+ optional small unit) on the KPI baseline.
@@ -201,14 +200,14 @@ function kpi(x, y, value, unit, maxW) {
   const parts = [{ text: value, opts: VALUE }]
   if (unit) parts.push({ text: unit, opts: UNIT })
   const size = fitSize(parts, maxW)
-  const muted = value === '—'
+  const muted = value === '—' // a missing number stays readable (#878787), never #454545
   const unitMarkup = unit
     ? `<tspan class="f-sans-500" font-size="${UNIT.size}" letter-spacing="0" fill="${color.textTertiary}" dx="5">${esc(unit)}</tspan>`
     : ''
   return txt(x, y, '', {
     ...VALUE,
     size,
-    fill: muted ? color.textMuted : color.text,
+    fill: muted ? color.textTertiary : color.text,
     attrs: { style: 'font-variant-numeric:tabular-nums' },
     content: `${esc(value)}${unitMarkup}`,
   })
@@ -261,6 +260,17 @@ function tile(doc, i, spec) {
       glow: spec.featured ? { color: color.blue, opacity: 0.2, height: 96 } : undefined,
     }),
     spec.featured ? litEdge(doc, x, y, TILE_W) : '',
+    shineSweep(doc, {
+      x,
+      y,
+      w: TILE_W,
+      h: TILE_H,
+      r: 12,
+      duration: MOTION.shinePeriod,
+      delay: lag((col + row) * MOTION.shineStep, MOTION.shinePeriod),
+      opacity: spec.featured ? 0.09 : 0.06,
+      band: 96,
+    }),
     txt(cx, y + LABEL_Y, label, { ...LABEL, fill: color.textTertiary }),
     glyph(spec.glyph, {
       x: x + TILE_W - PAD - glyphSize,
@@ -288,7 +298,7 @@ function area(box) {
 }
 
 // Bottom captions. Plain strings are escaped; { markup } passes tspans through.
-function axis(box, left, right, { leftFill = color.textMuted, rightFill = color.textMuted } = {}) {
+function axis(box, left, right, { leftFill = color.textTertiary, rightFill = color.textTertiary } = {}) {
   const y = box.y + box.h
   const one = (x, v, fill, anchor) =>
     v ? txt(x, y, typeof v === 'string' ? v : '', { ...AXIS, fill, anchor, content: typeof v === 'string' ? undefined : v.markup }) : ''
@@ -359,37 +369,15 @@ function vizMonthly(months) {
       [0, BLUE.lo, 0.6],
       [1, BLUE.hi],
     ], { units: 'userSpaceOnUse', x1: a.x, y1: 0, x2: a.x + a.w, y2: 0 })
-    // Ambient light sweep along the series (masked by line + area). Frame 0
-    // parks the band outside the box, so a static render is the finished chart.
-    const band = 44
-    doc.def(
-      'im-spark-mask',
-      h(
-        'mask',
-        { id: 'im-spark-mask', maskUnits: 'userSpaceOnUse', x: a.x - 4, y: a.y - 4, width: a.w + 8, height: a.h + 8 },
-        h('path', { d: fillPath, fill: '#fff', opacity: 0.22 }),
-        h('path', { d: line, stroke: '#fff', 'stroke-width': 2 }),
-      ),
-    )
-    const sweep = linearGradient(doc, 'im-sweep', [
-      [0, '#52a8ff', 0],
-      [0.55, '#d6ebff', 1],
-      [1, '#52a8ff', 0],
-    ])
-    doc.css(`@keyframes im-sweep{0%,24%{transform:translateX(0)}76%,100%{transform:translateX(${r2(a.w + band + 8)}px)}}
-.im-sweep{animation:im-sweep 8s cubic-bezier(.45,0,.25,1) infinite}`)
     const [ex, ey] = pts[pts.length - 1]
     return [
       guide(a.x, base - 0.5, a.x + a.w, base - 0.5, { stroke: color.border }),
       h('path', { d: fillPath, fill: `url(#${fill})` }),
       h('path', { d: line, stroke: `url(#${stroke})`, 'stroke-width': 1.75, 'stroke-linecap': 'round' }),
-      h(
-        'g',
-        { mask: 'url(#im-spark-mask)' },
-        h('rect', { x: r2(a.x - band - 4), y: a.y - 4, width: band, height: a.h + 8, fill: `url(#${sweep})`, class: 'im-sweep' }),
-      ),
-      statusDot(doc, ex, ey, { fill: BLUE.hi, r: 2.5 }),
-      axis(box, ...monthRangeCaps(months[0].month, months[months.length - 1].month), { rightFill: color.textTertiary }),
+      // Signature motion: a light glint travelling along the trend line.
+      pulseAlong(doc, { d: line, color: '#d6ebff', duration: 6.5, delay: 1.2, length: 20, width: 1.75, rest: 0.3 }),
+      statusDot(doc, ex, ey, { fill: BLUE.hi, r: 2.5, pulse: false }),
+      axis(box, ...monthRangeCaps(months[0].month, months[months.length - 1].month), { rightFill: color.textSecondary }),
     ].join('')
   }
 }
@@ -411,7 +399,7 @@ function vizYears(byYear) {
     })
     return [
       bars.join(''),
-      axis(box, String(years[0].year), n > 1 ? String(years[n - 1].year) : null, { rightFill: color.textTertiary }),
+      axis(box, String(years[0].year), n > 1 ? String(years[n - 1].year) : null, { rightFill: color.textSecondary }),
     ].join('')
   }
 }
@@ -431,7 +419,7 @@ function vizMeter(ratio, merged, total) {
     return [
       segs.join(''),
       axis(box, 'MERGED', merged !== null ? int(merged) : total !== null ? `OF ${int(total)}` : null, {
-        rightFill: color.textTertiary,
+        rightFill: color.textSecondary,
       }),
     ].join('')
   }
@@ -479,16 +467,17 @@ function vizRepos(total, pub, priv) {
       split
         ? [
             h('circle', { cx: box.x + 2.5, cy: swatchY, r: 2.5, fill: color.text }),
-            txt(box.x + 10, capY, 'PUBLIC', { ...AXIS, fill: color.textMuted }),
+            txt(box.x + 10, capY, 'PUBLIC', { ...AXIS, fill: color.textTertiary }),
             h('circle', { cx: r2(privX - 8), cy: swatchY, r: 2.5, fill: '#2f8af5' }),
-            txt(box.x + box.w, capY, privLabel, { ...AXIS, anchor: 'end', fill: color.textMuted }),
+            txt(box.x + box.w, capY, privLabel, { ...AXIS, anchor: 'end', fill: color.textTertiary }),
           ].join('')
         : axis(box, per > 1 ? `1 DOT = ${per} REPOS` : '1 DOT = 1 REPO', null),
     ].join('')
   }
 }
 
-// 5 · streak chain: the last 21 days, consecutive active days linked.
+// 5 · recent-days chain under the streak KPI: the last 21 days, consecutive
+// active days linked (captioned "LAST 21 DAYS" so it never reads as the streak itself).
 function vizStreak(calendar) {
   return (doc, box) => {
     const n = 21
@@ -513,7 +502,7 @@ function vizStreak(calendar) {
       links.length ? h('path', { d: links.join(''), stroke: '#1d5fb8', 'stroke-width': 1.25, opacity: 0.75 }) : '',
       dots.join(''),
       h('circle', { cx: lastX, cy, r: 6, stroke: color.borderHover, 'stroke-width': 1, 'stroke-dasharray': '2 2' }),
-      axis(box, `${n} DAYS AGO`, 'TODAY', { rightFill: color.textTertiary }),
+      axis(box, `LAST ${n} DAYS`, 'TODAY', { rightFill: color.textSecondary }),
     ].join('')
   }
 }
@@ -539,6 +528,7 @@ function vizPeak(calendar, bestDate) {
     return [
       h('path', { d: `${d}L${r2(a.x + a.w)} ${base}L${a.x} ${base}Z`, fill: `url(#${fill})` }),
       h('path', { d, stroke: '#5a5a5a', 'stroke-width': 1, 'stroke-linejoin': 'round' }),
+      pulseAlong(doc, { d, color: '#ffffff', duration: 9, delay: 4.1, length: 9, width: 1, rest: 0.35, opacity: 0.55 }),
       guide(px, py + 4, px, base, { stroke: BLUE.hi, dash: '1 2', opacity: 0.8 }),
       h('circle', { cx: px, cy: py, r: 5.5, fill: BLUE.lo, opacity: 0.22 }),
       h('circle', { cx: px, cy: py, r: 2.5, fill: BLUE.hi, stroke: color.surface, 'stroke-width': 1 }),
@@ -571,7 +561,7 @@ function vizAverage(calendar, dailyAverage) {
       parts.push(h('path', { d: `M${a.x} ${ay}H${a.x + a.w}`, stroke: BLUE.hi, 'stroke-width': 1, 'stroke-dasharray': '3 2' }))
       legend = { markup: `<tspan fill="${BLUE.hi}">--</tspan><tspan dx="4">AVG</tspan>` }
     }
-    parts.push(axis(box, `${n} WEEKS`, legend, { rightFill: color.textTertiary }))
+    parts.push(axis(box, `${n} WEEKS`, legend, { rightFill: color.textSecondary }))
     return parts.join('')
   }
 }
@@ -595,7 +585,7 @@ function vizWeekdays(weekday, busiest) {
           txt(r2(x + bw / 2), box.y + box.h, WEEKDAY_SHORT[k].charAt(0), {
             ...AXIS,
             anchor: 'middle',
-            fill: on ? color.textSecondary : color.textMuted,
+            fill: on ? color.text : color.textTertiary,
           }),
         ].join('')
       })
@@ -632,7 +622,7 @@ function tiles(m) {
       featured: true,
       value: compact(m.lastYear),
       note: {
-        chip: growth && m.yoy !== 0 ? { text: growth, tone: m.yoy > 0 ? 'green' : 'gray' } : null,
+        chip: growth && m.yoy !== 0 ? { text: growth, tone: m.yoy > 0 ? 'positive' : 'neutral' } : null,
         text: growth ? 'vs. prior year' : 'Last 12 months',
       },
       viz: vizMonthly(m.monthly),
@@ -649,7 +639,7 @@ function tiles(m) {
       glyph: 'gitPullRequest',
       value: compact(m.prTotal),
       note: {
-        chip: m.mergeRate !== null ? { text: percent(m.mergeRate), tone: m.mergeRate >= 0.5 ? 'green' : 'gray' } : null,
+        chip: m.mergeRate !== null ? { text: percent(m.mergeRate), tone: 'neutral' } : null,
         text: m.mergeRate !== null ? 'merge rate' : 'Opened on GitHub',
       },
       viz: vizMeter(m.mergeRate, m.prMerged, m.prTotal),
@@ -689,7 +679,7 @@ function tiles(m) {
       glyph: 'calendar',
       value: m.busiest !== null ? WEEKDAY_NAMES[m.busiest] : '—',
       note: {
-        chip: m.busiestShare !== null ? { text: percent(m.busiestShare), tone: 'blue' } : null,
+        chip: m.busiestShare !== null ? { text: percent(m.busiestShare), tone: 'neutral' } : null,
         text: m.busiestShare !== null ? 'of yearly activity' : 'Most productive day',
       },
       viz: vizWeekdays(m.weekday, m.busiest),
@@ -698,74 +688,56 @@ function tiles(m) {
 }
 
 // ── Frame ─────────────────────────────────────────────────────────────────
-function header(doc, m) {
-  const cy = GRID_TOP / 2
-  const left = GUIDE_L + PAD
-  const right = GUIDE_R - PAD
-  const crumb = { size: 14, weight: 500 }
-  const login = profile.login ?? 'RunyShark'
-  const loginW = measure(login, crumb)
-  const slashX = left + 26 + loginW + 12
-  const parts = [
-    brandIcon('github', { x: left, y: cy - 9, size: 18, fill: color.text }),
-    txt(left + 28, centerBaseline(cy, crumb), login, { ...crumb, fill: color.text }),
-    // Vercel breadcrumb separator: a thin slanted stroke.
-    h('path', { d: `M${r2(slashX + 6)} ${cy - 9}L${r2(slashX)} ${cy + 9}`, stroke: color.borderHover, 'stroke-width': 1.25, 'stroke-linecap': 'round' }),
-    txt(slashX + 18, centerBaseline(cy, crumb), COPY.title, { ...crumb, fill: color.text }),
-  ]
-
-  // Live pill (right): ● Live · updated Oct 22, 2026
-  const pillH = 28
-  const live = { size: 13, weight: 500 }
-  const meta = { size: 13, weight: 400 }
-  const updated = m.updated ? date(m.updated) : null
-  const liveW = measure(COPY.live, live)
-  const metaText = updated ? ` · ${COPY.updated} ${updated}` : ''
-  const metaW = metaText ? measure(metaText, meta) : 0
-  const pillW = Math.ceil(12 + 8 + 8 + liveW + metaW + 12)
-  const px = right - pillW
-  parts.push(
-    h('rect', { x: px + 0.5, y: cy - pillH / 2 + 0.5, width: pillW - 1, height: pillH - 1, rx: pillH / 2, fill: color.surface, stroke: color.borderStrong }),
-    statusDot(doc, px + 16, cy, { fill: color.greenBright, r: 3.5 }),
-    txt(px + 28, centerBaseline(cy, live), '', {
-      ...live,
-      fill: color.text,
-      content: `${esc(COPY.live)}${metaText ? `<tspan class="f-sans-400" fill="${color.textSecondary}">${esc(metaText)}</tspan>` : ''}`,
-    }),
-  )
-
-  // Range tag, Vercel Analytics style (static: no fake dropdown affordance).
-  const range = { size: 13, weight: 500 }
-  const rangeW = Math.ceil(12 + 14 + 8 + measure(COPY.range, range) + 12)
-  const rx = px - 8 - rangeW
-  parts.push(
-    h('rect', { x: rx + 0.5, y: cy - pillH / 2 + 0.5, width: rangeW - 1, height: pillH - 1, rx: 6, fill: color.surface, stroke: color.borderStrong }),
-    glyph('calendar', { x: rx + 12, y: cy - 7, size: 14, stroke: color.textSecondary, strokeWidth: 1.5 }),
-    txt(rx + 34, centerBaseline(cy, range), COPY.range, { ...range, fill: color.text }),
-  )
-  return parts.join('')
+// Shared toolbar (DESIGN.md rule 1): GitHub tile, title, period + freshness pills.
+// Freshness is the github source's real state (rule 7), never a hard-coded "Live".
+function header(doc, data) {
+  return panelHeader(doc, {
+    icon: { brand: 'github' },
+    title: COPY.title,
+    subtitle: COPY.subtitle,
+    pills: [periodPill(COPY.range), freshnessPill(freshness(data, 'github'))],
+  }).markup
 }
 
+// Vercel grid scaffolding between toolbar and footer: dashed guides on the tile
+// edges, "+" where they cross.
 function frame() {
   const xs = [GUIDE_L + 0.5, GUIDE_R - 0.5]
   const ys = [GRID_TOP - 0.5, GRID_BOTTOM + 0.5]
   return [
-    ...xs.map((x) => guide(x, 0, x, H, { dash: '2 4', opacity: 0.9 })),
+    ...xs.map((x) => guide(x, PANEL.toolbar, x, H - PANEL.footer, { dash: '2 4', opacity: 0.9 })),
     ...ys.map((y) => guide(0, y, W, y, { dash: '2 4', opacity: 0.9 })),
-    ...xs.flatMap((x) => ys.map((y) => crosshair(x, y, { size: 13, stroke: color.textMuted }))),
+    ...xs.flatMap((x) => ys.map((y) => crosshair(x, y, { size: 13, stroke: color.borderHover }))),
   ].join('')
 }
 
-// Provenance strip: mono key/value pairs, like a deployment's details row.
-function footer() {
-  const cy = GRID_BOTTOM + FOOT / 2
-  const cap = { size: 11, family: 'mono', weight: 400, tracking: 0.08 }
-  const pair = ([k, v]) =>
-    `${esc(k.toUpperCase())}<tspan dx="8" fill="${color.textTertiary}">${esc(v.toUpperCase())}</tspan>`
-  return [
-    txt(GUIDE_L + PAD, centerBaseline(cy, cap), '', { ...cap, fill: color.textMuted, content: pair(COPY.source) }),
-    txt(GUIDE_R - PAD, centerBaseline(cy, cap), '', { ...cap, fill: color.textMuted, anchor: 'end', content: pair(COPY.window) }),
-  ].join('')
+// Provenance strip (rule 4).
+function footer(doc) {
+  return panelFooter(doc, { y: H - PANEL.footer, left: [COPY.source], right: [COPY.window] }).markup
+}
+
+/**
+ * Border beam without a blur filter. The README shows ~20 animated SVGs at once and
+ * an SVG <img> is re-rasterised on every animation frame, so a feGaussianBlur on a
+ * moving stroke costs a full filter pass per frame. The glow is a wide, faint twin
+ * stroke instead. Butt caps: a zero-length dash with round caps would leave a dot.
+ * Rest state: the segment sits just past the top-left corner.
+ */
+function beam(doc, { x = 0, y = 0, w, h: hh, r = 16, color: c, duration = 12, delay = 0, length = 80, width = 1.25 }) {
+  doc.css('@keyframes bm-beam{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}.bm-beam{animation:bm-beam 12s linear infinite}')
+  const L = Math.max(10, Math.min(500, Math.round(length)))
+  const head = Math.max(6, Math.round(L * 0.35))
+  const [X, Y, X1, Y1] = [x + 0.5, y + 0.5, x + w - 0.5, y + hh - 0.5].map(r2)
+  const d = `M${X + r} ${Y}H${X1 - r}A${r} ${r} 0 0 1 ${X1} ${Y + r}V${Y1 - r}A${r} ${r} 0 0 1 ${X1 - r} ${Y1}H${X + r}A${r} ${r} 0 0 1 ${X} ${Y1 - r}V${Y + r}A${r} ${r} 0 0 1 ${X + r} ${Y}Z`
+  const common = { d, pathLength: 1000, fill: 'none', 'stroke-dashoffset': 940, class: 'bm-beam', style: `animation-duration:${duration}s;animation-delay:-${r2(delay)}s` }
+  const dash = `${L} ${1000 - L}`
+  return h(
+    'g',
+    {},
+    h('path', { ...common, stroke: c, 'stroke-width': r2(width * 4), 'stroke-opacity': 0.14, 'stroke-dasharray': dash }),
+    h('path', { ...common, stroke: c, 'stroke-width': width, 'stroke-opacity': 0.5, 'stroke-dasharray': dash }),
+    h('path', { ...common, stroke: '#ffffff', 'stroke-width': width, 'stroke-opacity': 0.9, 'stroke-dasharray': `0 ${L - head} ${head} ${1000 - L}` }),
+  )
 }
 
 function describe(m) {
@@ -782,6 +754,28 @@ function describe(m) {
   return bits.length ? `GitHub impact: ${bits.join('; ')}.` : 'GitHub impact dashboard.'
 }
 
+// Ambient sky: stars only where the frame shows (header, gutters, footer).
+function sky(doc) {
+  const tilesBox = { x: GUIDE_L - 2, y: GRID_TOP - 2, w: GUIDE_R - GUIDE_L + 4, h: GRID_BOTTOM - GRID_TOP + 4 }
+  const textBoxes = [
+    { x: 24, y: 10, w: 330, h: PANEL.toolbar - 20 }, // tile + title + subtitle
+    { x: W - 440, y: 10, w: 416, h: PANEL.toolbar - 20 }, // pills
+    { x: 0, y: H - PANEL.footer - 2, w: W, h: PANEL.footer + 2 }, // footer strip
+  ]
+  const avoid = [...textBoxes]
+  // keep the 16px gutters between tiles open, block the tiles themselves
+  for (let i = 0; i < COLS * ROWS; i++) {
+    const x = GUIDE_L + (i % COLS) * (TILE_W + GAP)
+    const y = GRID_TOP + Math.floor(i / COLS) * (TILE_H + GAP)
+    avoid.push({ x: x + 4, y: y + 4, w: TILE_W - 8, h: TILE_H - 8 })
+  }
+  return [
+    starfield(doc, { x: 6, y: 6, w: W - 12, h: H - 12, count: 110, seed: 'impact', twinkle: 0.55, avoid, opacity: 0.75 }),
+    // the open toolbar band between title and pills: brighter stars + a flare
+    starfield(doc, { x: 356, y: 8, w: 60, h: PANEL.toolbar - 16, count: 8, seed: 'impact-head', flares: 1, avoid: [tilesBox], opacity: 0.9 }),
+  ]
+}
+
 function render({ data }) {
   const m = model(data)
   const doc = createDoc({ width: W, height: H, title: `${profile.login ?? 'RunyShark'} — Impact`, desc: describe(m) })
@@ -792,11 +786,13 @@ function render({ data }) {
     h(
       'g',
       { 'clip-path': `url(#${clip})` },
+      sky(doc),
       frame(),
-      header(doc, m),
       specs.map((spec, i) => tile(doc, i, spec)),
-      footer(),
     ),
+    header(doc, data),
+    footer(doc),
+    beam(doc, { x: 0, y: 0, w: W, h: H, r: 16, color: BLUE.hi, duration: MOTION.beam.duration, delay: MOTION.beam.delay, length: 70, width: 1.25 }),
   )
 }
 

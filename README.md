@@ -2,7 +2,7 @@
 
 <!-- Hero -->
 <p align="center">
-<img src="./assets/hero.svg" width="100%" alt="RunyShark, Sergio Dario Moreno: Full-Stack Engineer, AI Engineer, Backend Architect and Mobile Engineer based in Mexico, currently shipping AI agents in production. Dot-matrix wordmark over drifting clouds, a terminal typing Clean Architecture, DDD and SOLID, and live stats for years shipping, repositories, contributions and certifications." />
+<img src="./assets/hero.svg" width="100%" alt="RunyShark, Sergio Dario Moreno: Principal Engineer, AI Architect, multi-agent systems expert and engineering leader based in Mexico, orchestrating 100+ AI agents in production. Dot-matrix wordmark over a neural constellation and drifting clouds, a terminal typing Claude Code, Codex, MCP, RAG and embeddings, and stats: 7+ years shipping, 60 engineers led, 100+ agents in parallel, commits and repositories." />
 </p>
 
 <!-- Contact -->
@@ -24,16 +24,43 @@
 
 <!-- 01 · About -->
 <p align="center">
-<img src="./assets/sections/about.svg" width="100%" alt="About: Engineering products that ship — and scale." />
-<img src="./assets/about.svg" width="100%" alt="About Sergio Dario Moreno: full-stack engineer with 7+ years building production apps for established companies. Clean Architecture, DDD and SOLID; AI agents, MCP integrations and LLM pipelines; mentor to 30+ bootcamp students; currently learning Python and Cloud Architecture; Spanish native, English learning." />
+<img src="./assets/sections/about.svg" width="100%" alt="About: Principal Engineer. AI-native by design." />
+<img src="./assets/about.svg" width="100%" alt="About Sergio Dario Moreno: Principal Engineer and AI expert leading 60 engineers. Orchestrates 100+ AI agents in parallel with agent harnesses; expert in Claude Code and Codex, RAG, embeddings and vector search, LLM pipelines, evals and guardrails, AI automation, Clean Architecture, DDD and SOLID, and cloud-native full-stack engineering." />
 </p>
 
 <br/>
 
-<!-- 02 · Impact (data refreshed daily by .github/workflows/profile.yml) -->
+<!-- 02 · AI systems -->
 <p align="center">
-<img src="./assets/sections/impact.svg" width="100%" alt="Impact: Shipping, every single day." />
-<img src="./assets/generated/impact.svg" width="100%" alt="GitHub impact dashboard: contributions in the last 12 months with year-over-year growth, all-time contributions, pull requests and merge rate, repositories, streaks, busiest day, daily average and most productive weekday." />
+<img src="./assets/sections/ai.svg" width="100%" alt="AI systems: Agentic engineering, at production scale." />
+<img src="./assets/ai.svg" width="100%" alt="Agent orchestration: an orchestrator coordinating 100+ AI agents across planner, architect, builder, reviewer, verifier and release roles, a live harness log, and four pillars: orchestrate, ground with RAG and MCP, act with tools and automations, and verify with evals and adversarial review." />
+</p>
+<p align="center">
+<img src="./assets/ai-cards.svg" width="100%" alt="Three systems as model cards on a starfield: Agent Harness (100+ agents in parallel; plan, build, review and verify roles; Claude Code, Codex and SDKs), RAG Engine (embeddings and hybrid search over pgvector, Pinecone and Redis, with reranking, evals and citations) and Automation Mesh (webhooks, queues and cron triggers, MCP and function calling, delivered with GitHub Actions and serverless)." />
+</p>
+
+<br/>
+
+<!-- 03 · Leadership -->
+<p align="center">
+<img src="./assets/sections/leadership.svg" width="100%" alt="Leadership: Leading 60 engineers into the agentic era." />
+<img src="./assets/leadership.svg" width="100%" alt="Engineering organization: a Principal Engineer leading 60 engineers, with delivery stats from GitHub (pull requests and merge rate, commits, consecutive weeks shipping) and four pillars: technical direction, AI-first engineering culture, quality at scale and mentorship." />
+</p>
+
+<br/>
+
+<!-- 04 · Hall of fame (data refreshed daily by .github/workflows/profile.yml) -->
+<p align="center">
+<img src="./assets/sections/trophies.svg" width="100%" alt="Hall of fame: The hardest ones to earn." />
+<img src="./assets/generated/trophies.svg" width="100%" alt="Trophy cabinet, hardest first: a podium with the SSS Rank Hacker secret trophy, Pull Shark gold and God Committer, then Super Puller, an unbroken weekly contribution streak, a best-day record, Rainbow Lang User, Village Elder, Pair Extraordinaire, Quickdraw and YOLO." />
+</p>
+
+<br/>
+
+<!-- 05 · Impact (data refreshed daily by .github/workflows/profile.yml) -->
+<p align="center">
+<img src="./assets/sections/impact.svg" width="100%" alt="Impact: Shipping, week after week." />
+<img src="./assets/generated/impact.svg" width="100%" alt="GitHub impact dashboard: contributions in the last 12 months with year-over-year growth, all-time contributions, pull requests and merge rate, public and private repositories, longest streak, busiest day, daily average and most productive weekday." />
 </p>
 <p align="center">
 <img src="./assets/generated/activity.svg" width="100%" alt="Contribution activity: 53-week contribution heatmap, monthly trend, contributions by weekday and contributions by year since 2021." />
@@ -41,7 +68,7 @@
 
 <br/>
 
-<!-- 03 · Coding activity (WakaTime) -->
+<!-- 06 · Coding activity (WakaTime) -->
 <p align="center">
 <img src="./assets/sections/coding.svg" width="100%" alt="Coding activity: Hours in the editor, measured." />
 <img src="./assets/generated/coding.svg" width="100%" alt="Coding activity from WakaTime: total coding time, hours in the last 12 months, daily average, top language, editor and operating system, plus a breakdown of time per language." />
@@ -49,15 +76,15 @@
 
 <br/>
 
-<!-- 04 · Stack -->
+<!-- 07 · Expertise -->
 <p align="center">
-<img src="./assets/sections/stack.svg" width="100%" alt="Stack: The tools behind the work." />
-<img src="./assets/stack.svg" width="100%" alt="Tech stack across languages, frontend and mobile, backend and APIs, databases and cloud, AI and automation, testing, and DevOps: TypeScript, React, Next.js, React Native, Expo, NestJS, Node.js, PostgreSQL, Prisma, AWS, Claude, OpenAI, MCP, Jest, Playwright, Docker, GitHub Actions and more." />
+<img src="./assets/sections/stack.svg" width="100%" alt="Expertise: Expert across the entire stack." />
+<img src="./assets/stack.svg" width="100%" alt="Expertise, all at expert level: AI and agents (Claude Code, OpenAI Codex, Claude and OpenAI APIs, Gemini, MCP, Vercel AI SDK, LangChain, LangGraph, LlamaIndex, Hugging Face, Ollama), RAG and retrieval (embeddings, vector search, pgvector, Pinecone, Qdrant), automation (n8n, Zapier, Make, GitHub Actions), languages (TypeScript, JavaScript, Python, SQL, Bash, PowerShell, HTML, CSS, SCSS, GraphQL), frontend and mobile, backend and APIs, cloud and infrastructure (AWS, Google Cloud, Azure, Vercel, Cloudflare, Docker, Kubernetes, Terraform), databases, testing and DevOps." />
 </p>
 
 <br/>
 
-<!-- 05 · Certifications -->
+<!-- 08 · Certifications -->
 <p align="center">
 <img src="./assets/sections/certifications.svg" width="100%" alt="Certifications: Never done learning." />
 <img src="./assets/certifications.svg" width="100%" alt="Certifications: 40+ Udemy certificates, 5 DevTalles certificates, and continuous learning with Python and Cloud Architecture in progress." />
@@ -143,9 +170,9 @@
 
 <br/>
 
-<!-- 06 · GitHub analytics (third-party widgets, themed to the same palette) -->
+<!-- 09 · GitHub analytics (third-party widgets, themed to the same palette) -->
 <p align="center">
-<img src="./assets/sections/analytics.svg" width="100%" alt="GitHub analytics: The open-source footprint." />
+<img src="./assets/sections/analytics.svg" width="100%" alt="GitHub analytics: The GitHub footprint." />
 <a href="https://github.com/RunyShark"><img src="https://streak-stats.demolab.com?user=runyshark&mode=weekly&timezone=America/Mexico_City&card_width=860&card_height=200&border_radius=16&background=000000&border=1f1f1f&stroke=1f1f1f&ring=52a8ff&fire=f5a524&currStreakNum=ededed&sideNums=ededed&currStreakLabel=ededed&sideLabels=a1a1a1&dates=878787&excludeDaysLabel=878787&disable_animations=true" width="100%" alt="GitHub contribution streak: total contributions, current weekly streak and longest weekly streak." /></a>
 </p>
 <p align="center">
@@ -153,7 +180,7 @@
 <a href="https://github.com/RunyShark?tab=repositories"><img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=runyshark&layout=compact&langs_count=8&hide_border=true&bg_color=000000&title_color=ededed&text_color=a1a1a1" width="380" alt="Most used languages across public repositories." /></a>
 </p>
 <p align="center">
-<a href="https://github.com/RunyShark"><img src="https://github-trophies.vercel.app/?username=runyshark&theme=nord&no-frame=true&no-bg=true&title=MultiLanguage,LongTimeUser,Commits,PullRequest&column=4&row=1&margin-w=16&margin-h=0" alt="GitHub trophies: multi-language, long-time user, commits and pull requests." /></a>
+<a href="https://github.com/RunyShark"><img src="https://github-trophies.vercel.app/?username=runyshark&theme=nord&no-frame=true&no-bg=true&rank=SECRET,SSS,SS,S&column=6&row=1&margin-w=16&margin-h=0" alt="GitHub trophies from github-profile-trophy, S rank and above: SSS Rank Hacker (secret), Rainbow Lang User, Village Elder, Everything started, God Committer and Super Puller." /></a>
 </p>
 <p align="center">
 <a href="https://github.com/RunyShark">
@@ -173,12 +200,12 @@
 </a>
 </p>
 
-<!-- 07 · Now playing: hidden while the Spotify widget token is revoked. Re-authorise at
+<!-- 10 · Now playing: hidden while the Spotify widget token is revoked. Re-authorise at
      spotify-github-profile.kittinanx.com/api/login, then restore the section (see scripts/profile/DESIGN.md §5). -->
 
 <br/>
 
 <!-- Footer -->
 <p align="center">
-<img src="./assets/generated/footer.svg" width="100%" alt="Designed and engineered by RunyShark. Rendered daily by GitHub Actions. All systems operational." />
+<img src="./assets/generated/footer.svg" width="100%" alt="Designed and engineered by RunyShark, orchestrated with AI agents. Rendered daily by GitHub Actions. All systems operational." />
 </p>

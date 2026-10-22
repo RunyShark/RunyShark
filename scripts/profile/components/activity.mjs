@@ -1,18 +1,24 @@
 // Contribution activity — a Vercel Analytics page drawn in one SVG.
 //
-//   ┌ header ─ eyebrow · "44,771 contributions in the last year" · subline ── date range ┐
-//   ├ 01 CONTRIBUTION GRAPH ──────────────────────────────────────── Less ▪▪▪▪▪ More ──┤
+//   ┌ ▣ Contribution activity ──────────────── [▣ Oct 19, 2025 – Oct 22, 2026] [● Live] ┐
+//   │ 44,771 contributions in the last year   (KPI statement, 20px) · subline            │
+//   ├ CONTRIBUTION GRAPH ─────────────────────────────────────────── Less ▪▪▪▪▪ More ──┤
 //   │      Nov   Dec   Jan  …  53 Sunday-aligned weeks on the blue heat scale            │
-//   ├ 02 MONTHLY TREND ─────────────────────────────────────────── 3,684 avg / month ──┤
+//   ├ MONTHLY TREND ──────────────────────────────────────────────── 3,684 avg / month ──┤
 //   │  y ticks │ glowing line · halftone area · frozen-hover tooltip on the peak · live dot │
-//   ├ 03 BY WEEKDAY ───────────────────────┼ 04 BY YEAR ──────────── ↗ 20× since 2022 ──┤
+//   ├ BY WEEKDAY ──────────────────────────┼ BY YEAR ─────────────── ↗ 20× since 2022 ──┤
 //   │  "top pages" rows, busiest in blue    │  columns 2021 → now, current year = YTD     │
 //   └───────────────────────────────────────┴─────────────────────────────────────────────┘
 //
 // Data: data.contributions (DESIGN.md §6). Every block degrades on its own when
 // its field is missing: empty grid, bare gridlines + "No data yet", "—".
-// Motion is ambient and never hides data: a light sweep across the heatmap and a
-// pulse on the current month. There is deliberately no hide→show reveal —
+// Motion is ambient and never hides data (DESIGN.md rule 6, v2): a starfield in
+// the header, a slow border beam, a diagonal wave of light across the heatmap
+// (an overlay that rests at opacity 0, so every cell shows its true level at
+// rest), a glint along the trend line, shine on the lit bars and a pulse on the
+// current month. No SVG filters: an <img> SVG is re-rasterised on every animation
+// frame, so every glow is a gradient or a stack of faint strokes instead.
+// There is deliberately no hide→show reveal —
 // headless Chrome freezes <img> SVG timelines near t=0, and any renderer that
 // does the same would publish an empty chart.
 
@@ -23,10 +29,13 @@ import { crosshair, linearGradient, radialGradient, smoothPath } from '../core/p
 import { createDoc, esc, h, panel, panelClip } from '../core/svg.mjs'
 import { capHeight, centerBaseline, measure, truncate, txt } from '../core/text.mjs'
 import { color, heat, layout } from '../core/tokens.mjs'
+import { pulseAlong, shineSweep, starfield } from '../core/motion.mjs'
+import { PANEL, TYPE, freshness, freshnessPill, panelHeader, periodPill } from './shared/panel.mjs'
 
 // ── copy that content.mjs does not carry ────────────────────────────────────
 const COPY = {
-  eyebrow: 'Contribution activity',
+  title: 'Contribution activity',
+  subtitle: 'Every contribution on GitHub, day by day',
   headTail: ' in the last year',
   headFallback: 'Contributions',
   headFallbackTail: ' over the last year',
@@ -53,7 +62,10 @@ const W = layout.width
 const PAD = layout.pad // 32
 const X1 = W - PAD
 const INNER = X1 - PAD // 796
-const HEADER_H = 136
+const TOOLBAR = PANEL.toolbar // 64
+const HEADER_H = TOOLBAR + 96 // toolbar + KPI statement band
+const STATEMENT_Y = TOOLBAR + 44 // statement baseline
+const SUBLINE_Y = TOOLBAR + 69
 const LABEL_DY = 40 // section top → eyebrow baseline
 
 // A — heatmap: 53 columns fill the padding box exactly (fractional pitch is
@@ -86,12 +98,19 @@ const ROW_GAP = 6
 const ROWS_H = 7 * ROW_H + 6 * ROW_GAP
 const R_H = R_CONTENT_DY + ROWS_H + 30
 
+// Heatmap wave: overlay tint per level (brighter days catch more light).
+const WAVE = { period: 10, step: 0.075, color: '#cfe6ff', lift: [0.1, 0.24, 0.3, 0.34, 0.4] }
+const BEAM = { duration: 18, delay: 9 }
+
 const MONO_LABEL = { size: 12, weight: 400, family: 'mono', tracking: 0.08 }
 const MONO_TICK = { size: 11, weight: 400, family: 'mono' }
 const TAB = { style: 'font-variant-numeric:tabular-nums' }
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 const r2 = (v) => Math.round(v * 100) / 100
+// Phase (s) so an item peaks `at` seconds into a `period` loop.
+const lagOf = (at, period) => r2((period - (at % period)) % period)
+const phaseStyle = (sec) => (sec ? `animation-delay:-${sec}s` : null)
 const isNum = (v) => typeof v === 'number' && Number.isFinite(v)
 const nonNeg = (v) => (isNum(v) && v > 0 ? v : 0)
 const DAY_MS = 86400000
@@ -143,12 +162,9 @@ function rightRun(x, y, parts) {
   return txt(x, y, '', { ...first, anchor: 'end', attrs: TAB, content: parts.map(([text, style]) => tspan(text, style)).join('') })
 }
 
-// Mono "01  LABEL" eyebrow, the stack panel's row label.
-function sectionLabel(x, y, index, text) {
-  return [
-    txt(x, y, String(index).padStart(2, '0'), { ...MONO_LABEL, tracking: 0, fill: color.textMuted }),
-    txt(x + 24, y, text.toUpperCase(), { ...MONO_LABEL, fill: color.textTertiary }),
-  ]
+// Mono eyebrow over each block. No index: numbers belong to section headers only.
+function sectionLabel(x, y, text) {
+  return txt(x, y, text.toUpperCase(), { ...MONO_LABEL, fill: color.textTertiary })
 }
 
 // "No data yet" on a black plate, so gridlines never strike through it.
@@ -213,13 +229,17 @@ function model(data) {
 }
 
 // ── header ──────────────────────────────────────────────────────────────────
-function header(doc, m) {
-  const headStyle = { size: 24, weight: 600, tracking: -0.03 }
+// Shared toolbar (DESIGN.md rule 1) with the window as a period pill and the
+// github source's real freshness, then one KPI statement (rule 1: 18–20px, the
+// section header above is the headline) and its subline.
+function header(doc, m, data) {
+  const headStyle = { ...TYPE.statement, size: 20 }
   const n = m.lastYear
   const head1 = isNum(n) ? `${int(n)} ${plural(Math.round(n), 'contribution', 'contributions')}` : COPY.headFallback
   const head2 = isNum(n) ? COPY.headTail : COPY.headFallbackTail
-  const headline = txt(PAD, 84, '', {
+  const headline = txt(PAD, STATEMENT_Y, '', {
     ...headStyle,
+    attrs: TAB,
     content: `${h('tspan', { fill: color.text }, esc(head1))}${h('tspan', { fill: color.textTertiary }, esc(head2))}`,
   })
 
@@ -229,25 +249,18 @@ function header(doc, m) {
   if (m.bestDay) sub.push(`${COPY.peak} ${int(m.bestDay.count)} on ${date(m.bestDay.date)}`)
   const SUB = { size: 13 }
 
-  // date-range tag (the analytics page's range picker, as a static label)
-  const DISC_CY = 76
-  let tag = ''
-  let focusX = W - 200
-  if (m.days.length) {
-    const range = `${date(isoOf(m.days[0].t))} – ${date(isoOf(m.days.at(-1).t))}`
-    const T = { size: 13, weight: 500 }
-    const tw = measure(range, T)
-    const width = Math.ceil(12 + 14 + 8 + tw + 14)
-    const left = X1 - width
-    const top = DISC_CY - 16
-    focusX = left + width / 2
-    tag = [
-      h('rect', { x: left + 0.5, y: top + 0.5, width: width - 1, height: 31, rx: 8, fill: color.surface, stroke: color.borderStrong }),
-      glyph('calendar', { x: left + 12, y: DISC_CY - 7, size: 14, stroke: color.textSecondary, strokeWidth: 1.6 }),
-      txt(left + 34, centerBaseline(DISC_CY, T), range, { ...T, fill: color.text, attrs: TAB }),
-    ].join('')
-  }
+  const range = m.days.length ? `${date(isoOf(m.days[0].t))} – ${date(isoOf(m.days.at(-1).t))}` : null
+  const toolbar = panelHeader(doc, {
+    icon: { glyph: 'activity' },
+    title: COPY.title,
+    subtitle: COPY.subtitle,
+    pills: [range ? periodPill(range) : null, freshnessPill(freshness(data, 'github'))],
+  })
 
+  // atmosphere on the right of the statement band: amber light from the top edge,
+  // a faint 24px grid fading out, and a starfield kept off the copy and the pills
+  const focusX = W - 220
+  const focusY = (TOOLBAR + HEADER_H) / 2
   const glow = radialGradient(doc, 'act-glow', [
     [0, color.amber, 0.12],
     [0.45, color.amber, 0.03],
@@ -270,8 +283,8 @@ function header(doc, m) {
     'act-hdr-mask',
     h(
       'mask',
-      { id: 'act-hdr-mask', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: HEADER_H },
-      h('ellipse', { cx: focusX, cy: DISC_CY, rx: 300, ry: 150, fill: `url(#${fade})` }),
+      { id: 'act-hdr-mask', maskUnits: 'userSpaceOnUse', x: 0, y: TOOLBAR, width: W, height: HEADER_H - TOOLBAR },
+      h('ellipse', { cx: focusX, cy: focusY, rx: 280, ry: 90, fill: `url(#${fade})` }),
     ),
   )
   const edge = linearGradient(doc, 'act-edge', [
@@ -280,17 +293,31 @@ function header(doc, m) {
     [1, '#ffffff', 0],
   ], { units: 'userSpaceOnUse', x1: 16, y1: 0, x2: W - 16, y2: 0 })
 
+  const headW = Math.max(measure(head1 + head2, headStyle), sub.length ? measure(sub.join('  ·  '), SUB) : 0)
+  const stars = starfield(doc, {
+    x: 8,
+    y: TOOLBAR + 4,
+    w: W - 16,
+    h: HEADER_H - TOOLBAR - 8,
+    count: 56,
+    seed: 'activity',
+    flares: 2,
+    twinkle: 0.6,
+    opacity: 0.8,
+    avoid: [{ x: PAD - 6, y: TOOLBAR + 18, w: Math.min(INNER, headW) + 16, h: SUBLINE_Y - TOOLBAR - 6 }],
+  })
+
   return {
     back: [
       h('ellipse', { cx: focusX, cy: 0, rx: 340, ry: 170, fill: `url(#${glow})` }),
-      h('rect', { x: 0, y: 0, width: W, height: HEADER_H, fill: 'url(#act-hdr-grid)', mask: 'url(#act-hdr-mask)' }),
+      stars,
+      h('rect', { x: 0, y: TOOLBAR, width: W, height: HEADER_H - TOOLBAR, fill: 'url(#act-hdr-grid)', mask: 'url(#act-hdr-mask)' }),
       h('path', { d: `M16 0.5H${W - 16}`, stroke: `url(#${edge})` }),
     ],
     front: [
-      txt(PAD, 48, COPY.eyebrow.toUpperCase(), { ...MONO_LABEL, fill: color.textTertiary }),
+      toolbar.markup,
       headline,
-      sub.length ? txt(PAD, 110, truncate(sub.join('  ·  '), INNER, SUB), { ...SUB, fill: color.textSecondary, attrs: TAB }) : '',
-      tag,
+      sub.length ? txt(PAD, SUBLINE_Y, truncate(sub.join('  ·  '), INNER, SUB), { ...SUB, fill: color.textSecondary, attrs: TAB }) : '',
     ],
   }
 }
@@ -307,6 +334,7 @@ function heatmap(doc, m, top) {
 
   const columns = []
   const hot = []
+  const waves = new Map() // diagonal (col + row) → overlay cells
   // best day: a thin white ring, the heatmap's "selected" cell
   const bestT = m.bestDay ? dayNum(m.bestDay.date) : null
   let ring = ''
@@ -318,7 +346,16 @@ function heatmap(doc, m, top) {
       const level = t === null ? 0 : (byDay.get(t)?.level ?? 0)
       const rect = { x: r2(cx(col)), y: r2(cy(row)), width: r2(CELL), height: r2(CELL), rx: CELL_R }
       cells.push(h('rect', { ...rect, fill: heat[level] ?? heat[0] }))
-      if (level >= 3) hot.push(h('rect', { ...rect, fill: heat[level] }))
+      if (t !== null) {
+        const d = col + row
+        if (!waves.has(d)) waves.set(d, [])
+        waves.get(d).push(h('rect', { ...rect, 'fill-opacity': WAVE.lift[level] ?? WAVE.lift[0] }))
+      }
+      // hot days get a soft halo: a pre-blurred radial gradient, not a filter
+      if (level >= 3) {
+        const pad = level === 4 ? 6 : 4
+        hot.push(h('rect', { x: r2(cx(col) - pad), y: r2(cy(row) - pad), width: r2(CELL + pad * 2), height: r2(CELL + pad * 2), fill: `url(#act-halo-${level})` }))
+      }
       if (t !== null && t === bestT) {
         ring = h('rect', {
           x: r2(cx(col) - 2),
@@ -373,51 +410,37 @@ function heatmap(doc, m, top) {
     txt(X1, centerBaseline(legendCy, MONO_TICK), COPY.more, { ...MONO_TICK, fill: color.textTertiary, anchor: 'end' }),
   ]
 
-  // Light sweep: a soft band crosses the grid every 11s, masked by the cells'
-  // own luminance — bright days catch the light, empty ones stay dark. Its
-  // resting place (and the reduced-motion state) is off-grid, so any frame is clean.
-  const gridW = COLS * PITCH - GAP
-  const bandW = 168
-  linearGradient(doc, 'act-sweep-grad', [
-    [0, '#ffffff', 0],
-    [0.5, '#ffffff', 0.7],
-    [1, '#ffffff', 0],
-  ])
-  doc.def(
-    'act-sweep-mask',
-    h(
-      'mask',
-      { id: 'act-sweep-mask', maskUnits: 'userSpaceOnUse', x: r2(GRID_X - 1), y: r2(gridY - 1), width: r2(gridW + 2), height: r2(GRID_H + 2) },
-      h('use', { href: '#act-cells' }),
-    ),
-  )
-  doc.css(`@keyframes act-sweep{0%{transform:translateX(0)}55%,100%{transform:translateX(${r2(gridW + bandW)}px)}}
-.act-sweep{animation:act-sweep 11s cubic-bezier(.45,0,.25,1) 1.2s infinite}`)
-  const sweep = h(
+  // Diagonal wave: one overlay group per diagonal (col + row) brightens and fades
+  // in turn, sweeping top-left → bottom-right. Opacity only; each group rests at
+  // opacity 0, so with animation off the heatmap is exactly the data.
+  doc.css(`@keyframes act-wave{0%,100%{opacity:0}9%{opacity:1}26%{opacity:0}}
+.act-wave{animation:act-wave ${WAVE.period}s cubic-bezier(.4,0,.2,1) infinite}`)
+  const wave = h(
     'g',
-    { mask: 'url(#act-sweep-mask)' },
-    h('rect', { x: r2(GRID_X - bandW), y: r2(gridY), width: bandW, height: r2(GRID_H), fill: 'url(#act-sweep-grad)', class: 'act-sweep' }),
+    { fill: WAVE.color },
+    [...waves.entries()]
+      .sort((p, q) => p[0] - q[0])
+      .map(([d, list]) => h('g', { class: 'act-wave', opacity: 0, style: phaseStyle(lagOf(d * WAVE.step, WAVE.period)) }, list)),
   )
 
-  doc.def(
-    'act-bloom',
-    h(
-      'filter',
-      { id: 'act-bloom', filterUnits: 'userSpaceOnUse', x: GRID_X - 24, y: gridY - 24, width: INNER, height: GRID_H + 48 },
-      h('feGaussianBlur', { stdDeviation: 4 }),
-    ),
-  )
+  for (const level of [3, 4]) {
+    radialGradient(doc, `act-halo-${level}`, [
+      [0, heat[level], level === 4 ? 0.5 : 0.32],
+      [0.55, heat[level], level === 4 ? 0.16 : 0.1],
+      [1, heat[level], 0],
+    ])
+  }
 
   return [
-    sectionLabel(PAD, labelY, 1, COPY.graph),
+    sectionLabel(PAD, labelY, COPY.graph),
     legend,
     kept.map((lab) => txt(lab.x, top + A_MONTH_DY, lab.text, { ...MONTH, fill: color.textTertiary })),
     [1, 3, 5].map((row) =>
       txt(PAD, centerBaseline(cy(row) + CELL / 2, MONO_TICK), DAY_SHORT[row], { ...MONO_TICK, fill: color.textTertiary }),
     ),
-    hot.length ? h('g', { filter: 'url(#act-bloom)', opacity: 0.5 }, hot) : '',
+    hot.length ? h('g', {}, hot) : '',
     h('g', { id: 'act-cells' }, columns),
-    sweep,
+    wave,
     ring,
   ]
 }
@@ -462,7 +485,7 @@ function trend(doc, m, top) {
   }
 
   if (!pts.length) {
-    return [sectionLabel(PAD, labelY, 2, COPY.trend), grid, emptyNote((PX0 + X1) / 2, plotTop + B_PLOT_H / 2)]
+    return [sectionLabel(PAD, labelY, COPY.trend), grid, emptyNote((PX0 + X1) / 2, plotTop + B_PLOT_H / 2)]
   }
 
   const points = pts.map((p, i) => [r2(x(i)), r2(y(p.total))])
@@ -502,14 +525,6 @@ function trend(doc, m, top) {
       h('rect', { x: PX0 - 2, y: plotTop - 24, width: X1 - PX0 + 4, height: B_PLOT_H + 24, fill: `url(#${dotFade})` }),
     ),
   )
-  doc.def(
-    'act-line-glow',
-    h(
-      'filter',
-      { id: 'act-line-glow', filterUnits: 'userSpaceOnUse', x: PX0 - 24, y: plotTop - 30, width: X1 - PX0 + 48, height: B_PLOT_H + 60 },
-      h('feGaussianBlur', { stdDeviation: 5 }),
-    ),
-  )
 
   // peak: a frozen hover — one-line tooltip above the point, halo dot, dashed
   // drop line to the axis. The tooltip lives in the headroom above the plot so
@@ -544,7 +559,7 @@ function trend(doc, m, top) {
 
   // live: the current (partial) month pulses softly
   doc.css(`@keyframes act-pulse{0%{transform:scale(1);opacity:.5}80%,100%{transform:scale(3);opacity:0}}
-.act-pulse{transform-box:fill-box;transform-origin:center;animation:act-pulse 2.6s cubic-bezier(0,0,.2,1) infinite}`)
+.act-pulse{transform-box:fill-box;transform-origin:center;animation:act-pulse 3.6s cubic-bezier(0,0,.2,1) infinite}`)
   const [lx, ly] = points.at(-1)
   const live = peakI === pts.length - 1
     ? []
@@ -563,7 +578,7 @@ function trend(doc, m, top) {
   })
 
   return [
-    sectionLabel(PAD, labelY, 2, COPY.trend),
+    sectionLabel(PAD, labelY, COPY.trend),
     right,
     grid,
     h(
@@ -571,7 +586,16 @@ function trend(doc, m, top) {
       { 'clip-path': `url(#${clip})` },
       area ? h('path', { d: area, fill: `url(#${areaGrad})` }) : '',
       area ? h('path', { d: area, fill: 'url(#act-dots)', mask: 'url(#act-dot-mask)' }) : '',
-      line ? h('path', { d: line, stroke: color.blue, 'stroke-width': 6, opacity: 0.45, filter: 'url(#act-line-glow)' }) : '',
+      // glow: three faint, widening strokes (a filter would re-rasterise every frame)
+      line
+        ? h(
+            'g',
+            { stroke: color.blue, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' },
+            h('path', { d: line, 'stroke-width': 14, 'stroke-opacity': 0.05 }),
+            h('path', { d: line, 'stroke-width': 9, 'stroke-opacity': 0.08 }),
+            h('path', { d: line, 'stroke-width': 5, 'stroke-opacity': 0.16 }),
+          )
+        : '',
       line
         ? h('path', {
             d: line,
@@ -581,6 +605,7 @@ function trend(doc, m, top) {
             'stroke-linecap': 'round',
           })
         : '',
+      line ? pulseAlong(doc, { d: line, color: '#d6ebff', duration: 7.5, delay: 2.2, length: 9, width: 2, rest: 0.35, opacity: 0.85 }) : '',
     ),
     peak,
     live,
@@ -638,6 +663,7 @@ function weekdays(doc, m, top) {
             fill: hot ? 'url(#act-wd-hot)' : 'url(#act-wd)',
           })
         : '',
+      hot && bw ? shineSweep(doc, { x: x0, y: ry, w: r2(bw), h: ROW_H, r: 6, duration: 9, delay: 1.5, opacity: 0.22, band: 72 }) : '',
       txt(x0 + 10, centerBaseline(rcy, NAME), DAY_NAMES[i], { ...NAME, fill: hot ? '#ffffff' : color.text }),
       hot && bw > 150
         ? txt(x0 + bw - 10, centerBaseline(rcy, MONO_TICK), COPY.busiest.toUpperCase(), {
@@ -658,7 +684,7 @@ function weekdays(doc, m, top) {
     ]
   })
 
-  return [sectionLabel(PAD, labelY, 3, COPY.weekday), rows]
+  return [sectionLabel(PAD, labelY, COPY.weekday), rows]
 }
 
 // ── D · by year ─────────────────────────────────────────────────────────────
@@ -670,7 +696,7 @@ function years(doc, m, top) {
   const base = contentTop + ROWS_H - 38
   const barTop = contentTop + 22
   const list = m.byYear
-  const out = [sectionLabel(x0, labelY, 4, COPY.year)]
+  const out = [sectionLabel(x0, labelY, COPY.year)]
   out.push(h('path', { d: `M${x0} ${base + 0.5}H${xEnd}`, stroke: color.borderStrong }))
   if (!list.length) {
     out.push(emptyNote((x0 + xEnd) / 2, (barTop + base) / 2))
@@ -722,16 +748,13 @@ function years(doc, m, top) {
     const VAL = { size: 12, family: 'mono', weight: isLast ? 500 : 400 }
     if (bh) {
       if (isLast && bh > 8) {
-        // the current year glows like the trend line: same light, same blur
-        const gid = doc.def(
-          'act-bar-glow',
-          h(
-            'filter',
-            { id: 'act-bar-glow', filterUnits: 'userSpaceOnUse', x: r2(cx - bw), y: r2(by - 24), width: r2(bw * 2), height: r2(bh + 24) },
-            h('feGaussianBlur', { stdDeviation: 7 }),
-          ),
-        )
-        out.push(h('rect', { x: r2(cx - bw / 2 + 2), y: r2(by + 2), width: r2(bw - 4), height: r2(bh - 2), fill: color.blue, opacity: 0.4, filter: `url(#${gid})` }))
+        // the current year glows like the trend line: a pre-blurred halo (gradient, no filter)
+        const halo = radialGradient(doc, 'act-bar-halo', [
+          [0, color.blue, 0.34],
+          [0.6, color.blue, 0.1],
+          [1, color.blue, 0],
+        ])
+        out.push(h('rect', { x: r2(cx - bw * 1.1), y: r2(by - 22), width: r2(bw * 2.2), height: r2(bh + 22), fill: `url(#${halo})` }))
       }
       out.push(
         h('path', {
@@ -739,6 +762,9 @@ function years(doc, m, top) {
           fill: isLast ? 'url(#act-yr-hot)' : 'url(#act-yr)',
         }),
       )
+      if (isLast && bh > 8) {
+        out.push(shineSweep(doc, { x: r2(cx - bw / 2), y: r2(by), w: r2(bw), h: r2(bh), r: 4, duration: 9, delay: 5.5, opacity: 0.22, band: 40, angle: 24 }))
+      }
       if (isLast) {
         // lit top edge on the current year
         out.push(h('path', { d: `M${r2(cx - bw / 2 + 4)} ${r2(by) + 0.5}H${r2(cx + bw / 2 - 4)}`, stroke: '#ffffff', 'stroke-opacity': 0.55 }))
@@ -756,6 +782,30 @@ function years(doc, m, top) {
 }
 
 // ── render ──────────────────────────────────────────────────────────────────
+/**
+ * Border beam without a blur filter. The README shows ~20 animated SVGs at once and
+ * an SVG <img> is re-rasterised on every animation frame, so a feGaussianBlur on a
+ * moving stroke costs a full filter pass per frame. The glow is a wide, faint twin
+ * stroke instead. Butt caps: a zero-length dash with round caps would leave a dot.
+ * Rest state: the segment sits just past the top-left corner.
+ */
+function beam(doc, { x = 0, y = 0, w, h: hh, r = 16, color: c, duration = 12, delay = 0, length = 80, width = 1.25 }) {
+  doc.css('@keyframes bm-beam{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}.bm-beam{animation:bm-beam 12s linear infinite}')
+  const L = Math.max(10, Math.min(500, Math.round(length)))
+  const head = Math.max(6, Math.round(L * 0.35))
+  const [X, Y, X1, Y1] = [x + 0.5, y + 0.5, x + w - 0.5, y + hh - 0.5].map(r2)
+  const d = `M${X + r} ${Y}H${X1 - r}A${r} ${r} 0 0 1 ${X1} ${Y + r}V${Y1 - r}A${r} ${r} 0 0 1 ${X1 - r} ${Y1}H${X + r}A${r} ${r} 0 0 1 ${X} ${Y1 - r}V${Y + r}A${r} ${r} 0 0 1 ${X + r} ${Y}Z`
+  const common = { d, pathLength: 1000, fill: 'none', 'stroke-dashoffset': 940, class: 'bm-beam', style: `animation-duration:${duration}s;animation-delay:-${r2(delay)}s` }
+  const dash = `${L} ${1000 - L}`
+  return h(
+    'g',
+    {},
+    h('path', { ...common, stroke: c, 'stroke-width': r2(width * 4), 'stroke-opacity': 0.14, 'stroke-dasharray': dash }),
+    h('path', { ...common, stroke: c, 'stroke-width': width, 'stroke-opacity': 0.5, 'stroke-dasharray': dash }),
+    h('path', { ...common, stroke: '#ffffff', 'stroke-width': width, 'stroke-opacity': 0.9, 'stroke-dasharray': `0 ${L - head} ${head} ${1000 - L}` }),
+  )
+}
+
 function describe(m) {
   const parts = []
   parts.push(
@@ -782,7 +832,7 @@ function render(data) {
 
   const doc = createDoc({ width: W, height: H, title: 'RunyShark — contribution activity', desc: describe(m) })
   const clip = panelClip(doc)
-  const head = header(doc, m)
+  const head = header(doc, m, data)
 
   const lines = [A_TOP, B_TOP, R_TOP]
   const guides = [
@@ -799,6 +849,7 @@ function render(data) {
     trend(doc, m, B_TOP),
     weekdays(doc, m, R_TOP),
     years(doc, m, R_TOP),
+    beam(doc, { x: 0, y: 0, w: W, h: H, r: 16, color: color.blueBright, duration: BEAM.duration, delay: BEAM.delay, length: 55, width: 1.25 }),
   )
 }
 

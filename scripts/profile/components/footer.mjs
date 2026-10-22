@@ -1,8 +1,15 @@
 // Closing panel — the hero's bookend. Same grid (guides on the 32px padding,
 // "+" crosshairs, a 64px bar mirroring the hero's top bar), a miniature
 // dot-matrix "RunyShark" sampled from vendor/wordmark.json with a slow light
-// sweep, faint drifting clouds along the floor, the build provenance and a
-// Vercel-style status pill.
+// sweep, faint drifting haze along the floor, the build provenance and a
+// Vercel-style status pill (its dot pulses). v2: an agent constellation behind
+// the identity block — twinkling nodes with data pulses travelling the edges —
+// echoing "orchestrated with AI agents" (DESIGN.md rule 6). The copy and the
+// freshness date never move.
+//
+// Performance: no filters. The floor haze is pre-blurred radial gradients (an
+// feTurbulence layer under a drifting transform re-ran the noise every frame),
+// and the sweep's mask is limited to the wordmark's box.
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -14,6 +21,7 @@ import { crosshair, guide, linearGradient, pill, radialGradient } from '../core/
 import { createDoc, esc, h, panel, panelClip } from '../core/svg.mjs'
 import { centerBaseline, measure, txt } from '../core/text.mjs'
 import { color, layout } from '../core/tokens.mjs'
+import { constellation, starfield } from '../core/motion.mjs'
 
 const vendor = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'vendor')
 const wordmark = JSON.parse(fs.readFileSync(path.join(vendor, 'wordmark.json'), 'utf8'))
@@ -30,7 +38,7 @@ const CELL = 3 // mini wordmark pitch: an integer, pixel-aligned, so 1x screens 
 
 // Copy that content.mjs does not carry.
 const COPY = {
-  credit: ['Designed & engineered by ', profile.login ?? 'RunyShark'],
+  credit: ['Designed & engineered by ', profile.login ?? 'RunyShark', ' · orchestrated with AI agents'],
   rendered: 'Rendered daily by GitHub Actions',
   updated: 'last updated',
   status: 'All systems operational',
@@ -94,25 +102,27 @@ function miniWordmark(doc, top) {
     ],
     { units: 'userSpaceOnUse', x1: 0, y1: box.y, x2: 0, y2: box.y + box.h },
   )
-  // Light sweep: a warm band masked by the dots, crossing every ~9s then resting.
+  // Light sweep: a white band masked by the dots, crossing every ~9s then resting.
   doc.def(
     'ft-wm-mask',
     h(
       'mask',
-      { id: 'ft-wm-mask', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H },
+      { id: 'ft-wm-mask', maskUnits: 'userSpaceOnUse', x: box.x - 16, y: box.y - 16, width: box.w + 32, height: box.h + 32 },
       h('use', { href: '#ft-wm', fill: '#fff' }),
     ),
   )
   const band = 70
+  // Achromatic on purpose (a whisper of cool lead / warm tail): a blue→orange
+  // band read as a colour cast on the mark rather than light on metal.
   const sweep = linearGradient(
     doc,
     'ft-wm-sweep',
     [
-      [0, '#7aa7ff', 0],
-      [0.38, '#e8ddff', 0.75],
-      [0.55, '#fff6ea', 1],
-      [0.75, '#ffb36b', 0.45],
-      [1, '#ffb36b', 0],
+      [0, '#eef3ff', 0],
+      [0.38, '#eef3ff', 0.55],
+      [0.55, '#ffffff', 1],
+      [0.75, '#fff6ec', 0.4],
+      [1, '#fff6ec', 0],
     ],
     { x1: 0, y1: 0, x2: 1, y2: 0.35 },
   )
@@ -139,45 +149,27 @@ function miniWordmark(doc, top) {
   }
 }
 
-// Faint procedural clouds hugging the floor (one feTurbulence, slow drift).
+// Faint haze hugging the floor: three pre-blurred radial-gradient banks (cool
+// silver-blue, lavender, pale) drifting slowly sideways. transform only.
 function clouds(doc) {
-  const drift = 220
-  doc.def(
-    'ft-cloud',
-    h(
-      'filter',
-      { id: 'ft-cloud', x: 0, y: 0, width: '100%', height: '100%', filterUnits: 'objectBoundingBox', 'color-interpolation-filters': 'sRGB' },
-      h('feTurbulence', { type: 'fractalNoise', baseFrequency: '0.0035 0.011', numOctaves: 4, seed: 23, stitchTiles: 'stitch' }),
-      h('feColorMatrix', {
-        type: 'matrix',
-        values: ['0 0.9 0 0 0.12', '0 0.2 0 0 0.5', '0 -0.6 0 0 1.12', '2.3 0 0 0 -0.98'].join(' '),
-      }),
-    ),
-  )
-  const fade = linearGradient(
-    doc,
-    'ft-cloud-fade',
-    [
-      [0, '#fff', 0],
-      [0.45, '#fff', 0.35],
-      [1, '#fff', 1],
-    ],
-    { units: 'userSpaceOnUse', x1: 0, y1: 40, x2: 0, y2: H },
-  )
-  doc.def(
-    'ft-cloud-mask',
-    h(
-      'mask',
-      { id: 'ft-cloud-mask', maskUnits: 'userSpaceOnUse', x: 0, y: 0, width: W, height: H },
-      h('rect', { y: 40, width: W, height: H - 40, fill: `url(#${fade})` }),
-    ),
-  )
-  doc.css(`@keyframes ft-drift{from{transform:translateX(0)}to{transform:translateX(-${drift}px)}}
-.ft-drift{animation:ft-drift 64s ease-in-out infinite alternate}`)
+  const banks = [
+    { id: 'ft-haze-a', cx: 170, cy: 176, rx: 280, ry: 46, c: '#8ea6ff', o: 0.075 },
+    { id: 'ft-haze-b', cx: 520, cy: 190, rx: 320, ry: 50, c: '#a78bfa', o: 0.06 },
+    { id: 'ft-haze-c', cx: 790, cy: 170, rx: 240, ry: 40, c: '#cfe3ff', o: 0.055 },
+  ]
+  doc.css(`@keyframes ft-drift{from{transform:translateX(-36px)}to{transform:translateX(36px)}}
+.ft-drift{animation:ft-drift 48s ease-in-out infinite alternate}`)
   return h(
     'g',
-    { mask: 'url(#ft-cloud-mask)', opacity: 0.26 },
-    h('g', { class: 'ft-drift' }, h('rect', { width: W + drift, height: H, fill: '#000', filter: 'url(#ft-cloud)' })),
+    { class: 'ft-drift' },
+    banks.map((k) => {
+      const g = radialGradient(doc, k.id, [
+        [0, k.c, k.o],
+        [0.5, k.c, r2(k.o * 0.4)],
+        [1, k.c, 0],
+      ])
+      return h('ellipse', { cx: k.cx, cy: k.cy, rx: k.rx, ry: k.ry, fill: `url(#${g})` })
+    }),
   )
 }
 
@@ -211,12 +203,30 @@ function render({ data }) {
   const capH = (Math.floor(wordmark.baseline / wordmark.cell) - inkBounds().r0 + 1) * CELL
   const mark = miniWordmark(doc, Math.round((RULE - (capH + 31)) / 2))
   const creditY = mark.box.y + mark.box.cap + 31
-  const [lead, name] = COPY.credit
-  const creditW = measure(lead, creditOpts) + measure(name, { ...creditOpts, weight: 500 })
+  const [lead, name, tail] = COPY.credit
+  const creditW = measure(lead, creditOpts) + measure(name, { ...creditOpts, weight: 500 }) + measure(tail, creditOpts)
   const credit = txt(r2(CX - creditW / 2), creditY, '', {
     ...creditOpts,
     fill: color.textTertiary,
-    content: `${esc(lead)}<tspan class="f-sans-500" fill="${color.text}">${esc(name)}</tspan>`,
+    content: `${esc(lead)}<tspan class="f-sans-500" fill="${color.text}">${esc(name)}</tspan>${esc(tail)}`,
+  })
+
+  // Agent constellation behind the identity block, clear of the mark and the credit.
+  const identityW = Math.max(mark.box.w, creditW)
+  const identityBox = { x: CX - identityW / 2 - 28, y: mark.box.y - 14, w: identityW + 56, h: creditY + 10 - (mark.box.y - 14) }
+  const net = constellation(doc, {
+    x: GUIDE_L + 12,
+    y: 12,
+    w: GUIDE_R - GUIDE_L - 24,
+    h: RULE - 24,
+    nodes: 26,
+    seed: 'footer',
+    k: 2,
+    pulses: 5,
+    edgeOpacity: 0.1,
+    nodeR: [1, 1.9],
+    pulseDuration: 5.5,
+    avoid: [identityBox],
   })
 
   // Soft cool halo behind the mark, the way the hero lights its wordmark.
@@ -244,7 +254,7 @@ function render({ data }) {
     textFill: color.text,
   })
   const meta = updated
-    ? `${esc(COPY.rendered)}<tspan fill="${color.textMuted}"> · </tspan>${esc(COPY.updated)} <tspan class="f-sans-500" fill="${color.textSecondary}">${esc(updated)}</tspan>`
+    ? `${esc(COPY.rendered)}<tspan fill="${color.textTertiary}"> · </tspan>${esc(COPY.updated)} <tspan class="f-sans-500" fill="${color.textSecondary}">${esc(updated)}</tspan>`
     : esc(COPY.rendered)
 
   return doc.render(
@@ -253,6 +263,8 @@ function render({ data }) {
       'g',
       { 'clip-path': `url(#${clip})` },
       clouds(doc),
+      starfield(doc, { x: 8, y: 6, w: W - 16, h: RULE - 10, count: 46, seed: 'footer', twinkle: 0.6, opacity: 0.55, avoid: [identityBox] }),
+      h('g', { opacity: 0.85 }, net.markup),
       h('ellipse', { cx: CX, cy: mark.box.y + mark.box.cap / 2, rx: 300, ry: 70, fill: `url(#${halo})` }),
       grid(),
       mark.markup,

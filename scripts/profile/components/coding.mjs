@@ -1,6 +1,6 @@
 // Coding activity (WakaTime) — a Vercel-dashboard panel in one SVG.
 //
-//   ┌ ◉ Coding activity ────────────────────────── [▣ Last 12 months] [● Live] ┐
+//   ┌ ▣ Coding activity ─────────────────── [▣ Last 12 months] [● Live/Snapshot] ┐
 //   ├──────────────┼──────────────┼──────────────┤
 //   │ TOTAL        │ LAST 12 MO   │ DAILY AVG    │  numbers + one micro-visual each
 //   ├──────────────┼──────────────┼──────────────┤
@@ -10,17 +10,19 @@
 //   │ ████████████████████▌██▌█▌▌▒▒▒▒▒  stacked bar │  always 100 %: "Other" closes it
 //   │ ▓▓▓▓▓▓▓▓▓▓▓▓ TypeScript           55.0%  1,397 h │  Vercel-Analytics rows
 //   ├────────────────────────────────────────────┤
-//   │ Source: WakaTime · last 12 months · snapshot │
+//   │ SOURCE WakaTime · …                BASIS 1 work-week = 40 h │
 //
 // Data: data.wakatime (DESIGN.md §6). Every field may be missing; with no
 // WakaTime block at all the panel renders an empty state instead.
 
 import { glyph, hasGlyph } from '../core/glyphs.mjs'
 import { brandIcon, hasIcon } from '../core/icons.mjs'
-import { crosshair, iconTile, linearGradient, pill, radialGradient } from '../core/primitives.mjs'
+import { crosshair, iconTile, linearGradient, radialGradient } from '../core/primitives.mjs'
 import { createDoc, esc, h, panel, panelClip } from '../core/svg.mjs'
 import { centerBaseline, measure, truncate, txt } from '../core/text.mjs'
-import { color, gradient, layout } from '../core/tokens.mjs'
+import { color, layout } from '../core/tokens.mjs'
+import { shineSweep, starfield } from '../core/motion.mjs'
+import { PANEL, TYPE, chip, freshness, freshnessPill, panelFooter, panelHeader, periodPill } from './shared/panel.mjs'
 
 // ── copy that content.mjs does not carry ────────────────────────────────────
 const COPY = {
@@ -36,13 +38,8 @@ const COPY = {
   languages: 'Languages',
   emptyTitle: 'Coding activity is syncing',
   emptyText: 'WakaTime stats appear here after the next scheduled build.',
-  source: 'Source: WakaTime · last 12 months',
-}
-const STATUS = {
-  live: { text: 'Live', dot: color.greenBright, pulse: true },
-  cache: { text: 'Cached', dot: color.textTertiary, pulse: false },
-  seed: { text: 'Snapshot', dot: color.textTertiary, pulse: false },
-  none: { text: 'No data', dot: color.textMuted, pulse: false },
+  source: 'WakaTime · last 12 months',
+  basis: '1 work-week = 40 h',
 }
 
 // WakaTime language names → simple-icons slugs (vendor/icons.json).
@@ -95,17 +92,17 @@ const LANG_GLYPH = {
 const W = layout.width
 const PAD = layout.pad // 32
 const COLS = [0, 287, 573, W]
-const HEADER_H = 88
+const HEADER_H = PANEL.toolbar // 64, the shared toolbar
 const KPI_H = 136
 const ID_H = 100
 const ROW_H = 36
 const NAME_COL = 176 // icon + language name
 const BAR_H = 10
-const FOOT_H = 48
+const FOOT_H = PANEL.footer
 const MAX_LANGS = 8 // list rows, "Other" included
 const VALUE_COL = 168 // right column of the language list (percent + hours)
 
-const MONO_LABEL = { size: 11, weight: 400, family: 'mono', tracking: 0.08 }
+const MONO_LABEL = TYPE.eyebrow // 12px mono eyebrow (DESIGN.md rule 3)
 const KPI = { size: 32, weight: 600, tracking: -0.04 }
 const UNIT = { size: 16, weight: 500, tracking: -0.01 }
 const NUM = { style: 'font-variant-numeric:tabular-nums' }
@@ -116,15 +113,6 @@ const pos = (v) => (num(v) !== null && v > 0 ? v : null)
 const r2 = (v) => Math.round(v * 100) / 100
 const intFmt = new Intl.NumberFormat('en-US')
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-// Deterministic 0..1 hash (no Math.random: output must be byte-stable).
-function hash(a, b = 0, salt = 0) {
-  let x = (Math.imul(a + 1, 374761393) + Math.imul(b + 1, 668265263) + Math.imul(salt + 1, 362437)) | 0
-  x = Math.imul(x ^ (x >>> 15), 2246822519)
-  x = Math.imul(x ^ (x >>> 13), 3266489917)
-  x ^= x >>> 16
-  return (x >>> 0) / 4294967296
-}
 
 const hoursOf = (seconds) => (pos(seconds) === null ? null : seconds / 3600)
 const hoursText = (seconds) => {
@@ -139,13 +127,6 @@ function monthYear(iso) {
   if (!m || Number(m[2]) < 1 || Number(m[2]) > 12) return null
   return `${MONTHS[Number(m[2]) - 1]} ${m[1]}`
 }
-// '2026-10-22T05:00:00Z' → 'Oct 22, 2026'
-function dayText(iso) {
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso ?? ''))
-  if (!m || Number(m[2]) < 1 || Number(m[2]) > 12) return null
-  return `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`
-}
-
 const pctText = (p, digits = 1) => `${p.toFixed(digits)}%`
 
 // Blend two hex colours (t = 0 → a, 1 → b).
@@ -215,11 +196,6 @@ function model(data) {
   }
 }
 
-function statusOf(data, m) {
-  if (!m) return STATUS.none
-  const src = data?.sources?.wakatime
-  return STATUS[src] ?? STATUS.cache
-}
 
 // ── icons ───────────────────────────────────────────────────────────────────
 function langIconSpec(name) {
@@ -251,99 +227,15 @@ function smallIcon(spec, x, y, size, fill) {
 }
 
 // ── header ──────────────────────────────────────────────────────────────────
-// Halftone orb (pixelated-canvas texture) in Vercel's "Develop" gradient — the
-// avatar of the card, with a WakaTime badge where the reference has its amber one.
-function orb(doc, cx, cy, R) {
-  const fill = linearGradient(doc, 'cd-orb-fill', [
-    [0, gradient.develop[0]],
-    [1, gradient.develop[1]],
-  ], { units: 'userSpaceOnUse', x1: cx - R, y1: cy + R, x2: cx + R, y2: cy - R })
-  const step = 3
-  const n = Math.ceil(R / step) + 1
-  const still = []
-  const twinkle = [[], [], []]
-  for (let j = -n; j <= n; j++) {
-    for (let i = -n; i <= n; i++) {
-      const x = i * step + (j % 2 ? step / 2 : 0)
-      const y = j * step * 0.88
-      const d = Math.hypot(x, y) / R
-      if (d > 0.97) continue
-      const z = Math.sqrt(1 - d * d)
-      const light = Math.max(0, (-0.5 * x) / R + (-0.58 * y) / R + 0.66 * z)
-      const v = 0.14 + 0.86 * light
-      if (hash(i + 40, j + 40, 7) < 0.04 + (1 - v) * 0.4) continue // dropout
-      const r = 0.28 + 1.02 * v
-      const dot = `M${r2(cx + x - r)} ${r2(cy + y)}a${r2(r)} ${r2(r)} 0 1 0 ${r2(2 * r)} 0a${r2(r)} ${r2(r)} 0 1 0 ${r2(-2 * r)} 0`
-      const roll = hash(i + 40, j + 40, 9)
-      if (roll < 0.12) twinkle[Math.floor(roll * 25) % 3].push(dot)
-      else still.push(dot)
-    }
-  }
-  doc.css(`@keyframes cd-tw{0%,100%{opacity:1}50%{opacity:.2}}
-.cd-tw1{animation:cd-tw 4.8s ease-in-out infinite}
-.cd-tw2{animation:cd-tw 6.4s ease-in-out 1.2s infinite}
-.cd-tw3{animation:cd-tw 8s ease-in-out 2.6s infinite}`)
-  const dots = [
-    h('path', { d: still.join(''), fill: `url(#${fill})` }),
-    twinkle.map((list, k) => (list.length ? h('path', { d: list.join(''), fill: `url(#${fill})`, class: `cd-tw${k + 1}` }) : '')),
-  ]
-  const halo = radialGradient(doc, 'cd-orb-halo', [
-    [0, gradient.develop[0], 0.28],
-    [0.6, gradient.develop[0], 0.06],
-    [1, gradient.develop[0], 0],
-  ])
-  const B = 16 // badge
-  const bx = cx + R * 0.72
-  const by = cy + R * 0.72
-  return [
-    h('circle', { cx, cy, r: R * 1.9, fill: `url(#${halo})` }),
-    h('circle', { cx, cy, r: R + 0.5, fill: color.bg, stroke: color.border }),
-    dots,
-    h('circle', { cx: bx, cy: by, r: B / 2 + 2, fill: color.bg }),
-    h('circle', { cx: bx, cy: by, r: B / 2, fill: color.text }),
-    brandIcon('wakatime', { x: bx - 5.5, y: by - 5.5, size: 11, fill: color.bg }),
-  ]
-}
-
-function rangePill(x, y, text) {
-  const size = 12
-  const H = 28
-  const tw = measure(text, { size, weight: 500 })
-  const w = 10 + 14 + 7 + tw + 12
-  const left = x - w
-  return {
-    width: w,
-    markup: [
-      h('rect', { x: left + 0.5, y: y + 0.5, width: w - 1, height: H - 1, rx: 6, fill: color.surface, stroke: color.borderStrong }),
-      glyph('calendar', { x: left + 10, y: y + 7, size: 14, stroke: color.textTertiary, strokeWidth: 1.6 }),
-      txt(left + 31, centerBaseline(y + H / 2, { size, weight: 500 }), text, { size, weight: 500, fill: color.textSecondary }),
-    ].join(''),
-  }
-}
-
-function header(doc, status) {
-  const cy = HEADER_H / 2
-  const R = 22
-  const textX = PAD + R * 2 + 16
-  const st = pill(doc, {
-    x: W - PAD,
-    y: cy - 14,
-    height: 28,
-    size: 12,
-    text: status.text,
-    dot: status.dot,
-    pulse: status.pulse,
-    align: 'end',
-    padX: 11,
-  })
-  const range = rangePill(W - PAD - st.width - 8, cy - 14, COPY.range)
-  return [
-    orb(doc, PAD + R, cy, R),
-    txt(textX, cy - 3, COPY.title, { size: 16, weight: 600, tracking: -0.01, fill: color.text }),
-    txt(textX, cy + 15, COPY.subtitle, { size: 13, fill: color.textTertiary }),
-    range.markup,
-    st.markup,
-  ]
+// Shared toolbar (DESIGN.md rule 1): WakaTime tile, title, period + the wakatime
+// source's real freshness ("Snapshot" for the seed, never a hard-coded "Live").
+function header(doc, f) {
+  return panelHeader(doc, {
+    icon: { brand: 'wakatime' },
+    title: COPY.title,
+    subtitle: COPY.subtitle,
+    pills: [periodPill(COPY.range), freshnessPill(f)],
+  }).markup
 }
 
 // ── KPI row ─────────────────────────────────────────────────────────────────
@@ -357,7 +249,7 @@ function kpiLabel(x, y, glyphName, text) {
 // Big number with gray units: parts = [['5,186', 'h']] or [['7','h'],['16','m']].
 // Numerals carry a faint top-lit gradient (white → #c8c8c8), the Geist display look.
 function kpiValue(doc, x, y, parts) {
-  if (!parts) return txt(x, y, '—', { ...KPI, fill: color.textMuted })
+  if (!parts) return txt(x, y, '—', { ...KPI, fill: color.textTertiary })
   const paint = linearGradient(doc, `cd-num-${y}`, [
     [0, '#ffffff'],
     [1, '#bdbdbd'],
@@ -408,14 +300,8 @@ function kpis(doc, m, top) {
     const share = m.lySec && m.allSec ? Math.min(1, m.lySec / m.allSec) : null
     const perWeek = m.lySec ? Math.round(m.lySec / 3600 / 52.18) : null
     if (hrs && perWeek) {
-      // Vercel delta-chip, top-right of the tile on the label's centre line
-      const text = `≈ ${perWeek} h/wk`
-      const cw = measure(text, { size: 12, weight: 500 }) + 16
-      const cy = labelY - 4
-      out.push(
-        h('rect', { x: x + w - cw + 0.5, y: cy - 10, width: cw - 1, height: 20, rx: 10, fill: color.blueDeep, 'fill-opacity': 0.6, stroke: color.blue, 'stroke-opacity': 0.5 }),
-        txt(x + w - cw / 2, centerBaseline(cy, { size: 12, weight: 500 }), text, { size: 12, weight: 500, fill: color.blueBright, anchor: 'middle', attrs: NUM }),
-      )
+      // neutral chip (rule 5: not a delta), top-right of the tile on the label's centre line
+      out.push(chip({ x: x + w, cy: labelY - 4, text: `≈ ${perWeek} h/wk`, align: 'end' }).markup)
     }
     if (share !== null) {
       const trackW = 64
@@ -502,7 +388,7 @@ function identity(doc, m, top) {
         label: spec.label,
       }),
       txt(textX, cy - 9, label.toUpperCase(), { ...MONO_LABEL, fill: color.textTertiary }),
-      txt(textX, cy + 10, name, { size: 15, weight: 600, tracking: -0.01, fill: item ? color.text : color.textMuted }),
+      txt(textX, cy + 10, name, { size: 15, weight: 600, tracking: -0.01, fill: item ? color.text : color.textTertiary }),
       txt(textX, cy + 27, truncate(share, room, { size: 12 }), { size: 12, fill: color.textSecondary }),
     ]
   })
@@ -549,11 +435,6 @@ function languages(doc, m, top) {
       h('path', { d: 'M0 0V5', stroke: '#6b6b6b', 'stroke-width': 1.6 }),
     ),
   )
-  const sheen = linearGradient(doc, 'cd-sheen', [
-    [0, '#ffffff', 0],
-    [0.5, '#ffffff', 0.55],
-    [1, '#ffffff', 0],
-  ], { x1: 0, y1: 0, x2: 1, y2: 0 })
   const segs = []
   let cum = 0
   m.langs.forEach((l, i) => {
@@ -571,25 +452,17 @@ function languages(doc, m, top) {
       }),
     )
   })
-  // soft Geist-blue light under the lead segment (one cheap blur for the whole SVG)
+  // soft Geist-blue light under the lead segment: a pre-blurred radial gradient
+  // (an <img> SVG re-rasterises every frame, so no filters)
   const lead = m.langs[0]
   if (lead && !lead.other) {
-    doc.def(
-      'cd-blur',
-      h('filter', { id: 'cd-blur', x: '-20%', y: '-200%', width: '140%', height: '500%' }, h('feGaussianBlur', { stdDeviation: 6 })),
-    )
-    out.push(
-      h('rect', {
-        x: left + 8,
-        y: barY + 2,
-        width: r2(Math.max(8, (fullW * lead.percent) / total - 16)),
-        height: BAR_H,
-        rx: BAR_H / 2,
-        fill: lead.fill,
-        opacity: 0.4,
-        filter: 'url(#cd-blur)',
-      }),
-    )
+    const halo = radialGradient(doc, 'cd-lead-halo', [
+      [0, lead.fill, 0.32],
+      [0.55, lead.fill, 0.1],
+      [1, lead.fill, 0],
+    ])
+    const lw = Math.max(16, (fullW * lead.percent) / total)
+    out.push(h('rect', { x: r2(left - 8), y: barY - 12, width: r2(lw + 16), height: BAR_H + 30, fill: `url(#${halo})` }))
   }
   out.push(
     h(
@@ -597,10 +470,11 @@ function languages(doc, m, top) {
       { 'clip-path': `url(#${barClip})` },
       h('rect', { x: left, y: barY, width: fullW, height: BAR_H, fill: color.surface3 }),
       segs,
-      // top-edge light on the bar, then a slow sheen sweeping across it
+      // top-edge light on the bar
       h('rect', { x: left, y: barY, width: fullW, height: BAR_H / 2, fill: '#ffffff', opacity: 0.07 }),
-      h('rect', { x: left - 140, y: barY, width: 120, height: BAR_H, fill: `url(#${sheen})`, opacity: 0.35, class: 'cd-sheen' }),
     ),
+    // signature motion: a slow shine sweeping along the stacked bar (rests off-bar)
+    shineSweep(doc, { x: left, y: barY, w: fullW, h: BAR_H, r: BAR_H / 2, duration: 8, delay: 3, angle: 24, opacity: 0.32, band: 120 }),
   )
 
   // list: icon + name | share bar on a 0–100 % track (quarter guides) | percent · hours
@@ -659,7 +533,7 @@ function emptyState(doc, top, height) {
 }
 
 // ── assembly ────────────────────────────────────────────────────────────────
-function describe(m, status) {
+function describe(m, f) {
   if (!m) return 'Coding activity from WakaTime: no data available yet.'
   const parts = []
   const all = hoursText(m.allSec)
@@ -672,27 +546,46 @@ function describe(m, status) {
   if (m.editor) parts.push(`editor ${m.editor.name}`)
   if (m.os) parts.push(`operating system ${m.os.name}`)
   const langs = m.langs.map((l) => `${l.name} ${pctText(l.percent)}`).join(', ')
-  return `Coding activity from WakaTime (${status.text.toLowerCase()}): ${parts.join('; ')}.${langs ? ` Languages, last 12 months: ${langs}.` : ''}`
+  return `Coding activity from WakaTime (${f.label.toLowerCase()}): ${parts.join('; ')}.${langs ? ` Languages, last 12 months: ${langs}.` : ''}`
 }
 
-function footnote(data, m, y) {
-  const src = data?.sources?.wakatime
-  const synced = (src === 'live' || src === 'cache') && dayText(data?.generatedAt)
-  const tail = src === 'seed' ? 'dashboard snapshot' : src === 'live' ? 'live' : src === 'cache' ? 'cached' : null
-  const left = [COPY.source, tail, synced ? `synced ${synced}` : null].filter(Boolean).join(' · ')
-  // methodology note for the work-weeks translation in the first KPI
-  const right = m?.allSec ? '1 work-week = 40 h' : ''
-  const base = centerBaseline(y, { size: 11, family: 'mono' })
-  const rightW = right ? measure(right, { size: 11, family: 'mono' }) + 24 : 0
-  return [
-    txt(PAD, base, truncate(left, W - PAD * 2 - rightW, { size: 11, family: 'mono' }), { size: 11, family: 'mono', fill: color.textTertiary }),
-    right ? txt(W - PAD, base, right, { size: 11, family: 'mono', fill: color.textTertiary, anchor: 'end' }) : '',
-  ]
+// Provenance strip (rule 4): source + its state, and the work-week basis.
+function footnote(doc, f, m, y) {
+  const tail = f.state === 'seed' ? 'dashboard snapshot' : f.date ? `synced ${f.date}` : null
+  return panelFooter(doc, {
+    y,
+    left: [['Source', [COPY.source, tail].filter(Boolean).join(' · ')]],
+    right: m?.allSec ? [['Basis', COPY.basis]] : [],
+  }).markup
+}
+
+/**
+ * Border beam without a blur filter. The README shows ~20 animated SVGs at once and
+ * an SVG <img> is re-rasterised on every animation frame, so a feGaussianBlur on a
+ * moving stroke costs a full filter pass per frame. The glow is a wide, faint twin
+ * stroke instead. Butt caps: a zero-length dash with round caps would leave a dot.
+ * Rest state: the segment sits just past the top-left corner.
+ */
+function beam(doc, { x = 0, y = 0, w, h: hh, r = 16, color: c, duration = 12, delay = 0, length = 80, width = 1.25 }) {
+  doc.css('@keyframes bm-beam{from{stroke-dashoffset:1000}to{stroke-dashoffset:0}}.bm-beam{animation:bm-beam 12s linear infinite}')
+  const L = Math.max(10, Math.min(500, Math.round(length)))
+  const head = Math.max(6, Math.round(L * 0.35))
+  const [X, Y, X1, Y1] = [x + 0.5, y + 0.5, x + w - 0.5, y + hh - 0.5].map(r2)
+  const d = `M${X + r} ${Y}H${X1 - r}A${r} ${r} 0 0 1 ${X1} ${Y + r}V${Y1 - r}A${r} ${r} 0 0 1 ${X1 - r} ${Y1}H${X + r}A${r} ${r} 0 0 1 ${X} ${Y1 - r}V${Y + r}A${r} ${r} 0 0 1 ${X + r} ${Y}Z`
+  const common = { d, pathLength: 1000, fill: 'none', 'stroke-dashoffset': 940, class: 'bm-beam', style: `animation-duration:${duration}s;animation-delay:-${r2(delay)}s` }
+  const dash = `${L} ${1000 - L}`
+  return h(
+    'g',
+    {},
+    h('path', { ...common, stroke: c, 'stroke-width': r2(width * 4), 'stroke-opacity': 0.14, 'stroke-dasharray': dash }),
+    h('path', { ...common, stroke: c, 'stroke-width': width, 'stroke-opacity': 0.5, 'stroke-dasharray': dash }),
+    h('path', { ...common, stroke: '#ffffff', 'stroke-width': width, 'stroke-opacity': 0.9, 'stroke-dasharray': `0 ${L - head} ${head} ${1000 - L}` }),
+  )
 }
 
 function render(data) {
   const m = model(data)
-  const status = statusOf(data, m)
+  const f = freshness(data, 'wakatime')
 
   // vertical layout
   const kpiTop = HEADER_H
@@ -705,13 +598,13 @@ function render(data) {
   const bodyBottom = m ? langTop + langBlock.height : HEADER_H + EMPTY_H
   const H = bodyBottom + FOOT_H
 
-  const doc = createDoc({ width: W, height: H, title: 'RunyShark — coding activity (WakaTime)', desc: describe(m, status) })
+  const doc = createDoc({ width: W, height: H, title: 'RunyShark — coding activity (WakaTime)', desc: describe(m, f) })
   const clip = panelClip(doc)
 
-  // Motion is decoration only: every data mark is drawn in its final state, so a
-  // renderer that freezes animations still shows the full card.
-  doc.css(`@keyframes cd-sheen{0%,55%{transform:translateX(0)}100%{transform:translateX(${W + 40}px)}}
-.cd-sheen{animation:cd-sheen 9s cubic-bezier(.4,0,.2,1) 2s infinite}`)
+  // Motion is decoration only (DESIGN.md rule 6, v2): every data mark is drawn in
+  // its final state, so a renderer that freezes animations still shows the full
+  // card. Ambient: header starfield + a slow amber border beam; signature: the
+  // shine sweeping the language bar.
 
   // atmosphere: amber light at the top edge + a dot grid fading out from it
   const glow = radialGradient(doc, 'cd-glow', [
@@ -745,18 +638,35 @@ function render(data) {
     [0.5, '#ffffff', 0.24],
     [1, '#ffffff', 0],
   ], { units: 'userSpaceOnUse', x1: 16, y1: 0, x2: W - 16, y2: 0 })
+  const headTextW = Math.max(measure(COPY.title, TYPE.title), measure(COPY.subtitle, TYPE.subtitle))
+  const stars = starfield(doc, {
+    x: 8,
+    y: 4,
+    w: W - 16,
+    h: HEADER_H - 8,
+    count: 36,
+    seed: 'coding',
+    flares: 2,
+    opacity: 0.8,
+    avoid: [
+      { x: PAD - 8, y: 8, w: 28 + 12 + headTextW + 20, h: HEADER_H - 16 }, // tile + title block
+      { x: W - PAD - 290, y: HEADER_H / 2 - 18, w: 296, h: 36 }, // period + status pills
+    ],
+  })
   const atmosphere = [
     h('ellipse', { cx: W * 0.62, cy: 0, rx: 380, ry: 150, fill: `url(#${glow})` }),
+    stars,
     h('rect', { x: 0, y: 0, width: W, height: HEADER_H, fill: 'url(#cd-dots)', mask: 'url(#cd-dots-mask)' }),
     h('path', { d: `M16 0.5H${W - 16}`, stroke: `url(#${edge})` }),
   ]
 
   // guides
-  const hLines = m ? [HEADER_H, idTop, langTop, bodyBottom] : [HEADER_H, bodyBottom]
+  // the toolbar and footer draw their own hairlines (63.5 and bodyBottom + 0.5)
+  const hLines = m ? [idTop, langTop] : []
   const guides = [h('path', { d: hLines.map((y) => `M0 ${y + 0.5}H${W}`).join(''), stroke: color.border })]
   if (m) {
     guides.push(h('path', { d: [COLS[1], COLS[2]].map((x) => `M${x + 0.5} ${HEADER_H}V${langTop}`).join(''), stroke: color.border }))
-    for (const x of [COLS[1], COLS[2]]) for (const y of [HEADER_H, idTop, langTop]) guides.push(crosshair(x + 0.5, y + 0.5, { stroke: color.textMuted }))
+    for (const x of [COLS[1], COLS[2]]) for (const y of [HEADER_H - 1, idTop, langTop]) guides.push(crosshair(x + 0.5, y + 0.5, { stroke: color.borderHover }))
   }
 
   const body = m
@@ -766,9 +676,10 @@ function render(data) {
   return doc.render(
     panel(doc),
     h('g', { 'clip-path': `url(#${clip})` }, atmosphere, guides),
-    header(doc, status),
+    header(doc, f),
     body,
-    footnote(data, m, bodyBottom + FOOT_H / 2),
+    footnote(doc, f, m, bodyBottom),
+    beam(doc, { x: 0, y: 0, w: W, h: H, r: 16, color: color.amber, duration: 15, delay: 11, length: 55, width: 1.25 }),
   )
 }
 

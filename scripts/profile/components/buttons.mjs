@@ -2,6 +2,14 @@
 // one primary (light fill) and secondary ones (near-black fill, #2e2e2e hairline).
 // Each button is its own transparent SVG so the README can link them one by one;
 // widths come from the measured label so the row reads as one set.
+//
+// Motion (DESIGN.md rule 6, v2): the primary button gets a slow shine sweep,
+// each secondary one a soft glint gliding along its top hairline, phases
+// staggered so the row never moves in unison. Labels never move; at rest the
+// shine is off-pill and the glint is hidden (the static lit edge stays).
+// (A perimeter border beam was tried: on a 40px pill its fragments wrapping the
+// round ends read as rendering glitches, and its blur filter cost a filter pass
+// per frame. The glint is one transform/opacity-animated <g>, no filter.)
 
 import { links } from '../content.mjs'
 import { glyph } from '../core/glyphs.mjs'
@@ -10,6 +18,7 @@ import { linearGradient } from '../core/primitives.mjs'
 import { createDoc, h } from '../core/svg.mjs'
 import { centerBaseline, measure, txt } from '../core/text.mjs'
 import { color } from '../core/tokens.mjs'
+import { shineSweep } from '../core/motion.mjs'
 
 const BTN_H = 40
 const INSET = 1 // breathing room so the 1px hairline is never clipped by the <img> box
@@ -24,6 +33,13 @@ const PAD_TRAIL = 12
 const VARIANTS = {
   primary: { fill: color.text, stroke: null, text: color.surface, icon: color.surface },
   secondary: { fill: color.surface, stroke: color.borderStrong, text: color.text, icon: color.text },
+}
+
+// Per-button motion phase (s), so neighbours never sync.
+const MOTION = {
+  shine: { duration: 7, delay: 1.5, opacity: 0.85 },
+  glint: { duration: 7.5, opacity: 0.75 },
+  phase: { linkedin: 0.8, github: 3.3, certifications: 5.8 },
 }
 
 const BUTTONS = [
@@ -61,6 +77,26 @@ const BUTTONS = [
   },
 ]
 
+// Edge glint: a short soft-ended streak of light gliding left → right along the
+// pill's top hairline during the first half of the loop, hidden the second half.
+function edgeGlint(doc, { x1, x2, y, duration, delay, opacity }) {
+  const len = Math.round(Math.min(56, (x2 - x1) * 0.5))
+  const travel = Math.round(x2 - x1 - len)
+  const line = linearGradient(doc, 'btn-glint', [
+    [0, '#ffffff', 0],
+    [0.7, '#ffffff', 0.9],
+    [1, '#ffffff', 0],
+  ])
+  const name = `btn-glint-${travel}`
+  doc.css(`@keyframes ${name}{0%{transform:translateX(0);opacity:0}12%{opacity:1}38%{opacity:1}50%,100%{transform:translateX(${travel}px);opacity:0}}
+.${name}{animation:${name} ${duration}s cubic-bezier(.4,0,.6,1) infinite}`)
+  return h(
+    'g',
+    { opacity: 0, class: name, style: delay ? `animation-delay:-${delay}s` : null },
+    h('rect', { x: Math.round(x1 * 100) / 100, y: y - 0.5, width: len, height: 1, fill: `url(#${line})`, opacity }),
+  )
+}
+
 function icon(spec, x, cy, fill) {
   const y = cy - ICON / 2
   if (spec.glyph) return glyph(spec.glyph, { x, y, size: ICON, stroke: spec.fill ?? fill, strokeWidth: 1.6 })
@@ -95,6 +131,7 @@ function button(spec) {
       { x1: 0, y1: 0, x2: 0, y2: 1 },
     )
     parts.push(h('rect', { x: x0, y: y0, width: w, height: BTN_H, rx: r, fill: `url(#${fid})` }))
+    parts.push(shineSweep(doc, { x: x0, y: y0, w, h: BTN_H, r, ...MOTION.shine, angle: 22, band: 56 }))
   } else {
     const fid = linearGradient(
       doc,
@@ -128,6 +165,7 @@ function button(spec) {
       { units: 'userSpaceOnUse', x1: x0 + r, y1: 0, x2: x0 + w - r, y2: 0 },
     )
     parts.push(h('path', { d: `M${x0 + r} ${y0 + 0.5}H${x0 + w - r}`, stroke: `url(#${hid})`, 'stroke-width': 1 }))
+    parts.push(edgeGlint(doc, { x1: x0 + r * 0.7, x2: x0 + w - r * 0.7, y: y0 + 0.5, ...MOTION.glint, delay: MOTION.phase[spec.id] ?? 0 }))
   }
 
   if (spec.lead) parts.push(icon(spec.lead, x0 + PAD_ICON, cy, v.icon))
