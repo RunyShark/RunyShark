@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T03:41:32.969Z",
+  "generatedAt": "2026-10-26T03:44:54.756Z",
   "sources": {
     "github": "live",
     "wakatime": "live",
-    "githubAt": "2026-10-25T03:41:32.969Z",
-    "wakatimeAt": "2026-10-25T03:41:32.969Z"
+    "githubAt": "2026-10-26T03:44:54.756Z",
+    "wakatimeAt": "2026-10-26T03:44:54.756Z"
   },
   "user": {
     "login": "RunyShark",
@@ -23,9 +23,9 @@
   "contributions": {
     "allTime": 65625,
     "lastYear": 45026,
-    "previousYear": 10886,
-    "yoyGrowth": 3.1361,
-    "windowDays": 371,
+    "previousYear": 10794,
+    "yoyGrowth": 3.1714,
+    "windowDays": 365,
     "timezone": "America/Mexico_City",
     "totals": { "commits": 58684, "pullRequests": 1757, "issues": 14, "reviews": 67 },
     "byYear": [
@@ -37,13 +37,6 @@
       { "year": 2026, "total": 36419, "commits": 36006, "pullRequests": 162, "issues": 13, "reviews": 2 }
     ],
     "calendar": [
-      { "date": "2025-10-19", "count": 5, "level": 1 },
-      { "date": "2025-10-20", "count": 11, "level": 1 },
-      { "date": "2025-10-21", "count": 36, "level": 1 },
-      { "date": "2025-10-22", "count": 1, "level": 1 },
-      { "date": "2025-10-23", "count": 0, "level": 0 },
-      { "date": "2025-10-24", "count": 0, "level": 0 },
-      { "date": "2025-10-25", "count": 0, "level": 0 },
       { "date": "2025-10-26", "count": 0, "level": 0 },
       { "date": "2025-10-27", "count": 145, "level": 1 },
       { "date": "2025-10-28", "count": 2, "level": 1 },
@@ -407,7 +400,8 @@
       { "date": "2026-10-21", "count": 46, "level": 1 },
       { "date": "2026-10-22", "count": 32, "level": 1 },
       { "date": "2026-10-23", "count": 92, "level": 1 },
-      { "date": "2026-10-24", "count": 9, "level": 1 }
+      { "date": "2026-10-24", "count": 9, "level": 1 },
+      { "date": "2026-10-25", "count": 0, "level": 0 }
     ],
     "monthly": [
       { "month": "2025-11", "total": 2328, "partial": false },
@@ -423,7 +417,7 @@
       { "month": "2026-09", "total": 800, "partial": false },
       { "month": "2026-10", "total": 856, "partial": true }
     ],
-    "weekday": [6389, 9528, 8566, 6899, 6483, 4142, 3019],
+    "weekday": [6384, 9517, 8530, 6898, 6483, 4142, 3019],
     "busiestWeekday": 1,
     "currentStreak": { "days": 32, "start": "2026-09-23", "end": "2026-10-24" },
     "longestStreak": { "days": 59, "start": "2023-12-31", "end": "2024-02-27" },
@@ -432,9 +426,9 @@
       "longest": { "weeks": 223, "start": "2022-07-17", "end": "2026-10-24" }
     },
     "bestDay": { "date": "2026-02-02", "count": 1866 },
-    "activeDays": 260,
-    "activeWeeks": 53,
-    "dailyAverage": 121.4
+    "activeDays": 256,
+    "activeWeeks": 52,
+    "dailyAverage": 123.4
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
@@ -451,33 +445,33 @@
     { "name": "Other", "color": "#878787", "bytes": 2112442, "share": 0.0021 }
   ],
   "wakatime": {
-    "allTime": { "totalSeconds": 25370635, "text": "7,047 hrs", "since": "2023-10-29" },
+    "allTime": { "totalSeconds": 25395540, "text": "7,054 hrs", "since": "2023-10-29" },
     "lastYear": {
       "range": "last_year",
-      "totalSeconds": 9164796,
-      "dailyAverageSeconds": 29756,
+      "totalSeconds": 9185295,
+      "dailyAverageSeconds": 29726,
       "languages": [
-        { "name": "TypeScript", "percent": 54.6, "totalSeconds": 5622767 },
-        { "name": "Other", "percent": 11.1, "totalSeconds": 1142931 },
-        { "name": "Markdown", "percent": 9, "totalSeconds": 926108 },
-        { "name": "JSON", "percent": 5.8, "totalSeconds": 594668 },
-        { "name": "Bash", "percent": 4.4, "totalSeconds": 448615 },
-        { "name": "JavaScript", "percent": 3.3, "totalSeconds": 340492 },
+        { "name": "TypeScript", "percent": 54.4, "totalSeconds": 5623742 },
+        { "name": "Other", "percent": 11.1, "totalSeconds": 1149299 },
+        { "name": "Markdown", "percent": 9, "totalSeconds": 932169 },
+        { "name": "JSON", "percent": 5.8, "totalSeconds": 596309 },
+        { "name": "Bash", "percent": 4.3, "totalSeconds": 448615 },
+        { "name": "JavaScript", "percent": 3.4, "totalSeconds": 349838 },
         { "name": "Python", "percent": 2.8, "totalSeconds": 283949 },
         { "name": "PowerShell", "percent": 2.7, "totalSeconds": 277550 },
         { "name": "Prisma", "percent": 1.8, "totalSeconds": 181001 },
         { "name": "YAML", "percent": 1.2, "totalSeconds": 123434 }
       ],
       "editors": [
-        { "name": "VS Code", "percent": 62.5 },
-        { "name": "Claude Code", "percent": 35.4 },
+        { "name": "VS Code", "percent": 62.3 },
+        { "name": "Claude Code", "percent": 35.6 },
         { "name": "Codex CLI", "percent": 1.3 },
         { "name": "Codex Vscode", "percent": 0.4 },
         { "name": "Unknown Editor", "percent": 0.3 }
       ],
       "operatingSystems": [
-        { "name": "Windows", "percent": 93 },
-        { "name": "Mac", "percent": 4.5 },
+        { "name": "Windows", "percent": 92.8 },
+        { "name": "Mac", "percent": 4.8 },
         { "name": "Linux", "percent": 2.2 },
         { "name": "Unknown OS", "percent": 0.2 }
       ],
