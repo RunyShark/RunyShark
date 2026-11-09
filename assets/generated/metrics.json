@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-08T03:31:31.894Z",
+  "generatedAt": "2026-11-09T03:32:19.011Z",
   "sources": {
     "github": "live",
     "wakatime": "cache",
-    "githubAt": "2026-11-08T03:31:31.894Z",
+    "githubAt": "2026-11-09T03:32:19.011Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
   },
   "user": {
@@ -21,29 +21,22 @@
     "yearsOnGitHub": 5.09
   },
   "contributions": {
-    "allTime": 66906,
-    "lastYear": 45738,
-    "previousYear": 11303,
-    "yoyGrowth": 3.0465,
-    "windowDays": 371,
+    "allTime": 66907,
+    "lastYear": 45739,
+    "previousYear": 11914,
+    "yoyGrowth": 2.8391,
+    "windowDays": 365,
     "timezone": "America/Mexico_City",
-    "totals": { "commits": 59953, "pullRequests": 1766, "issues": 14, "reviews": 67 },
+    "totals": { "commits": 59954, "pullRequests": 1766, "issues": 14, "reviews": 67 },
     "byYear": [
       { "year": 2021, "total": 1, "commits": 0, "pullRequests": 0, "issues": 0, "reviews": 0 },
       { "year": 2022, "total": 1788, "commits": 1357, "pullRequests": 112, "issues": 0, "reviews": 65 },
       { "year": 2023, "total": 4862, "commits": 1967, "pullRequests": 635, "issues": 1, "reviews": 0 },
       { "year": 2024, "total": 6766, "commits": 4892, "pullRequests": 649, "issues": 0, "reviews": 0 },
       { "year": 2025, "total": 15789, "commits": 14462, "pullRequests": 199, "issues": 0, "reviews": 0 },
-      { "year": 2026, "total": 37700, "commits": 37275, "pullRequests": 171, "issues": 13, "reviews": 2 }
+      { "year": 2026, "total": 37701, "commits": 37276, "pullRequests": 171, "issues": 13, "reviews": 2 }
     ],
     "calendar": [
-      { "date": "2025-11-02", "count": 0, "level": 0 },
-      { "date": "2025-11-03", "count": 17, "level": 1 },
-      { "date": "2025-11-04", "count": 302, "level": 2 },
-      { "date": "2025-11-05", "count": 155, "level": 1 },
-      { "date": "2025-11-06", "count": 238, "level": 2 },
-      { "date": "2025-11-07", "count": 32, "level": 1 },
-      { "date": "2025-11-08", "count": 0, "level": 0 },
       { "date": "2025-11-09", "count": 0, "level": 0 },
       { "date": "2025-11-10", "count": 126, "level": 1 },
       { "date": "2025-11-11", "count": 12, "level": 1 },
@@ -407,7 +400,8 @@
       { "date": "2026-11-04", "count": 13, "level": 1 },
       { "date": "2026-11-05", "count": 5, "level": 1 },
       { "date": "2026-11-06", "count": 3, "level": 1 },
-      { "date": "2026-11-07", "count": 0, "level": 0 }
+      { "date": "2026-11-07", "count": 1, "level": 1 },
+      { "date": "2026-11-08", "count": 0, "level": 0 }
     ],
     "monthly": [
       { "month": "2025-12", "total": 5710, "partial": false },
@@ -421,20 +415,20 @@
       { "month": "2026-08", "total": 1176, "partial": false },
       { "month": "2026-09", "total": 800, "partial": false },
       { "month": "2026-10", "total": 2086, "partial": false },
-      { "month": "2026-11", "total": 51, "partial": true }
+      { "month": "2026-11", "total": 52, "partial": true }
     ],
-    "weekday": [6445, 9541, 8947, 6948, 6650, 4108, 3099],
+    "weekday": [6445, 9524, 8645, 6793, 6412, 4076, 3100],
     "busiestWeekday": 1,
-    "currentStreak": { "days": 45, "start": "2026-09-23", "end": "2026-11-06" },
+    "currentStreak": { "days": 46, "start": "2026-09-23", "end": "2026-11-07" },
     "longestStreak": { "days": 59, "start": "2023-12-31", "end": "2024-02-27" },
     "weeklyStreak": {
       "current": { "weeks": 225, "start": "2022-07-17", "end": "2026-11-07" },
       "longest": { "weeks": 225, "start": "2022-07-17", "end": "2026-11-07" }
     },
     "bestDay": { "date": "2026-02-02", "count": 1866 },
-    "activeDays": 264,
-    "activeWeeks": 53,
-    "dailyAverage": 123.3
+    "activeDays": 260,
+    "activeWeeks": 52,
+    "dailyAverage": 125.3
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
