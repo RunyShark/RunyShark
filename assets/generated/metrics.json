@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-09T03:32:19.011Z",
+  "generatedAt": "2026-11-10T03:31:39.389Z",
   "sources": {
     "github": "live",
     "wakatime": "cache",
-    "githubAt": "2026-11-09T03:32:19.011Z",
+    "githubAt": "2026-11-10T03:31:39.389Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
   },
   "user": {
@@ -22,10 +22,10 @@
   },
   "contributions": {
     "allTime": 66907,
-    "lastYear": 45739,
-    "previousYear": 11914,
-    "yoyGrowth": 2.8391,
-    "windowDays": 365,
+    "lastYear": 44995,
+    "previousYear": 11921,
+    "yoyGrowth": 2.7744,
+    "windowDays": 366,
     "timezone": "America/Mexico_City",
     "totals": { "commits": 59954, "pullRequests": 1766, "issues": 14, "reviews": 67 },
     "byYear": [
@@ -401,7 +401,8 @@
       { "date": "2026-11-05", "count": 5, "level": 1 },
       { "date": "2026-11-06", "count": 3, "level": 1 },
       { "date": "2026-11-07", "count": 1, "level": 1 },
-      { "date": "2026-11-08", "count": 0, "level": 0 }
+      { "date": "2026-11-08", "count": 0, "level": 0 },
+      { "date": "2026-11-09", "count": 0, "level": 0 }
     ],
     "monthly": [
       { "month": "2025-12", "total": 5710, "partial": false },
@@ -419,7 +420,7 @@
     ],
     "weekday": [6445, 9524, 8645, 6793, 6412, 4076, 3100],
     "busiestWeekday": 1,
-    "currentStreak": { "days": 46, "start": "2026-09-23", "end": "2026-11-07" },
+    "currentStreak": { "days": 0, "start": null, "end": null },
     "longestStreak": { "days": 59, "start": "2023-12-31", "end": "2024-02-27" },
     "weeklyStreak": {
       "current": { "weeks": 225, "start": "2022-07-17", "end": "2026-11-07" },
@@ -428,7 +429,7 @@
     "bestDay": { "date": "2026-02-02", "count": 1866 },
     "activeDays": 260,
     "activeWeeks": 52,
-    "dailyAverage": 125.3
+    "dailyAverage": 122.9
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
