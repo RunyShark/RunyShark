@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-14T03:31:42.614Z",
+  "generatedAt": "2026-11-15T03:31:57.240Z",
   "sources": {
     "github": "live",
     "wakatime": "cache",
-    "githubAt": "2026-11-14T03:31:42.614Z",
+    "githubAt": "2026-11-15T03:31:57.240Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
   },
   "user": {
@@ -23,9 +23,9 @@
   "contributions": {
     "allTime": 66908,
     "lastYear": 44996,
-    "previousYear": 11964,
-    "yoyGrowth": 2.7609,
-    "windowDays": 370,
+    "previousYear": 11977,
+    "yoyGrowth": 2.7569,
+    "windowDays": 371,
     "timezone": "America/Mexico_City",
     "totals": { "commits": 59954, "pullRequests": 1766, "issues": 14, "reviews": 67 },
     "byYear": [
@@ -406,7 +406,8 @@
       { "date": "2026-11-10", "count": 0, "level": 0 },
       { "date": "2026-11-11", "count": 0, "level": 0 },
       { "date": "2026-11-12", "count": 1, "level": 1 },
-      { "date": "2026-11-13", "count": 0, "level": 0 }
+      { "date": "2026-11-13", "count": 0, "level": 0 },
+      { "date": "2026-11-14", "count": 0, "level": 0 }
     ],
     "monthly": [
       { "month": "2025-12", "total": 5710, "partial": false },
@@ -424,16 +425,16 @@
     ],
     "weekday": [6445, 9524, 8645, 6793, 6413, 4076, 3100],
     "busiestWeekday": 1,
-    "currentStreak": { "days": 1, "start": "2026-11-12", "end": "2026-11-12" },
+    "currentStreak": { "days": 0, "start": null, "end": null },
     "longestStreak": { "days": 59, "start": "2023-12-31", "end": "2024-02-27" },
     "weeklyStreak": {
-      "current": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-13" },
-      "longest": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-13" }
+      "current": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-14" },
+      "longest": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-14" }
     },
     "bestDay": { "date": "2026-02-02", "count": 1866 },
     "activeDays": 261,
     "activeWeeks": 53,
-    "dailyAverage": 121.6
+    "dailyAverage": 121.3
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
