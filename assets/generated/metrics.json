@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-15T03:31:57.240Z",
+  "generatedAt": "2026-11-16T03:36:24.261Z",
   "sources": {
     "github": "live",
     "wakatime": "cache",
-    "githubAt": "2026-11-15T03:31:57.240Z",
+    "githubAt": "2026-11-16T03:36:24.261Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
   },
   "user": {
@@ -18,14 +18,14 @@
     "totalRepos": 225,
     "stars": 19,
     "totalCommits": 57227,
-    "yearsOnGitHub": 5.1
+    "yearsOnGitHub": 5.11
   },
   "contributions": {
     "allTime": 66908,
     "lastYear": 44996,
-    "previousYear": 11977,
-    "yoyGrowth": 2.7569,
-    "windowDays": 371,
+    "previousYear": 12280,
+    "yoyGrowth": 2.6642,
+    "windowDays": 365,
     "timezone": "America/Mexico_City",
     "totals": { "commits": 59954, "pullRequests": 1766, "issues": 14, "reviews": 67 },
     "byYear": [
@@ -37,13 +37,6 @@
       { "year": 2026, "total": 37702, "commits": 37276, "pullRequests": 171, "issues": 13, "reviews": 2 }
     ],
     "calendar": [
-      { "date": "2025-11-09", "count": 0, "level": 0 },
-      { "date": "2025-11-10", "count": 126, "level": 1 },
-      { "date": "2025-11-11", "count": 12, "level": 1 },
-      { "date": "2025-11-12", "count": 27, "level": 1 },
-      { "date": "2025-11-13", "count": 104, "level": 1 },
-      { "date": "2025-11-14", "count": 147, "level": 1 },
-      { "date": "2025-11-15", "count": 0, "level": 0 },
       { "date": "2025-11-16", "count": 0, "level": 0 },
       { "date": "2025-11-17", "count": 272, "level": 2 },
       { "date": "2025-11-18", "count": 65, "level": 1 },
@@ -407,7 +400,8 @@
       { "date": "2026-11-11", "count": 0, "level": 0 },
       { "date": "2026-11-12", "count": 1, "level": 1 },
       { "date": "2026-11-13", "count": 0, "level": 0 },
-      { "date": "2026-11-14", "count": 0, "level": 0 }
+      { "date": "2026-11-14", "count": 0, "level": 0 },
+      { "date": "2026-11-15", "count": 0, "level": 0 }
     ],
     "monthly": [
       { "month": "2025-12", "total": 5710, "partial": false },
@@ -423,7 +417,7 @@
       { "month": "2026-10", "total": 2086, "partial": false },
       { "month": "2026-11", "total": 53, "partial": true }
     ],
-    "weekday": [6445, 9524, 8645, 6793, 6413, 4076, 3100],
+    "weekday": [6445, 9398, 8633, 6766, 6309, 3929, 3100],
     "busiestWeekday": 1,
     "currentStreak": { "days": 0, "start": null, "end": null },
     "longestStreak": { "days": 59, "start": "2023-12-31", "end": "2024-02-27" },
@@ -432,9 +426,9 @@
       "longest": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-14" }
     },
     "bestDay": { "date": "2026-02-02", "count": 1866 },
-    "activeDays": 261,
-    "activeWeeks": 53,
-    "dailyAverage": 121.3
+    "activeDays": 256,
+    "activeWeeks": 52,
+    "dailyAverage": 123.3
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
