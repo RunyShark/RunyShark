@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-16T03:36:24.261Z",
+  "generatedAt": "2026-11-17T03:31:49.366Z",
   "sources": {
     "github": "live",
     "wakatime": "cache",
-    "githubAt": "2026-11-16T03:36:24.261Z",
+    "githubAt": "2026-11-17T03:31:49.366Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
   },
   "user": {
@@ -22,10 +22,10 @@
   },
   "contributions": {
     "allTime": 66908,
-    "lastYear": 44996,
-    "previousYear": 12280,
-    "yoyGrowth": 2.6642,
-    "windowDays": 365,
+    "lastYear": 44580,
+    "previousYear": 12293,
+    "yoyGrowth": 2.6265,
+    "windowDays": 366,
     "timezone": "America/Mexico_City",
     "totals": { "commits": 59954, "pullRequests": 1766, "issues": 14, "reviews": 67 },
     "byYear": [
@@ -401,7 +401,8 @@
       { "date": "2026-11-12", "count": 1, "level": 1 },
       { "date": "2026-11-13", "count": 0, "level": 0 },
       { "date": "2026-11-14", "count": 0, "level": 0 },
-      { "date": "2026-11-15", "count": 0, "level": 0 }
+      { "date": "2026-11-15", "count": 0, "level": 0 },
+      { "date": "2026-11-16", "count": 0, "level": 0 }
     ],
     "monthly": [
       { "month": "2025-12", "total": 5710, "partial": false },
@@ -428,7 +429,7 @@
     "bestDay": { "date": "2026-02-02", "count": 1866 },
     "activeDays": 256,
     "activeWeeks": 52,
-    "dailyAverage": 123.3
+    "dailyAverage": 121.8
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
