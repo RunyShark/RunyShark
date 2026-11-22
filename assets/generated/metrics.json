@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-21T03:31:26.803Z",
+  "generatedAt": "2026-11-22T03:31:38.140Z",
   "sources": {
     "github": "live",
     "wakatime": "cache",
-    "githubAt": "2026-11-21T03:31:26.803Z",
+    "githubAt": "2026-11-22T03:31:38.140Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
   },
   "user": {
@@ -21,20 +21,20 @@
     "yearsOnGitHub": 5.12
   },
   "contributions": {
-    "allTime": 66908,
-    "lastYear": 44580,
-    "previousYear": 12312,
-    "yoyGrowth": 2.6209,
-    "windowDays": 370,
+    "allTime": 67171,
+    "lastYear": 44843,
+    "previousYear": 12323,
+    "yoyGrowth": 2.639,
+    "windowDays": 371,
     "timezone": "America/Mexico_City",
-    "totals": { "commits": 59954, "pullRequests": 1766, "issues": 14, "reviews": 67 },
+    "totals": { "commits": 60216, "pullRequests": 1767, "issues": 14, "reviews": 67 },
     "byYear": [
       { "year": 2021, "total": 1, "commits": 0, "pullRequests": 0, "issues": 0, "reviews": 0 },
       { "year": 2022, "total": 1788, "commits": 1357, "pullRequests": 112, "issues": 0, "reviews": 65 },
       { "year": 2023, "total": 4862, "commits": 1967, "pullRequests": 635, "issues": 1, "reviews": 0 },
       { "year": 2024, "total": 6766, "commits": 4892, "pullRequests": 649, "issues": 0, "reviews": 0 },
       { "year": 2025, "total": 15789, "commits": 14462, "pullRequests": 199, "issues": 0, "reviews": 0 },
-      { "year": 2026, "total": 37702, "commits": 37276, "pullRequests": 171, "issues": 13, "reviews": 2 }
+      { "year": 2026, "total": 37965, "commits": 37538, "pullRequests": 172, "issues": 13, "reviews": 2 }
     ],
     "calendar": [
       { "date": "2025-11-16", "count": 0, "level": 0 },
@@ -391,22 +391,23 @@
       { "date": "2026-11-02", "count": 6, "level": 1 },
       { "date": "2026-11-03", "count": 5, "level": 1 },
       { "date": "2026-11-04", "count": 13, "level": 1 },
-      { "date": "2026-11-05", "count": 5, "level": 1 },
-      { "date": "2026-11-06", "count": 3, "level": 1 },
+      { "date": "2026-11-05", "count": 17, "level": 1 },
+      { "date": "2026-11-06", "count": 9, "level": 1 },
       { "date": "2026-11-07", "count": 1, "level": 1 },
-      { "date": "2026-11-08", "count": 0, "level": 0 },
-      { "date": "2026-11-09", "count": 0, "level": 0 },
-      { "date": "2026-11-10", "count": 0, "level": 0 },
-      { "date": "2026-11-11", "count": 0, "level": 0 },
-      { "date": "2026-11-12", "count": 1, "level": 1 },
-      { "date": "2026-11-13", "count": 0, "level": 0 },
-      { "date": "2026-11-14", "count": 0, "level": 0 },
+      { "date": "2026-11-08", "count": 2, "level": 1 },
+      { "date": "2026-11-09", "count": 28, "level": 1 },
+      { "date": "2026-11-10", "count": 11, "level": 1 },
+      { "date": "2026-11-11", "count": 4, "level": 1 },
+      { "date": "2026-11-12", "count": 17, "level": 1 },
+      { "date": "2026-11-13", "count": 16, "level": 1 },
+      { "date": "2026-11-14", "count": 1, "level": 1 },
       { "date": "2026-11-15", "count": 0, "level": 0 },
-      { "date": "2026-11-16", "count": 0, "level": 0 },
-      { "date": "2026-11-17", "count": 0, "level": 0 },
-      { "date": "2026-11-18", "count": 0, "level": 0 },
-      { "date": "2026-11-19", "count": 0, "level": 0 },
-      { "date": "2026-11-20", "count": 0, "level": 0 }
+      { "date": "2026-11-16", "count": 31, "level": 1 },
+      { "date": "2026-11-17", "count": 8, "level": 1 },
+      { "date": "2026-11-18", "count": 50, "level": 1 },
+      { "date": "2026-11-19", "count": 67, "level": 1 },
+      { "date": "2026-11-20", "count": 5, "level": 1 },
+      { "date": "2026-11-21", "count": 6, "level": 1 }
     ],
     "monthly": [
       { "month": "2025-12", "total": 5710, "partial": false },
@@ -420,20 +421,20 @@
       { "month": "2026-08", "total": 1176, "partial": false },
       { "month": "2026-09", "total": 800, "partial": false },
       { "month": "2026-10", "total": 2086, "partial": false },
-      { "month": "2026-11", "total": 53, "partial": true }
+      { "month": "2026-11", "total": 316, "partial": true }
     ],
-    "weekday": [6445, 9398, 8633, 6766, 6309, 3929, 3100],
+    "weekday": [6447, 9457, 8652, 6820, 6404, 3956, 3107],
     "busiestWeekday": 1,
-    "currentStreak": { "days": 0, "start": null, "end": null },
+    "currentStreak": { "days": 6, "start": "2026-11-16", "end": "2026-11-21" },
     "longestStreak": { "days": 59, "start": "2023-12-31", "end": "2024-02-27" },
     "weeklyStreak": {
-      "current": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-14" },
-      "longest": { "weeks": 226, "start": "2022-07-17", "end": "2026-11-14" }
+      "current": { "weeks": 227, "start": "2022-07-17", "end": "2026-11-21" },
+      "longest": { "weeks": 227, "start": "2022-07-17", "end": "2026-11-21" }
     },
     "bestDay": { "date": "2026-02-02", "count": 1866 },
-    "activeDays": 256,
-    "activeWeeks": 52,
-    "dailyAverage": 120.5
+    "activeDays": 268,
+    "activeWeeks": 53,
+    "dailyAverage": 120.9
   },
   "pullRequests": { "total": 1755, "merged": 1685, "open": 8, "mergeRate": 0.9601 },
   "issues": { "total": 14 },
