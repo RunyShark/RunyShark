@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-27T03:31:41.648Z",
+  "generatedAt": "2026-11-28T03:31:35.696Z",
   "sources": {
-    "github": "live",
+    "github": "cache",
     "wakatime": "cache",
     "githubAt": "2026-11-27T03:31:41.648Z",
     "wakatimeAt": "2026-11-01T03:32:06.741Z"
